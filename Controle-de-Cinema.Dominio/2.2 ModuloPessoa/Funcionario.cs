@@ -14,6 +14,8 @@ public class Funcionario : EntidadeBase
         Nome = nome;
         Cpf = cpf;
     }
+
+    #region Overrides
     public override void Atualizar(EntidadeBase registro)
     {
         Funcionario update = (Funcionario)registro;
@@ -32,4 +34,5 @@ public class Funcionario : EntidadeBase
         if (string.IsNullOrEmpty(Cpf.Trim()))
             erros.Add("O campo \"cpf\" deve ser preenchido.");
     }
+    #endregion
 }

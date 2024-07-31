@@ -22,6 +22,12 @@ public class Sessao : EntidadeBase
         FimDaSessao = fim;
     }
 
+    public bool CalcularTempoDeSessao()
+    {
+        return InicioDaSessao.AddMinutes(Filme.Duracao.TotalMinutes) < FimDaSessao;
+    }
+
+    #region Overrides
     public override void Atualizar(EntidadeBase registro)
     {
         Sessao update = (Sessao)registro;
@@ -52,8 +58,5 @@ public class Sessao : EntidadeBase
             erros.Add("A sessão deve ser mais longa que a duração do filme.");
     }
 
-    public bool CalcularTempoDeSessao()
-    {
-        return InicioDaSessao.AddMinutes(Filme.Duracao.TotalMinutes) < FimDaSessao;
-    }
+    #endregion
 }

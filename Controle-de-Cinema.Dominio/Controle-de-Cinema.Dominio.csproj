@@ -8,7 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="2.5 ModuloSessao\aa\" />
+    <Compile Remove="2.5 ModuloSessao\aa\**" />
+    <EmbeddedResource Remove="2.5 ModuloSessao\aa\**" />
+    <None Remove="2.5 ModuloSessao\aa\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

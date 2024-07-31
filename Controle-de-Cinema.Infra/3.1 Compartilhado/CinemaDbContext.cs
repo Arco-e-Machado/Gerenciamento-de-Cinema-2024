@@ -29,6 +29,76 @@ public class CinemaDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Ignore<Sessao>();
+        modelBuilder.Ignore<Funcionario>();
+        modelBuilder.Ignore<Atendimento>();
+
+        modelBuilder.Entity<Assento>(assentoBuilder =>
+        {
+            assentoBuilder.ToTable("TBAssento");
+
+            assentoBuilder.Property(a => a.Id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
+
+            assentoBuilder.Property(a => a.Numero)
+                .IsRequired()
+                .HasColumnType("varchar(100)");
+
+            assentoBuilder.Property(a => a.Status)
+                .IsRequired()
+                .HasColumnType("bit");
+        });
+
+        modelBuilder.Entity<Sala>(salaBuilder =>
+        {
+            salaBuilder.ToTable("TBSala");
+
+            salaBuilder.Property(s => s.Id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
+
+            salaBuilder.Property(s => s.NumeroDaSala)
+                .IsRequired()
+                .HasColumnType("varchar(100)");
+
+            salaBuilder.Property(s => s.Capacidade)
+                .IsRequired()
+                .HasColumnType("int");
+
+            salaBuilder.Property(s => s.Status)
+                .IsRequired()
+                .HasColumnType("bit");
+
+            salaBuilder.HasMany(s => s.Assentos)
+                .WithOne(a => a.Sala)
+                .HasForeignKey("Sala_Id");
+
+        });
+
+
+        modelBuilder.Entity<Filme>(filmeBuilder =>
+        {
+            filmeBuilder.ToTable("TBfilme");
+
+            filmeBuilder.Property(f => f.Id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
+
+            filmeBuilder.Property(f => f.Nome)
+                .IsRequired()
+                .HasColumnType("varchar(100)");
+
+            filmeBuilder.Property(f => f.Duracao)
+                .IsRequired()
+                .HasColumnType("time");
+
+            filmeBuilder.Property(f => f.Genero)
+                .IsRequired()
+                .HasColumnType("int");
+
+        });
+
         base.OnModelCreating(modelBuilder);
     }
 }

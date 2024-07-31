@@ -1,51 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Controle_de_Cinema.Dominio.Sala">
-    <Position X="3.25" Y="0.5" Width="2" />
+    <Position X="9.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACAEAAAAAAAEAABAABAAAAAAAQAAAAAgAAAAQAA=</HashCode>
       <FileName>2.4 ModuloSala\Sala.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Controle_de_Cinema.Dominio.Filme">
-    <Position X="3.25" Y="4.75" Width="2.25" />
+    <Position X="10.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAQQAAAAAgAAEAAAA=</HashCode>
       <FileName>2.3 ModuloFilme\Filme.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Controle_de_Cinema.Dominio.Sessao">
-    <Position X="7.75" Y="3.5" Width="2.25" />
+    <Position X="6.5" Y="1.25" Width="2.25" />
+    <AssociationLine Name="Sala" Type="Controle_de_Cinema.Dominio.Sala" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.281" Y="3.896" />
+        <Point X="8.281" Y="5.312" />
+        <Point X="9.25" Y="5.312" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ingressos" Type="Controle_de_Cinema.Dominio.Ingresso" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.188" Y="3.896" />
+        <Point X="7.188" Y="5.313" />
+        <Point X="5.5" Y="5.313" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAIAAAAAAAAAAAAAIAAAAAgAQAAABQkAAAAAAA=</HashCode>
       <FileName>2.5 ModuloSessao\Sessao.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Filme" />
+      <Property Name="Sala" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ingressos" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Controle_de_Cinema.Dominio.Ingresso">
-    <Position X="11.5" Y="2.25" Width="2.75" />
+    <Position X="2.75" Y="3.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAAAAAAAAAAAAAEAAAAAUAAAAAgBAAAAAA=</HashCode>
       <FileName>2.5 ModuloSessao\Ingresso.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Controle_de_Cinema.Dominio.Funcionario">
-    <Position X="14.5" Y="5.75" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAgAAGAAAA=</HashCode>
       <FileName>2.2 ModuloPessoa\Funcionario.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Controle_de_Cinema.Dominio.Assento">
-    <Position X="5.75" Y="0.5" Width="2.25" />
+    <Position X="11.75" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAEAAAAAAAAAAAAAAAQAAAAAgAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAEAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>2.4 ModuloSala\Assento.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Controle_de_Cinema.Dominio.Atendimento">
-    <Position X="11.5" Y="5.5" Width="1.5" />
+    <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABQAAAAAAACAAAAAAAAAAUAAAAAgAAAABAA=</HashCode>
+      <HashCode>AAAAAAAAAAQAAAAAAACAAAAAAAAAAUAAAAAgAAAABAA=</HashCode>
       <FileName>2.6 ModuloAtendimento\Atendimento.cs</FileName>
     </TypeIdentifier>
   </Class>

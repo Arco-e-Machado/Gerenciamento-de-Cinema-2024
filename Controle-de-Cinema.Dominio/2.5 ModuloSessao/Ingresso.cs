@@ -2,7 +2,7 @@
 
 namespace Controle_de_Cinema.Dominio;
 
-public class Ingresso : Sessao
+public class Ingresso : EntidadeBase
 {
     public Sessao Sessao { get; set; }
 
@@ -12,14 +12,17 @@ public class Ingresso : Sessao
 
     public bool Status { get; set; } // true = Livre
 
-    public Ingresso(){}
-    public Ingresso(Sessao sessao,Assento assento, double valor, bool status)
+    public Ingresso() { }
+
+    public Ingresso(Sessao sessao, Assento assento, double valor, bool status)
     {
         Sessao = sessao;
         Assento = assento;
         Valor = valor;
         Status = status;
     }
+
+    #region Overrides
     public override void Atualizar(EntidadeBase registro)
     {
         Ingresso update = (Ingresso)registro;
@@ -34,4 +37,5 @@ public class Ingresso : Sessao
     {
         throw new NotImplementedException();
     }
+    #endregion
 }

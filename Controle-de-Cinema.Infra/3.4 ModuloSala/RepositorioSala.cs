@@ -1,44 +1,31 @@
 ﻿using Controle_de_Cinema.Dominio;
 using Controle_de_Cinema.Dominio.ModuloSala;
 using Controle_de_Cinema.Infra.Compartilhado;
+using Microsoft.EntityFrameworkCore;
 
 namespace Controle_de_Cinema.Infra.ModuloSala;
 
-public class RepositorioSala : IRepositorioSala
+public class RepositorioSala : RepositorioBase<Sala>, IRepositorioSala
 {
-    CinemaDbContext _dbContext;
-    public RepositorioSala(CinemaDbContext dbContext)
+    public RepositorioSala(CinemaDbContext dbContext) : base(dbContext)
     {
-        _dbContext = dbContext;
-    }
-    public void Cadastrar(Sala registro)
-    {
-        _dbContext.Salas.Add(registro);
-
-        _dbContext.SaveChanges();
     }
 
-    public bool Editar(Sala registroOriginal, Sala registroAtualizado)
+    protected override DbSet<Sala> ObterRegistros()
     {
-        if (registroOriginal == null || registroAtualizado == null)
+        return _dbContext.Salas;
+    }
+
+    public override bool Excluir(Sala registro)
+    {
+        var salaSelecionada = _dbContext.Salas
+            .Include(s => s.Assentos)
+            .FirstOrDefault(s => s.Id == registro.Id)!;
+
+        if (salaSelecionada == null)
             return false;
 
-        registroOriginal.Atualizar(registroAtualizado);
-
-        _dbContext.Salas.Update(registroOriginal);
-
-        _dbContext.SaveChanges();
-
-        return true;
-    }
-
-    public bool Excluir(Sala registro)
-    {
-        if (registro == null)
-            return false;
-
-        _dbContext.Salas.Remove(registro);
-
+        _dbContext.Remove(salaSelecionada);
         _dbContext.SaveChanges();
 
         return true;
@@ -46,7 +33,7 @@ public class RepositorioSala : IRepositorioSala
 
     public Sala SelecionarId(int id)
     {
-        return _dbContext.Salas.Find(id)!;
+        return _dbContext.Salas.Include(s => s.Assentos).First(s => s.Id == id)!;
     }
 
     public List<Sala> SelecionarTodos()

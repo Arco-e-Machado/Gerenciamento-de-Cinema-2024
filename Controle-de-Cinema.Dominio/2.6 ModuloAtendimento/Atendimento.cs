@@ -2,8 +2,9 @@
 
 namespace Controle_de_Cinema.Dominio;
 
-public class Atendimento : Ingresso
+public class Atendimento : EntidadeBase
 {
+    //Acredito que não será necessário a implementação!
     public Funcionario Funcionario { get; set; }
 
     public Ingresso Ingresso { get; set; }
@@ -20,18 +21,6 @@ public class Atendimento : Ingresso
         Sessao = sessao;
         Cliente = cliente;
     }
-
-    public void VenderIngresso(Sessao Sessao)
-    {
-        List<Ingresso> IngressosDisponiveis = Sessao.ingressos.FindAll(i => i.Status == true);
-
-        if (IngressosDisponiveis.Count != 0)
-        {
-            Ingresso ingressoSelecionado = Sessao.ingressos.Find(i => i.Sessao == this.Sessao)!;
-
-        }
-    }
-    
 
     #region Overrides
     public override void Atualizar(EntidadeBase registro)

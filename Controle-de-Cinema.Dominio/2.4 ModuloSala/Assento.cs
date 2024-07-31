@@ -2,29 +2,19 @@
 
 namespace Controle_de_Cinema.Dominio;
 
-public class Assento : EntidadeBase
+public class Assento
 {
-
-    public string IdDoAssento { get; set; }
-
-
+    public int Id { get; set; }
+    public string Numero{ get; set; }
+    public Sala Sala { get; set; }
     public bool Status { get; set; } // true = Livre
 
     public Assento() { }
-    public Assento(string idDoAssento, bool status)
+    public Assento(int id, string numero, bool status)
     {
-        IdDoAssento = idDoAssento;
+        Id = id;
+        Numero = numero;
         Status = status;
-    }
-
-    public override void Atualizar(EntidadeBase registro)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void Validar()
-    {
-        throw new NotImplementedException();
     }
 
 }

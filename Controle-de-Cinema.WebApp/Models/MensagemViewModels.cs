@@ -3,5 +3,6 @@
 public class MensagemViewModel
 {
     public string Mensagem {  get; set; }
+    public string Controlador { get; set; }
     public string Link { get; set; }
 }

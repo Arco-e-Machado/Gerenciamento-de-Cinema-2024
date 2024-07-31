@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controle-de-Cinema.Unidade"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.3 Web", "1.3 Web", "{C8A84251-0FB8-49DF-9618-D7EDD904D1D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controle-de-Cinema.WebApp", "Controle-de-Cinema.WebApp\Controle-de-Cinema.WebApp.csproj", "{D18829E6-271B-4C01-9E10-ADE80DD695D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controle-de-Cinema.WebApp", "Controle-de-Cinema.WebApp\Controle-de-Cinema.WebApp.csproj", "{D18829E6-271B-4C01-9E10-ADE80DD695D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

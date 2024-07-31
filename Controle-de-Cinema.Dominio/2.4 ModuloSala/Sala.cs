@@ -4,7 +4,7 @@ namespace Controle_de_Cinema.Dominio;
 
 public class Sala : EntidadeBase
 {
-    public string NumeroDaSala { get; private set; }
+    public string NumeroDaSala { get; set; }
 
     public int Capacidade { get; set; }
 
@@ -12,17 +12,36 @@ public class Sala : EntidadeBase
 
     public bool Status { get; set; } // True = Livre
 
-    public Sala() { }
     public Sala(string numeroDaSala, int capacidade, bool status, List<Assento> assentos)
     {
         NumeroDaSala = numeroDaSala;
         Capacidade = capacidade;
         Status = status;
-        Assentos = assentos;
+        //Assentos = assentos;
 
         AlocarAssentos(capacidade);
     }
 
+    public void AlocarAssentos(int Capacidade)
+    {
+        for (int i = 0; i < Capacidade; i++)
+        {
+            if (i % 8 == 0 && i != 0)
+            {
+                int fileiraIndex = (i / 8) % 26;
+                string Fileira = $"{(char)(65 + fileiraIndex)}";
+
+                Assento novoAssento = new Assento
+                {
+                    Numero = $"{Fileira}-{i}",
+                    Status = true
+                };
+                Assentos.Add(novoAssento);
+            }
+        }
+    }
+
+    #region Overrides
     public override void Atualizar(EntidadeBase registro)
     {
         Sala update = (Sala)registro;
@@ -43,24 +62,5 @@ public class Sala : EntidadeBase
         if (Capacidade == null || Capacidade < 15)
             erros.Add("A Sala deve conter uma quantia mínima de 15 assentos de capacidade.");
     }
-
-    public void AlocarAssentos(int Capacidade)
-    {
-        for (int i = 0; i < Capacidade; i++)
-        {
-            if (i % 8 == 0 && i != 0)
-            {
-                int fileiraIndex = (i / 8) % 26;
-                string Fileira = $"{(char)(65 + fileiraIndex)}";
-
-                Assento novoAssento = new Assento
-                {
-                    IdDoAssento = $"{Fileira}-{i}",
-                    Status = true
-                };
-                Assentos.Add(novoAssento);
-            }
-        }
-    }
-
+#endregion
 }
