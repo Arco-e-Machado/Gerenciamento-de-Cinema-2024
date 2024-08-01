@@ -71,7 +71,7 @@ public class SalaController : Controller
 
         var editarSalaVM = new EditarSalaViewModel
         {
-            Id = id,
+            Id = salaSelecionada.Id,
             Numero = salaSelecionada.NumeroDaSala,
             Capacidade = salaSelecionada.Capacidade,
             Status = salaSelecionada.Status ? "Ocupada" : "Livre"
@@ -83,8 +83,8 @@ public class SalaController : Controller
     [HttpPost]
     public ViewResult editar(EditarSalaViewModel editarSalaVM)
     {
-        if (!ModelState.IsValid)
-            return View(editarSalaVM);
+        //if (!ModelState.IsValid)
+        //    return View(editarSalaVM);
 
         var db = new CinemaDbContext();
         var repositorioSala = new RepositorioSala(db);
