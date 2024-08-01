@@ -1,8 +1,13 @@
 ﻿using Controle_de_Cinema.Dominio;
 using Controle_de_Cinema.Infra.Compartilhado;
+using Controle_de_Cinema.Infra.Migrations;
+using Controle_de_Cinema.Infra.ModuloFilme;
+using Controle_de_Cinema.Infra.ModuloSala;
 using Controle_de_Cinema.Infra.ModuloSessao;
 using Controle_de_Cinema.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Eventing.Reader;
 
 namespace Controle_de_Cinema.WebApp.Controllers;
@@ -34,7 +39,35 @@ public class SessaoController : Controller
 
     public ViewResult inserir()
     {
-        return View();
+        var db = new CinemaDbContext();
+
+        var repositorioSala = new RepositorioSala(db);
+        var repositorioFilme = new RepositorioFilme(db);
+
+        var salas = repositorioSala
+            .SelecionarTodos()
+            .Select(s => new SelectListItem(s.NumeroDaSala, s.Id.ToString()));
+
+        var assentos = repositorioSala
+            .SelecionarTodos()
+            .Select(s => new SelectListItem(s.Assentos.ToString(), s.Id.ToString()));
+
+        var filmes = repositorioFilme
+            .SelecionarTodos()
+            .Select(f => new SelectListItem(f.Nome, f.Id.ToString()));
+
+        var criarSessao = teste(salas, filmes, assentos);
+        return View(criarSessao);
+    }
+
+    private static InserirSessaoViewModel teste(IEnumerable<SelectListItem> salas, IEnumerable<SelectListItem> filmes, IEnumerable<SelectListItem> assentos)
+    {
+        return new InserirSessaoViewModel
+        {
+            salas = salas.ToList(),
+            filmes = filmes.ToList(),
+            assentos = assentos.ToList()
+        };
     }
 
     [HttpPost]
@@ -42,9 +75,26 @@ public class SessaoController : Controller
     {
         var db = new CinemaDbContext();
         var repositorioSessao = new RepositorioSessao(db);
+        var repositorioSala = new RepositorioSala(db);
+        var repositorioFilme = new RepositorioFilme(db);
 
-        var novaSessao = new Sessao(novaSessaoVM.Filme,
-                                                             novaSessaoVM.Sala,
+        var salas = repositorioSala
+            .SelecionarTodos()
+            .Select(s => new SelectListItem(s.NumeroDaSala, s.Id.ToString()));
+
+        var assentos = repositorioSala
+    .SelecionarTodos()
+    .Select(s => new SelectListItem(s.Assentos.ToString(), s.Id.ToString()));
+
+        var filmes = repositorioFilme
+            .SelecionarTodos()
+            .Select(f => new SelectListItem(f.Nome, f.Id.ToString()));
+
+        var sala = repositorioSala.SelecionarId(novaSessaoVM.IdSala.GetValueOrDefault());
+        var filme = repositorioFilme.SelecionarId(novaSessaoVM.IdFilme.GetValueOrDefault());
+
+        var novaSessao = new Sessao(filme,
+                                                             sala,
                                                              novaSessaoVM.InicioSessao,
                                                              novaSessaoVM.FimSessao
                                                              );

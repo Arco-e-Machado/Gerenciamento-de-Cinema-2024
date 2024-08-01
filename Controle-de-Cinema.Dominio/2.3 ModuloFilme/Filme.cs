@@ -14,10 +14,11 @@ public class Filme : EntidadeBase
     {
         Nome = nome;
         Genero = genero;
-        Duracao = duracao/conversorDeMinutos;
+        Duracao = duracao / conversorDeMinutos;
     }
 
     #region Overrides
+
     public override void Atualizar(EntidadeBase registro)
     {
         Filme update = (Filme)registro;
@@ -40,6 +41,11 @@ public class Filme : EntidadeBase
         if (Duracao == null || Duracao.Minutes <= 0)
             erros.Add("O campo \"Duração\" deve ser preenchido");
 
+    }
+
+    public override string? ToString()
+    {
+        return Nome;
     }
     #endregion
 }

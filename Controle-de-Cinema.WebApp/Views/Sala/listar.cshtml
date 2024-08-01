@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ListarSessaoViewModel>
+﻿@model IEnumerable<ListarSalaViewModel>
 @{
     Layout = "_Layout";
     ViewBag.Tittle = "Listagem de Sessões";
@@ -6,9 +6,9 @@
 
 @* Cabeçalho *@
 <div class="mt-3">
-    <a class="btn btn-danger px-4" href="/sessao/inserir">
+    <a class="btn btn-danger px-4" href="/sala/inserir">
         <i class="bi bi-plus-circle"></i>
-        Inserir Nova Sessão
+        Inserir Nova Sala
     </a>
 </div>
 
@@ -19,7 +19,7 @@
         <div class="card col-md-5 col-lg-4 col-xl-3 p-2 bg-dark text-white">
             <div class="card-body">
                 <div class="row row-cols-2 gap-2">
-                    <label class="card-title fs-5 fw-semibold">Numero: @sala.Numero </label>
+                    <label class="card-title fs-5 fw-semibold">Sala: @sala.Numero </label>
 
                     <div class="d-flex justify-content-end">
                         <a class="btn btn-secondary btn-sm mx-1" href="/sala/detalhes/@sala.Id">
@@ -37,8 +37,7 @@
                 </div>
 
                 <p class="card-subtitle fs-6"><strong>Id: </strong>[@sala.Id]</p>
-                <p class="card-subtitle fs-6"><strong>Status: </strong>[@sala.Status] </p>
-                <p class="card-subtitle fs-6"><strong>Capacidade da Sala: </strong>[@sala.Capacidade] </p>
+                <p class="card-subtitle fs-6"><strong>Numero: </strong>[@sala.Numero] </p>
             </div>
         </div>
     }

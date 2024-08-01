@@ -34,7 +34,7 @@ public class RepositorioSala : RepositorioBase<Sala>, IRepositorioSala
 
     public Sala SelecionarId(int id)
     {
-        return _dbContext.Salas.Include(s => s.Assentos).First(s => s.Id == id)!;
+        return _dbContext.Salas.Include(s => s.Assentos).FirstOrDefault(s => s.Id == id)!;
     }
 
     public List<Sala> SelecionarTodos()

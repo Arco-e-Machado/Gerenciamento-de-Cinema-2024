@@ -20,9 +20,9 @@
                     <div class="fw-bold">Id:</div> @Model.Id
                 </div>
                 <div class="list-group-item list-group-item-action">
-                    <div class="fw-bold">Número:</div> @Model.Numero
+                    <div class="fw-bold">FIlme:</div> @Model.Filme
                 </div>
-                @if (Model.Status == "Ocupada")
+@*                 @if (Model.Status == "Ocupada")
                 {
                     <div class="list-group-item list-group-item-action bg-danger">
                         <div class="fw-bold">Status:</div> @Model.Status
@@ -33,9 +33,9 @@
                     <div class="list-group-item list-group-item-action">
                         <div class="fw-bold">Status:</div> @Model.Status
                     </div>
-                }
+                } *@
 
-                <div class="mt-4 d-flex flex-column align-items-center">
+@*                 <div class="mt-4 d-flex flex-column align-items-center">
                     <h5>Assentos</h5>
                     <div class="d-flex flex-wrap">
                         @foreach (var assento in Model.Assentos)
@@ -49,7 +49,7 @@
                                     <p class="card-text" style="font-size:10px">@assento.Numero</p>
                                 </label>
                             </div>
-                        }
+                        } *@
                     </div>
                 </div>
             </div>
