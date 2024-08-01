@@ -1,45 +1,31 @@
 ﻿using Controle_de_Cinema.Dominio;
 using Controle_de_Cinema.Dominio.ModuloFilme;
 using Controle_de_Cinema.Infra.Compartilhado;
+using Microsoft.EntityFrameworkCore;
 
 namespace Controle_de_Cinema.Infra.ModuloFilme;
 
-public class RepositorioFilme : IRepositorioFilme
+public class RepositorioFilme : RepositorioBase<Filme>, IRepositorioFilme
 {
-    CinemaDbContext _dbContext;
 
-    public RepositorioFilme(CinemaDbContext dbContext)
+
+    public RepositorioFilme(CinemaDbContext dbContext) : base(dbContext)
     {
-        _dbContext = dbContext;
     }
 
-    public void Cadastrar(Filme registro)
+    protected override DbSet<Filme> ObterRegistros()
     {
-        _dbContext.Filmes.Add(registro);
-
-        _dbContext.SaveChanges();
+        return _dbContext.Filmes ;
     }
 
-    public bool Editar(Filme registroOriginal, Filme registroAtualizado)
+    public override bool Excluir(Filme registro)
     {
-        if(registroOriginal == null || registroAtualizado == null)
-                return false;
+        var filmeSelecionado = _dbContext.Filmes.FirstOrDefault(f => f .Id == registro.Id)!;
 
-        registroOriginal.Atualizar(registroAtualizado);
-
-        _dbContext.Filmes.Update(registroOriginal);
-
-        _dbContext.SaveChanges();
-
-        return true;
-    }
-
-    public bool Excluir(Filme registro)
-    {
-        if (registro == null)
+        if (filmeSelecionado == null)
             return false;
 
-        _dbContext.Filmes.Remove(registro);
+        _dbContext.Remove(filmeSelecionado);
 
         _dbContext.SaveChanges();
 
@@ -48,7 +34,7 @@ public class RepositorioFilme : IRepositorioFilme
 
     public Filme SelecionarId(int id)
     {
-        return _dbContext.Filmes.Find(id)!;
+        return _dbContext.Filmes.FirstOrDefault(f => f.Id == id)!;
     }
 
     public List<Filme> SelecionarTodos()

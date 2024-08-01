@@ -5,7 +5,7 @@ namespace Controle_de_Cinema.Dominio;
 public class Atendimento : EntidadeBase
 {
     //Acredito que não será necessário a implementação!
-    public Funcionario Funcionario { get; set; }
+    public Pessoa Funcionario { get; set; }
 
     public Ingresso Ingresso { get; set; }
 
@@ -14,7 +14,7 @@ public class Atendimento : EntidadeBase
     public string Cliente { get; set; }
 
     public Atendimento() { }
-    public Atendimento(Funcionario funcionario, Ingresso ingresso, Sessao sessao, string cliente)
+    public Atendimento(Pessoa funcionario, Ingresso ingresso, Sessao sessao, string cliente)
     {
         Funcionario = funcionario;
         Ingresso = ingresso;

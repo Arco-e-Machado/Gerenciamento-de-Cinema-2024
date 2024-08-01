@@ -26,6 +26,7 @@ public class RepositorioSala : RepositorioBase<Sala>, IRepositorioSala
             return false;
 
         _dbContext.Remove(salaSelecionada);
+
         _dbContext.SaveChanges();
 
         return true;
@@ -38,6 +39,6 @@ public class RepositorioSala : RepositorioBase<Sala>, IRepositorioSala
 
     public List<Sala> SelecionarTodos()
     {
-        return _dbContext.Salas.ToList();
+        return _dbContext.Salas.Include(s => s.Assentos).ToList();
     }
 }

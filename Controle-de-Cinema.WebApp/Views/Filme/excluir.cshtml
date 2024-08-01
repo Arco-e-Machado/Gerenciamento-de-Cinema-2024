@@ -1,17 +1,17 @@
-﻿@model ExcluirSalaViewModel
+﻿@model ExcluirFilmeViewModel
 @{
     Layout = "_Layout";
-    ViewBag.Tittle = "Exclusão de Salas";
+    ViewBag.Tittle = "Exclusão de Filme";
 }
 
 <div class="container">
     <div class="col card m-5 p-4 gap-2 bg-light shadow bg-dark rounded">
 
         <div class="d-flex flex-column justify-content-center text-white">
-            <label class="fs-5"><strong>Numero:</strong> @Model.Numero</label>
+            <label class="fs-5"><strong>Nome:</strong> @Model.Nome</label>
 
             <label><strong>Id:</strong> [@Model.Id]</label>
-            <label><strong>Status:</strong> @Model.Status</label>
+            <label><strong>Duração:</strong> @Model.Duracao</label>
 
             <p class="text-bg-danger p-3 rounded fs-5 mt-2">
                 Deseja realmente confirmar a exclusão? Não será possível recuperar os dados excluídos posteriormente.
@@ -23,7 +23,7 @@
                     Excluir
                 </button>
 
-                <a class="btn btn-secondary px-5" href="/sala/listar">
+                <a class="btn btn-secondary px-5" href="/filme/listar">
                     <i class="bi bi-arrow-return-left me-1"></i>
                     Voltar
                 </a>

@@ -2,14 +2,14 @@
 
 namespace Controle_de_Cinema.Dominio;
 
-public class Funcionario : EntidadeBase
+public class Pessoa : EntidadeBase
 {
     public string Nome { get; set; }
 
     public string Cpf { get; set; }
 
-    public Funcionario() { }
-    public Funcionario(string nome, string cpf)
+    public Pessoa() { }
+    public Pessoa(string nome, string cpf)
     {
         Nome = nome;
         Cpf = cpf;
@@ -18,7 +18,7 @@ public class Funcionario : EntidadeBase
     #region Overrides
     public override void Atualizar(EntidadeBase registro)
     {
-        Funcionario update = (Funcionario)registro;
+        Pessoa update = (Pessoa)registro;
 
         Nome = update.Nome;
         Cpf = update.Cpf;

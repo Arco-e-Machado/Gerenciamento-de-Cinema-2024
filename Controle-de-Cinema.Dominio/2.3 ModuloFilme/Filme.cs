@@ -7,13 +7,14 @@ public class Filme : EntidadeBase
     public string Nome { get; set; }
     public EnumGeneros Genero { get; set; }
     public TimeSpan Duracao { get; set; }
-    
+
+    private int conversorDeMinutos = 1440; // fui testando
     public Filme() { }
     public Filme(string nome, EnumGeneros genero, TimeSpan duracao)
     {
         Nome = nome;
         Genero = genero;
-        Duracao = duracao;
+        Duracao = duracao/conversorDeMinutos;
     }
 
     #region Overrides

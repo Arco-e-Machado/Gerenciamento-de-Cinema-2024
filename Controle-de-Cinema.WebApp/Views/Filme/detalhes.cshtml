@@ -1,0 +1,33 @@
+﻿@model DetalharFilmeViewModel
+@{
+    Layout = "_Layout";
+    ViewBag.Tittle = "Detalhamento do filme";
+}
+
+<div class="container bd-highlight">
+    <div class="row">
+        <div class="col card m-5 p-4 gap-2 shadow rounded bg-dark text-white">
+            <div class="d-flex justify-content-between">
+                <h1>@ViewBag.Title</h1>
+                <a class="btn btn-secondary ps-3 align-content-center" href="/filme/listar">
+                    <i class="bi bi-arrow-return-left me-1"></i> Voltar
+                </a>
+            </div>
+
+            <div class="list-group">
+                <div class="list-group-item list-group-item-action">
+                    <div class="fw-bold">Id:</div> @Model.Id
+                </div>
+                <div class="list-group-item list-group-item-action">
+                    <div class="fw-bold">Nome:</div> @Model.Nome
+                </div>
+                <div class="list-group-item list-group-item-action">
+                    <div class="fw-bold">Duração:</div> @Model.Duracao
+                </div>
+                <div class="list-group-item list-group-item-action">
+                    <div class="fw-bold">Genero:</div> @Model.Genero
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

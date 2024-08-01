@@ -12,34 +12,36 @@ public class Sala : EntidadeBase
 
     public bool Status { get; set; } // True = Livre
 
-    public Sala(string numeroDaSala, int capacidade, bool status, List<Assento> assentos)
+    public Sala(string numeroDaSala, int capacidade, bool status)
     {
         NumeroDaSala = numeroDaSala;
         Capacidade = capacidade;
         Status = status;
-        //Assentos = assentos;
+        Assentos = new List<Assento>();
 
         AlocarAssentos(capacidade);
     }
 
     public void AlocarAssentos(int Capacidade)
     {
+        int fileiraIndex = 0;
         for (int i = 0; i < Capacidade; i++)
         {
-            if (i % 8 == 0 && i != 0)
-            {
-                int fileiraIndex = (i / 8) % 26;
-                string Fileira = $"{(char)(65 + fileiraIndex)}";
+            if (i % 10 == 0 && i != 0)
+                fileiraIndex++;
 
-                Assento novoAssento = new Assento
-                {
-                    Numero = $"{Fileira}-{i}",
-                    Status = true
-                };
-                Assentos.Add(novoAssento);
-            }
+            string Fileira = $"{(char)(65 + (fileiraIndex))}";
+
+            Assento novoAssento = new Assento
+            {
+                Numero = $"{Fileira}-{i + 1}",
+                Status = true
+            };
+
+            Assentos.Add(novoAssento);
         }
     }
+
 
     #region Overrides
     public override void Atualizar(EntidadeBase registro)

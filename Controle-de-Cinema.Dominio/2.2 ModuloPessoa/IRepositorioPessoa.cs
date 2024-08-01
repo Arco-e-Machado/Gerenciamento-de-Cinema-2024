@@ -2,7 +2,7 @@
 
 namespace Controle_de_Cinema.Dominio.ModuloPessoa;
 
-public interface IRepositorioFuncionario : IRepositorioBase<Funcionario>
+public interface IRepositorioPessoa : IRepositorioBase<Pessoa>
 {
 }
 

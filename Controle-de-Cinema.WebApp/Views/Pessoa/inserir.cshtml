@@ -1,21 +1,19 @@
-﻿@model InserirSalaViewModel
-
+﻿@model InserirPessoasViewModel
 @{
     Layout = "_Layout";
-    ViewBag.Tittle = "Cadastrar Salas";
+    ViewBag.Tittle = "Cadastrar Clientes";
 }
-
 <div class="container">
     <div class="col card m-5 p-4 gap-2 shadow bg-dark text-white rounded">
         <form class="d-grid gap-4" asp-action="inserir">
             <div class="mt-2">
-                <label class="control-label fw-semibold">Capacidade:</label>
-                <input class="form-control" type="number" asp-for="Capacidade" required min="15" max="200" />
+                <label class="control-label fw-semibold">Nome:</label>
+                <input class="form-control" type="text" asp-for="Nome" required min="3" max="200" />
             </div>
 
             <div class="mt-2">
-                <label class="control-label fw-semibold">Numero da Sala:</label>
-                <input class="form-control" type="text" asp-for="Numero" required />
+                <label class="control-label fw-semibold">Cpf:</label>
+                <input class="form-control" type="text" asp-for="Cpf" required />
             </div>
 
             <div class="mt-2 d-grid gap-2 d-md-block">
@@ -24,7 +22,7 @@
                     Gravar
                 </button>
 
-                <a class="btn btn-secondary px-5" href="/sala/listar">
+                <a class="btn btn-secondary px-5" href="/pessoa/listar">
                     <i class="bi bi-arrow-return-left me-1"></i>
                     Voltar
                 </a>
@@ -34,3 +32,10 @@
     </div>
 </div>
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#cpf").mask("000.000.000-00", { reverse: false })
+        });
+    </script>
+}

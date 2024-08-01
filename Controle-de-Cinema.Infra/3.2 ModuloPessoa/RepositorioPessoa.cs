@@ -1,58 +1,42 @@
 ﻿using Controle_de_Cinema.Dominio;
 using Controle_de_Cinema.Dominio.ModuloPessoa;
 using Controle_de_Cinema.Infra.Compartilhado;
+using Microsoft.EntityFrameworkCore;
 
 namespace Controle_de_Cinema.Infra.ModuloPessoa;
 
-public class RepositorioPessoa : IRepositorioFuncionario
+public class RepositorioPessoa : RepositorioBase<Pessoa>, IRepositorioPessoa
 {
-    CinemaDbContext _dbContext;
-
-    public RepositorioPessoa(CinemaDbContext dbContext)
+    public RepositorioPessoa(CinemaDbContext dbContext) : base(dbContext)
     {
-        _dbContext = dbContext;
     }
 
-    public void Cadastrar(Funcionario registro)
+    protected override DbSet<Pessoa> ObterRegistros()
     {
-        _dbContext.Funcionarios.Add(registro);
-
-        _dbContext.SaveChanges();
+        return _dbContext.Pessoas;
     }
 
-    public bool Editar(Funcionario registroOriginal, Funcionario registroAtualizado)
+    public bool Excluir(Pessoa registro)
     {
-        if (registroOriginal == null || registroAtualizado == null)
+        var pessoaSelecionada = _dbContext.Pessoas.FirstOrDefault(p => p.Id == registro.Id);
+
+        if (pessoaSelecionada == null)
             return false;
 
-        registroOriginal.Atualizar(registroAtualizado);
-
-        _dbContext.Funcionarios.Update(registroOriginal);
+        _dbContext.Pessoas.Remove(pessoaSelecionada);
 
         _dbContext.SaveChanges();
 
         return true;
     }
 
-    public bool Excluir(Funcionario registro)
+    public Pessoa SelecionarId(int id)
     {
-        if (registro == null)
-            return false;
-
-        _dbContext.Funcionarios.Remove(registro);
-
-        _dbContext.SaveChanges();
-
-        return true;
+        return _dbContext.Pessoas.Find(id)!;
     }
 
-    public Funcionario SelecionarId(int id)
+    public List<Pessoa> SelecionarTodos()
     {
-        return _dbContext.Funcionarios.Find(id)!;
-    }
-
-    public List<Funcionario> SelecionarTodos()
-    {
-        return _dbContext.Funcionarios.ToList();
+        return _dbContext.Pessoas.ToList();
     }
 }

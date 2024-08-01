@@ -7,7 +7,7 @@ namespace Controle_de_Cinema.Infra.Compartilhado;
 
 public class CinemaDbContext : DbContext
 {
-    public DbSet<Funcionario> Funcionarios { get; set; }
+    public DbSet<Pessoa> Pessoas { get; set; }
     public DbSet<Filme> Filmes { get; set; }
     public DbSet<Sala> Salas { get; set; }
     public DbSet<Sessao> Sessoes { get; set; }
@@ -30,9 +30,25 @@ public class CinemaDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Ignore<Sessao>();
-        modelBuilder.Ignore<Funcionario>();
         modelBuilder.Ignore<Atendimento>();
 
+        modelBuilder.Entity<Pessoa>(pessoaBuilder =>
+        {
+            pessoaBuilder.ToTable("TBPessoa");
+
+            pessoaBuilder.Property(p => p.Id)
+            .IsRequired()
+            .ValueGeneratedOnAdd();
+
+            pessoaBuilder.Property(p => p.Nome)
+            .IsRequired()
+            .HasColumnType("varchar(200)");
+
+            pessoaBuilder.Property(p => p.Cpf)
+            .IsRequired()
+            .HasColumnType("varchar(20)");
+
+        });
         modelBuilder.Entity<Assento>(assentoBuilder =>
         {
             assentoBuilder.ToTable("TBAssento");
@@ -75,7 +91,6 @@ public class CinemaDbContext : DbContext
                 .HasForeignKey("Sala_Id");
 
         });
-
 
         modelBuilder.Entity<Filme>(filmeBuilder =>
         {
