@@ -1,0 +1,90 @@
+﻿@model DetalharSessaoViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Detalhamento de Sessões";
+}
+
+<div class="container bd-highlight">
+    <div class="row">
+        <div class="col card m-5 p-4 gap-2 shadow rounded bg-dark text-white">
+            <div class="d-flex justify-content-between">
+                <h1>@ViewBag.Title</h1>
+                <a class="btn btn-secondary ps-3 align-content-center" href="/sessao/listar">
+                    <i class="bi bi-arrow-return-left me-1"></i> Voltar
+                </a>
+            </div>
+
+            <div class="list-group">
+                <div class="list-group-item list-group-item-action">
+                    <div class="fw-bold">Id:</div> @Model.Id
+                </div>
+                <div class="list-group-item list-group-item-action">
+                    <div class="fw-bold">Número:</div> @Model.Numero
+                </div>
+                @if (Model.Status == "Ocupada")
+                {
+                    <div class="list-group-item list-group-item-action bg-danger">
+                        <div class="fw-bold">Status:</div> @Model.Status
+                    </div>
+                }
+                else
+                {
+                    <div class="list-group-item list-group-item-action">
+                        <div class="fw-bold">Status:</div> @Model.Status
+                    </div>
+                }
+
+                <div class="mt-4 d-flex flex-column align-items-center">
+                    <h5>Assentos</h5>
+                    <div class="d-flex flex-wrap">
+                        @foreach (var assento in Model.Assentos)
+                        {
+                            var statusAssento = assento.Status ? "bg-success" : "bg-danger";
+
+                            <div class="card m-2 @statusAssento text-white" style="height: 4rem; width:4rem; border-end-end-radius:50%">
+
+                                <label class="d-flex flex-column card justify-content-center text-center">
+                                    <i class="bi bi-person fs-5 "></i>
+                                    <p class="card-text" style="font-size:10px">@assento.Numero</p>
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* @section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+
+                checkbox.addEventListener('change', function () {
+
+                    const cardDiv = document.getElementById('teste-' + this.id.replace('checkbox-', ''));
+
+                    cardDiv.classList.toggle('bg-success', !this.checked);
+                    cardDiv.classList.toggle('bg-danger', this.checked);
+                });
+
+                const cardDiv = document.getElementById('teste-' + checkbox.id.replace('checkbox-', ''));
+
+                cardDiv.addEventListener('click', function () {
+
+                    checkbox.checked = !checkbox.checked;
+
+                    const cardDiv = document.getElementById('teste-' + checkbox.id.replace('checkbox-', ''));
+
+                    cardDiv.classList.toggle('bg-success', !checkbox.checked);
+                    cardDiv.classList.toggle('bg-danger', checkbox.checked);
+                });
+            });
+        });
+
+    </script>
+}
+ *@
+
