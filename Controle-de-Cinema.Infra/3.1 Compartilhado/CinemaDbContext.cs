@@ -11,7 +11,7 @@ public class CinemaDbContext : DbContext
     public DbSet<Filme> Filmes { get; set; }
     public DbSet<Sala> Salas { get; set; }
     public DbSet<Sessao> Sessoes { get; set; }
-    public DbSet<Atendimento> Atendimentos { get; set; }
+    public DbSet<Ingresso> Ingressos { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -29,9 +29,53 @@ public class CinemaDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Ignore<Sessao>();
-        modelBuilder.Ignore<Atendimento>();
 
+        modelBuilder.Entity<Sala>(salaBuilder =>
+        {
+            salaBuilder.ToTable("TBSala");
+
+            salaBuilder.Property(s => s.Id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
+
+            salaBuilder.Property(s => s.NumeroDaSala)
+                .IsRequired()
+                .HasColumnType("varchar(100)");
+
+            salaBuilder.Property(s => s.Capacidade)
+                .IsRequired()
+                .HasColumnType("int");
+
+            salaBuilder.Property(s => s.Status)
+                .IsRequired()
+                .HasColumnType("bit");
+
+            salaBuilder.HasMany(s => s.Assentos)
+                .WithOne(a => a.Sala)
+                .HasForeignKey("Sala_Id");
+
+        });
+        modelBuilder.Entity<Filme>(filmeBuilder =>
+        {
+            filmeBuilder.ToTable("TBfilme");
+
+            filmeBuilder.Property(f => f.Id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
+
+            filmeBuilder.Property(f => f.Nome)
+                .IsRequired()
+                .HasColumnType("varchar(100)");
+
+            filmeBuilder.Property(f => f.Duracao)
+                .IsRequired()
+                .HasColumnType("time");
+
+            filmeBuilder.Property(f => f.Genero)
+                .IsRequired()
+                .HasColumnType("int");
+
+        });
         modelBuilder.Entity<Pessoa>(pessoaBuilder =>
         {
             pessoaBuilder.ToTable("TBPessoa");
@@ -66,51 +110,66 @@ public class CinemaDbContext : DbContext
                 .HasColumnType("bit");
         });
 
-        modelBuilder.Entity<Sala>(salaBuilder =>
+        modelBuilder.Entity<Sessao>(sessaoBuilder =>
         {
-            salaBuilder.ToTable("TBSala");
+            sessaoBuilder.ToTable("TBSessao");
 
-            salaBuilder.Property(s => s.Id)
-                .IsRequired()
-                .ValueGeneratedOnAdd();
+            sessaoBuilder.Property(ss => ss.Id)
+            .IsRequired()
+            .ValueGeneratedOnAdd();
 
-            salaBuilder.Property(s => s.NumeroDaSala)
-                .IsRequired()
-                .HasColumnType("varchar(100)");
+            sessaoBuilder.HasOne(ss => ss.Sala)
+            .WithOne()
+            .IsRequired()
+            .HasForeignKey("Sala_Id");
 
-            salaBuilder.Property(s => s.Capacidade)
-                .IsRequired()
-                .HasColumnType("int");
+            sessaoBuilder.HasOne(ss => ss.Filme)
+            .WithOne()
+            .IsRequired()
+            .HasForeignKey("Filme_Id");
 
-            salaBuilder.Property(s => s.Status)
-                .IsRequired()
-                .HasColumnType("bit");
+            sessaoBuilder.HasMany(ss => ss.ingressos)
+            .WithOne(i => i.Sessao)
+            .IsRequired()
+            .HasForeignKey("Sessao_Id");
 
-            salaBuilder.HasMany(s => s.Assentos)
-                .WithOne(a => a.Sala)
-                .HasForeignKey("Sala_Id");
+            sessaoBuilder.Property(ss => ss.InicioDaSessao)
+            .IsRequired()
+            .HasColumnType("datetime2");
+
+            sessaoBuilder.Property(ss => ss.FimDaSessao)
+            .IsRequired()
+            .HasColumnType("datetime2");
+
+            sessaoBuilder.Property(ss => ss.QuantiaDeIngressos)
+            .IsRequired()
+            .HasColumnType("int");
 
         });
-
-        modelBuilder.Entity<Filme>(filmeBuilder =>
+        modelBuilder.Entity<Ingresso>(ingressoBuilder =>
         {
-            filmeBuilder.ToTable("TBfilme");
+            ingressoBuilder.ToTable("TBIngresso");
 
-            filmeBuilder.Property(f => f.Id)
-                .IsRequired()
-                .ValueGeneratedOnAdd();
+            ingressoBuilder.Property(i => i.Id)
+            .IsRequired()
+            .ValueGeneratedOnAdd();
 
-            filmeBuilder.Property(f => f.Nome)
-                .IsRequired()
-                .HasColumnType("varchar(100)");
+            ingressoBuilder.Property(i => i.Valor)
+            .IsRequired()
+            .HasColumnType("decimal");
 
-            filmeBuilder.Property(f => f.Duracao)
-                .IsRequired()
-                .HasColumnType("time");
+            ingressoBuilder.Property(i => i.Status)
+            .IsRequired()
+            .HasColumnType("bit");
 
-            filmeBuilder.Property(f => f.Genero)
-                .IsRequired()
-                .HasColumnType("int");
+            ingressoBuilder.HasOne(i => i.Sessao)
+            .WithMany(ss => ss.ingressos)
+            .IsRequired()
+            .HasForeignKey("Sessao_Id");
+
+            ingressoBuilder.HasOne(i => i.Assento)
+            .WithOne(a => a.Ingresso)
+            .HasForeignKey("Ingresso_Id");
 
         });
 

@@ -7,6 +7,7 @@ public class Assento
     public int Id { get; set; }
     public string Numero{ get; set; }
     public Sala Sala { get; set; }
+    public Ingresso Ingresso { get; set; }
     public bool Status { get; set; } // true = Livre
 
     public Assento() { }

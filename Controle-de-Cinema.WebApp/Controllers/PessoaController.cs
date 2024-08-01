@@ -34,6 +34,7 @@ public class PessoaController : Controller
         return View();
     }
 
+    [HttpPost]
     public ViewResult inserir(InserirPessoasViewModel novaPessoaVM)
     {
         var db = new CinemaDbContext();
