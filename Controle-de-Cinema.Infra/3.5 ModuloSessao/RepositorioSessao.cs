@@ -1,47 +1,37 @@
 ﻿using Controle_de_Cinema.Dominio;
 using Controle_de_Cinema.Dominio.ModuloSessao;
 using Controle_de_Cinema.Infra.Compartilhado;
+using Microsoft.EntityFrameworkCore;
 
 namespace Controle_de_Cinema.Infra.ModuloSessao;
 
-public class RepositorioSessao : IRepositorioSessao
+public class RepositorioSessao : RepositorioBase<Sessao>, IRepositorioSessao
 {
-    CinemaDbContext _dbContext;
-
-    public RepositorioSessao(CinemaDbContext dbContext)
+    protected override DbSet<Sessao> ObterRegistros()
     {
-        _dbContext = dbContext;
-    }
-    public void Cadastrar(Sessao registro)
-    {
-        _dbContext.Sessoes.Add(registro);
-
-        _dbContext.SaveChanges();
+        return _dbContext.Sessoes;
     }
 
-    public bool Editar(Sessao registroOriginal, Sessao registroAtualizado)
-    {
-        if (registroOriginal == null || registroAtualizado == null)
-            return false;
-
-        registroOriginal.Atualizar(registroAtualizado);
-
-        _dbContext.Sessoes.Update(registroOriginal);
-
-        _dbContext.SaveChanges();
-
-        return true;
-    }
+    public RepositorioSessao(CinemaDbContext dbContext) : base(dbContext)
+    { }
 
     public bool Excluir(Sessao registro)
     {
         if (registro == null)
             return false;
-        try{
+        try
+        {
 
-        _dbContext.Sessoes.Remove(registro);
+            var sessaoSelecionada = _dbContext.Sessoes
+                .Include(ss => ss.ingressos)
+                .FirstOrDefault(ss => ss.Id == registro.Id)!;
 
-        _dbContext.SaveChanges();
+            if (sessaoSelecionada == null)
+                return false;
+
+            _dbContext.Remove(sessaoSelecionada);
+
+            _dbContext.SaveChanges();
 
         }
         catch
@@ -54,11 +44,21 @@ public class RepositorioSessao : IRepositorioSessao
 
     public Sessao SelecionarId(int id)
     {
-        return _dbContext.Sessoes.Find(id)!;
+        return _dbContext.Sessoes
+            .Include(ss => ss.Filme)
+            .Include(ss => ss.Sala)
+            .Include(ss => ss.ingressos)
+            .ToList()
+            .FirstOrDefault(ss => ss.Id == id)!;
     }
 
     public List<Sessao> SelecionarTodos()
     {
-        return _dbContext.Sessoes.ToList();
+        return _dbContext.Sessoes
+            .Include(ss => ss.Filme)
+            .Include(ss => ss.Sala)
+            .Include(ss => ss.ingressos)
+            .ToList();
     }
+
 }
