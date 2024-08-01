@@ -70,6 +70,35 @@ namespace Controle_de_Cinema.Infra.Migrations
                     b.ToTable("TBfilme", (string)null);
                 });
 
+            modelBuilder.Entity("Controle_de_Cinema.Dominio.Ingresso", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AssentoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sessao_Id")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssentoId");
+
+                    b.HasIndex("Sessao_Id");
+
+                    b.ToTable("TBIngresso", (string)null);
+                });
+
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Pessoa", b =>
                 {
                     b.Property<int>("Id")
@@ -114,6 +143,35 @@ namespace Controle_de_Cinema.Infra.Migrations
                     b.ToTable("TBSala", (string)null);
                 });
 
+            modelBuilder.Entity("Controle_de_Cinema.Dominio.Sessao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Filme_Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FimDaSessao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InicioDaSessao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Sala_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Filme_Id");
+
+                    b.HasIndex("Sala_Id");
+
+                    b.ToTable("TBSessao", (string)null);
+                });
+
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Assento", b =>
                 {
                     b.HasOne("Controle_de_Cinema.Dominio.Sala", "Sala")
@@ -125,9 +183,52 @@ namespace Controle_de_Cinema.Infra.Migrations
                     b.Navigation("Sala");
                 });
 
+            modelBuilder.Entity("Controle_de_Cinema.Dominio.Ingresso", b =>
+                {
+                    b.HasOne("Controle_de_Cinema.Dominio.Assento", "Assento")
+                        .WithMany()
+                        .HasForeignKey("AssentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Controle_de_Cinema.Dominio.Sessao", "Sessao")
+                        .WithMany("ingressos")
+                        .HasForeignKey("Sessao_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Assento");
+
+                    b.Navigation("Sessao");
+                });
+
+            modelBuilder.Entity("Controle_de_Cinema.Dominio.Sessao", b =>
+                {
+                    b.HasOne("Controle_de_Cinema.Dominio.Filme", "Filme")
+                        .WithMany()
+                        .HasForeignKey("Filme_Id")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Controle_de_Cinema.Dominio.Sala", "Sala")
+                        .WithMany()
+                        .HasForeignKey("Sala_Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Filme");
+
+                    b.Navigation("Sala");
+                });
+
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Sala", b =>
                 {
                     b.Navigation("Assentos");
+                });
+
+            modelBuilder.Entity("Controle_de_Cinema.Dominio.Sessao", b =>
+                {
+                    b.Navigation("ingressos");
                 });
 #pragma warning restore 612, 618
         }

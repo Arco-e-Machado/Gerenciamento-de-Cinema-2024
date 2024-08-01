@@ -37,10 +37,17 @@ public class RepositorioSessao : IRepositorioSessao
     {
         if (registro == null)
             return false;
+        try{
 
         _dbContext.Sessoes.Remove(registro);
 
         _dbContext.SaveChanges();
+
+        }
+        catch
+        {
+            return false;
+        }
 
         return true;
     }

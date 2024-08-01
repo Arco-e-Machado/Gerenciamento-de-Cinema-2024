@@ -119,19 +119,22 @@ public class CinemaDbContext : DbContext
             .ValueGeneratedOnAdd();
 
             sessaoBuilder.HasOne(ss => ss.Sala)
-            .WithOne()
+            .WithMany()
             .IsRequired()
-            .HasForeignKey("Sala_Id");
+            .HasForeignKey("Sala_Id")
+            .OnDelete(DeleteBehavior.Restrict); //lançar uma try catch no controllerSala
 
             sessaoBuilder.HasOne(ss => ss.Filme)
-            .WithOne()
+            .WithMany()
             .IsRequired()
-            .HasForeignKey("Filme_Id");
+            .HasForeignKey("Filme_Id")
+            .OnDelete(DeleteBehavior.NoAction);
 
             sessaoBuilder.HasMany(ss => ss.ingressos)
             .WithOne(i => i.Sessao)
             .IsRequired()
-            .HasForeignKey("Sessao_Id");
+            .HasForeignKey("Sessao_Id")
+            .OnDelete(DeleteBehavior.NoAction);
 
             sessaoBuilder.Property(ss => ss.InicioDaSessao)
             .IsRequired()
@@ -141,9 +144,8 @@ public class CinemaDbContext : DbContext
             .IsRequired()
             .HasColumnType("datetime2");
 
-            sessaoBuilder.Property(ss => ss.QuantiaDeIngressos)
-            .IsRequired()
-            .HasColumnType("int");
+            sessaoBuilder.Ignore(ss => ss.QuantiaDeIngressos);
+
 
         });
         modelBuilder.Entity<Ingresso>(ingressoBuilder =>
@@ -165,11 +167,12 @@ public class CinemaDbContext : DbContext
             ingressoBuilder.HasOne(i => i.Sessao)
             .WithMany(ss => ss.ingressos)
             .IsRequired()
-            .HasForeignKey("Sessao_Id");
+            .HasForeignKey("Sessao_Id")
+            .OnDelete(DeleteBehavior.Cascade);
 
-            ingressoBuilder.HasOne(i => i.Assento)
-            .WithOne(a => a.Ingresso)
-            .HasForeignKey("Ingresso_Id");
+            //ingressoBuilder.HasOne(i => i.Assento)
+            //.WithOne(a => a.Ingresso)
+            //.HasForeignKey("Ingresso_Id");
 
         });
 

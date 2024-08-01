@@ -6,10 +6,10 @@ public class Sessao : EntidadeBase
 {
     public Filme Filme { get; set; }
     public Sala Sala { get; set; }
+    public List<Ingresso> ingressos {  get; set; }
     public DateTime InicioDaSessao { get; set; }
     public DateTime FimDaSessao { get; set; }
     public int QuantiaDeIngressos => Sala.Capacidade;
-    public List<Ingresso> ingressos {  get; set; }
 
 
     public Sessao() { }
