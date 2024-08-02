@@ -9,7 +9,7 @@ public class IngressoViewModel
     public bool MeiaEntrada { get; set; }
     public Pessoa Pessoa { get; set; }
     public Sessao Sessao { get; set; }
-    public Sala Sala { get; set; }
+    public int IdSala { get; set; }
     public IEnumerable<SelectListItem>? assentos { get; set; }
 
 }
