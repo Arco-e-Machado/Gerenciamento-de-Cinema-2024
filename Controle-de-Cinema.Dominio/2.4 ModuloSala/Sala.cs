@@ -12,6 +12,11 @@ public class Sala : EntidadeBase
 
     public bool Status { get; set; } // True = Livre
 
+    public Sala()
+    {
+        Assentos = new List<Assento>();
+    }
+
     public Sala(string numeroDaSala, int capacidade, bool status)
     {
         NumeroDaSala = numeroDaSala;
@@ -64,5 +69,5 @@ public class Sala : EntidadeBase
         if (Capacidade == null || Capacidade < 15)
             erros.Add("A Sala deve conter uma quantia mínima de 15 assentos de capacidade.");
     }
-#endregion
+    #endregion
 }

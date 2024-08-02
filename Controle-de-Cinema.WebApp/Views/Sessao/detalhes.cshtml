@@ -22,25 +22,14 @@
                 <div class="list-group-item list-group-item-action">
                     <div class="fw-bold">FIlme:</div> @Model.Filme
                 </div>
-            @*    @if (Model.assentoteste.Status == false)
-                {
-                    <div class="list-group-item list-group-item-action bg-danger">
-                        <div class="fw-bold">Status:</div> @Model.assentoteste.Status
-                    </div>
-                }
-                else
-                {
-                    <div class="list-group-item list-group-item-action">
-                        <div class="fw-bold">Status:</div> @Model.assentoteste.Status
-                    </div>
-                }  *@
+
 
                 <div class="mt-4 d-flex flex-column align-items-center">
                     <h5>Assentos</h5>
                     <div class="d-flex flex-wrap">
                         @foreach (var assento in Model.Assentos)
                         {
-                             var statusAssento = assento.Status ? "bg-success" : "bg-danger"; 
+                            var statusAssento = assento.Status ? "bg-success" : "bg-danger";
 
                             <div class="card m-2  @statusAssento  text-white" style="height: 4rem; width:4rem; border-end-end-radius:50%">
 
@@ -55,7 +44,7 @@
             </div>
         </div>
     </div>
-</div>@* 
+</div>@*
 @section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {

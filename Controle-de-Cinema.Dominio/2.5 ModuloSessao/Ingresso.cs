@@ -8,17 +8,19 @@ public class Ingresso : EntidadeBase
 
     public Assento Assento { get; set; }
 
-    public decimal Valor { get; set; }
+    public decimal Valor { get; set; } = 50;
 
     public bool Status { get; set; } // true = Livre
 
+    public bool Tipo { get; set; }
+
     public Ingresso() { }
 
-    public Ingresso(Sessao sessao, Assento assento, decimal valor, bool status)
+    public Ingresso(Sessao sessao, Assento assento, bool tipo, bool status)
     {
         Sessao = sessao;
         Assento = assento;
-        Valor = valor;
+        Tipo = tipo;
         Status = status;
     }
 
