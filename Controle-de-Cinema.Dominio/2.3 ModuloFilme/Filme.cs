@@ -9,6 +9,7 @@ public class Filme : EntidadeBase
     public TimeSpan Duracao { get; set; }
 
     private int conversorDeMinutos = 1440; // fui testando
+
     public Filme() { }
     public Filme(string nome, EnumGeneros genero, TimeSpan duracao)
     {
