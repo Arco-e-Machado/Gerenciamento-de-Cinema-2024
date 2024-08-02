@@ -31,11 +31,15 @@ public class InserirSessaoViewModel
 public class EditarSessaoViewModel
 {
     public int Id { get; set; }
-    public Filme Filme { get; set; }
     public Sala Sala { get; set; }
-    public DateTime InicioSessao { get; set; }
-    public DateTime FimSessao { get; set; }
-    public int Ingressos { get; set; }
+    public Filme Filme { get; set; }
+    public int? IdSala { get; set; }
+    public int? IdFilme { get; set; }
+    public IEnumerable<SelectListItem>? filmes { get; set; }
+    public IEnumerable<SelectListItem>? salas { get; set; }
+    public IEnumerable<SelectListItem>? assentos { get; set; }
+    public DateTime InicioSessao { get; set; } = DateTime.Today;
+    public DateTime FimSessao { get; set; } = DateTime.Today;
 }
 public class ExcluirSessaoViewModel
 {
@@ -51,8 +55,15 @@ public class DetalharSessaoViewModel
     public int Id { get; set; }
     public Filme Filme { get; set; }
     public Sala Sala { get; set; }
-    public IEnumerable<SelectListItem>? assentos { get; set; }
     public DateTime InicioSessao { get; set; }
     public DateTime FimSessao { get; set; }
-    public int Ingressos { get; set; }
+    public int Ingresso { get; set; }
+    public Assento assentoteste { get; set; }
+    public List<Assento> Assentos { get; set; }
+    public int? IdSala { get; set; }
+    public int? IdFilme { get; set; }
+    public IEnumerable<SelectListItem>? filmes { get; set; }
+    public IEnumerable<SelectListItem>? salas { get; set; }
+    public IEnumerable<SelectListItem>? assentos { get; set; }
+
 }

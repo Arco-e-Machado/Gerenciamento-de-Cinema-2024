@@ -117,6 +117,22 @@ public class SessaoController : Controller
     {
         var db = new CinemaDbContext();
         var repositorioSessao = new RepositorioSessao(db);
+        var repositorioSala = new RepositorioSala(db);
+        var repositorioFilme = new RepositorioFilme(db);
+
+        var salas = repositorioSala
+            .SelecionarTodos()
+            .Select(s => new SelectListItem(s.NumeroDaSala, s.Id.ToString()));
+
+        var assentos = repositorioSala
+            .SelecionarTodos()
+            .Select(s => new SelectListItem(s.Assentos.ToString(), s.Id.ToString()));
+
+        var filmes = repositorioFilme
+            .SelecionarTodos()
+            .Select(f => new SelectListItem(f.Nome, f.Id.ToString()));
+
+        var criarSessao = teste(salas, filmes, assentos);
 
         var sessaoSelecionada = repositorioSessao.SelecionarId(id);
 
@@ -137,7 +153,23 @@ public class SessaoController : Controller
     {
         var db = new CinemaDbContext();
         var repositorioSessao = new RepositorioSessao(db);
+        var repositorioSala = new RepositorioSala(db);
+        var repositorioFilme = new RepositorioFilme(db);
 
+        var salas = repositorioSala
+            .SelecionarTodos()
+            .Select(s => new SelectListItem(s.NumeroDaSala, s.Id.ToString()));
+
+        var assentos = repositorioSala
+    .SelecionarTodos()
+    .Select(s => new SelectListItem(s.Assentos.ToString(), s.Id.ToString()));
+
+        var filmes = repositorioFilme
+            .SelecionarTodos()
+            .Select(f => new SelectListItem(f.Nome, f.Id.ToString()));
+
+        var sala = repositorioSala.SelecionarId(editarSessaoVM.IdSala.GetValueOrDefault());
+        var filme = repositorioFilme.SelecionarId(editarSessaoVM.IdFilme.GetValueOrDefault());
         var sessao = repositorioSessao.SelecionarId(editarSessaoVM.Id);
 
         sessao.Filme = editarSessaoVM.Filme;
@@ -198,7 +230,6 @@ public class SessaoController : Controller
 
         return View("notificacao", Mensagem);
     }
-
     public ViewResult detalhes(int id)
     {
         var db = new CinemaDbContext();
@@ -213,7 +244,9 @@ public class SessaoController : Controller
             Sala = sessao.Sala,
             InicioSessao = sessao.InicioDaSessao,
             FimSessao = sessao.FimDaSessao,
-            Ingressos = sessao.QuantiaDeIngressos
+            Ingresso = sessao.QuantiaDeIngressos,
+            Assentos = sessao.Sala.Assentos,
+            assentoteste = sessao.Sala.Assentos.Find(Sala => Sala.Id == id)!
         };
 
         return View(detalharSessaoVM);

@@ -47,8 +47,8 @@ public class RepositorioSessao : RepositorioBase<Sessao>, IRepositorioSessao
         return _dbContext.Sessoes
             .Include(ss => ss.Filme)
             .Include(ss => ss.Sala)
+            .ThenInclude(sala => sala.Assentos)
             .Include(ss => ss.ingressos)
-            .ToList()
             .FirstOrDefault(ss => ss.Id == id)!;
     }
 
