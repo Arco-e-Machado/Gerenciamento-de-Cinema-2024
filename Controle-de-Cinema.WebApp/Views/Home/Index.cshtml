@@ -1,46 +1,52 @@
 ﻿@{
     Layout = "_Layout";
-    ViewBag.Title = "Página Inicial";
+    ViewBag.Title = "Sua Marca Aqui";
 }
 
 <div class="container my-4">
     <h1 class="text-center mb-4">Bem-vindo à Página Inicial!</h1>
-    <p class="text-center mb-4">Esta é a página inicial do seu site.</p>
+    <p class="text-center mb-4">Filmes Em cartaz!</p>
 
-    <div class="row">
-        <!-- Card 1 -->
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://upload.wikimedia.org/wikipedia/pt/d/d1/The_Dark_Knight.jpg" class="card-img-top" alt="Imagem do Card 1" style="height: 550px; object-fit: cover;">
-                <div class="card-body bg-dark text-white">
-                    <h5 class="card-title">Batman: O Cavaleiro das Trevas</h5>
-                    <p class="card-text">Batman enfrenta o Coringa, um novo inimigo que semeia o caos em Gotham.</p>
+    <div id="filmeCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://recreio.com.br/media/uploads/dc_comics/batman_cavaleiro_das_trevas_capa.jpg" class="d-block w-100" alt="Batman: O Cavaleiro das Trevas" style="height: 550px; object-fit: cover;  border: 2px solid white; border-radius: 15px;">
+                <div class="carousel-caption d-none d-md-block text-white" style="background-color: rgba(0, 0, 0, 0.5);">
+                    <h5>Batman: O Cavaleiro das Trevas</h5>
+                    <p>Batman enfrenta o Coringa, um novo inimigo que semeia o caos em Gotham.</p>
+                    <a href="#" class="btn btn-danger">Saiba Mais</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://seliganerd.com/wp-content/uploads/maxresdefault-6-1.jpg" class="d-block w-100" alt="Velozes e Furiosos 11" style="height: 550px; object-fit: cover; border: 2px solid white; border-radius: 15px;">
+                <div class="carousel-caption d-none d-md-block text-white" style="background-color: rgba(0, 0, 0, 0.5);">
+                    >
+                    <h5>Velozes e Furiosos 11</h5>
+                    <p>Dom e sua equipe enfrentam novos desafios e inimigos em sua jornada de alta velocidade.</p>
+                    <a href="#" class="btn btn-danger">Saiba Mais</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://universoreverso.com.br/wp-content/uploads/2023/04/barbie-1280-x-720.jpg" class="d-block w-100" alt="Barbie" style="height: 550px; object-fit: cover; border: 2px solid white; border-radius: 15px;">
+                <div class="carousel-caption d-none d-md-block text-white" style="background-color: rgba(0, 0, 0, 0.5);">
+                    >
+                    <h5>Barbie</h5>
+                    <p>A icônica boneca Barbie vive aventuras mágicas e inspiradoras no mundo real.</p>
                     <a href="#" class="btn btn-danger">Saiba Mais</a>
                 </div>
             </div>
         </div>
-        <!-- Card 2 -->
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://seliganerd.com/wp-content/uploads/maxresdefault-6-1.jpg" class="card-img-top" alt="Imagem do Card 2" style="height: 550px; object-fit: cover;">
-                <div class="card-body bg-dark text-white">
-                    <h5 class="card-title">Velozes e Furiosos 11</h5>
-                    <p class="card-text">Dom e sua equipe enfrentam novos desafios e inimigos em sua jornada de alta velocidade.</p>
-                    <a href="#" class="btn btn-danger">Saiba Mais</a>
-                </div>
-            </div>
-        </div>
-        <!-- Card 3 -->
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://www.claquete.com/fotos/filmes/poster/14754_grande.jpg" class="card-img-top" alt="Imagem do Card 3" style="height: 550px; object-fit: cover;">
-                <div class="card-body bg-dark text-white">
-                    <h5 class="card-title">Barbie</h5>
-                    <p class="card-text">A icônica boneca Barbie vive aventuras mágicas e inspiradoras no mundo real.</p>
-                    <a href="#" class="btn btn-danger">Saiba Mais</a>
-                </div>
-            </div>
-        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#filmeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#filmeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="row mt-4">
         <!-- Duplicate Card 1 -->
         <div class="col-md-4 mb-4">
             <div class="card">
