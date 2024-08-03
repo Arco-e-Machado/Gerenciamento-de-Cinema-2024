@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>Controle_de_Cinema.Unidade</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -18,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Controle-de-Cinema.Dominio\Controle-de-Cinema.Dominio.csproj" />
     <ProjectReference Include="..\Controle-de-Cinema.Infra\Controle-de-Cinema.Infra.csproj" />
-    <ProjectReference Include="..\Controle-de-Cinema.WebApp\Controle-de-Cinema.WebApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
