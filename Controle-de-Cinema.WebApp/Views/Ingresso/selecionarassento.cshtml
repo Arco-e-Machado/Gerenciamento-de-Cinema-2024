@@ -6,18 +6,15 @@
 <div class="container">
     <div class="col card m-5 p-4 gap-2 shadow bg-dark text-white rounded">
 
-        @*  ComboBox Seleção Assento *@
         <form class="d-grid gap-4" asp-action="inserir" method="post">
 
             <div class="mt-2">
                 <label class="control-label fw-semibold">Filme:</label>
-                <select class="custom-select d-flex" asp-for="IdSala" asp-items="Model.assentos" required> <!-- Talvez esteja errado a logica-->
+                <select class="custom-select d-flex" asp-for="assentoTeste.Numero" asp-items="Model.Assentos"  required>
                     <option value="" disabled selected>Selecione um Assento</option>
-                    <option></option>
                 </select>
             </div>
 
-           @*  CheckBox Meia Entrada *@
             <div class="mt-2">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" asp-for="MeiaEntrada" id="meiaEntrada">

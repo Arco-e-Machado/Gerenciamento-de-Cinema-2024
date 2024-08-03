@@ -17,4 +17,8 @@ public class Assento
         Status = status;
     }
 
+    public string ToString()
+    {
+        return $"assento {Numero}";
+    }
 }
