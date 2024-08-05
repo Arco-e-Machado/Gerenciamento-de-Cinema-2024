@@ -12,6 +12,7 @@ public class CinemaDbContext : DbContext
     public DbSet<Sala> Salas { get; set; }
     public DbSet<Sessao> Sessoes { get; set; }
     public DbSet<Ingresso> Ingressos { get; set; }
+    public DbSet<Assento> Assentos { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -52,7 +53,8 @@ public class CinemaDbContext : DbContext
 
             salaBuilder.HasMany(s => s.Assentos)
                 .WithOne(a => a.Sala)
-                .HasForeignKey("Sala_Id");
+                .HasForeignKey("Sala_Id")
+                .OnDelete(DeleteBehavior.Restrict);
 
         });
         modelBuilder.Entity<Filme>(filmeBuilder =>
@@ -130,11 +132,11 @@ public class CinemaDbContext : DbContext
             .HasForeignKey("Filme_Id")
             .OnDelete(DeleteBehavior.NoAction);
 
-            sessaoBuilder.HasMany(ss => ss.ingressos)
+            sessaoBuilder.HasMany(ss => ss.Ingressos)
             .WithOne(i => i.Sessao)
             .IsRequired()
             .HasForeignKey("Sessao_Id")
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Cascade);
 
             sessaoBuilder.Property(ss => ss.InicioDaSessao)
             .IsRequired()
@@ -156,6 +158,7 @@ public class CinemaDbContext : DbContext
             .IsRequired()
             .ValueGeneratedOnAdd();
 
+
             ingressoBuilder.Property(i => i.Valor)
             .IsRequired()
             .HasColumnType("decimal");
@@ -164,15 +167,12 @@ public class CinemaDbContext : DbContext
             .IsRequired()
             .HasColumnType("bit");
 
-            ingressoBuilder.HasOne(i => i.Sessao)
-            .WithMany(ss => ss.ingressos)
-            .IsRequired()
-            .HasForeignKey("Sessao_Id")
-            .OnDelete(DeleteBehavior.Cascade);
+            //ingressoBuilder.HasOne(i => i.Sessao)
+            //.WithMany(ss => ss.Ingressos)
+            //.IsRequired()
+            //.HasForeignKey("Sessao_Id")
+            //.OnDelete(DeleteBehavior.Cascade);
 
-            //ingressoBuilder.HasOne(i => i.Assento)
-            //.WithOne(a => a.Ingresso)
-            //.HasForeignKey("Ingresso_Id");
 
         });
 

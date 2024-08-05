@@ -33,7 +33,7 @@ public class RepositorioSessao : RepositorioBase<Sessao>, IRepositorioSessao
             .Include(ss => ss.Filme)
             .Include(ss => ss.Sala)
             .ThenInclude(sala => sala.Assentos)
-            //.Include(ss => ss.ingressos)
+            .Include(ss => ss.Ingressos)
             .FirstOrDefault(ss => ss.Id == id)!;
     }
 
@@ -42,7 +42,7 @@ public class RepositorioSessao : RepositorioBase<Sessao>, IRepositorioSessao
         return _dbContext.Sessoes
             .Include(ss => ss.Filme)
             .Include(ss => ss.Sala)
-            //.Include(ss => ss.ingressos)
+            .Include(ss => ss.Ingressos)
             .ToList();
     }
 

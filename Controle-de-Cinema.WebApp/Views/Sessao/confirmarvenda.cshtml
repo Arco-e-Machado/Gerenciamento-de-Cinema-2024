@@ -1,0 +1,23 @@
+﻿@model VendaViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Confirmar Venda";
+}
+
+<div class="container mt-5">
+    <h2>Confirmar Venda</h2>
+    <form asp-action="ConfirmarVenda" method="post">
+        <input type="hidden" id="sessaoId" name="sessaoId" value="@Model.SessaoId" />
+        <div class="form-group">
+            <label for="assentoId">Assento</label>
+            <select id="assentoId" name="assentoId" class="form-control">
+                @foreach (var assento in Model.Assentos)
+                {
+                    <option value="@assento.Value">@assento.Text</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Confirmar Venda</button>
+    </form>
+</div>

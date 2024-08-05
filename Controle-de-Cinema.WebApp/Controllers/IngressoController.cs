@@ -14,7 +14,7 @@ namespace Controle_de_Cinema.WebApp.Controllers;
 public class IngressoController : Controller
 {
 
-    public ViewResult SelecionarAssento(int id)
+    public ViewResult venda(int id)
     {
         var db = new CinemaDbContext();
         var repositorioSessao = new RepositorioSessao(db);
@@ -26,7 +26,7 @@ public class IngressoController : Controller
 
         var Mapa = MapearInformacoesSessao(assentos, Sessao);
 
-        return View("selecionarassento", Mapa);
+        return View("venda", Mapa);
     }
 
     private static IngressoViewModel MapearInformacoesSessao(IEnumerable<SelectListItem> assentos, Sessao sessao)

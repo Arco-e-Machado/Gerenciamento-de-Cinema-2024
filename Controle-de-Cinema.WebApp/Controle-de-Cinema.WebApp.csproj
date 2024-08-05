@@ -31,4 +31,8 @@
     <_ContentIncludedByDefault Remove="Views\Sala\Detalhes.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Ingresso\" />
+  </ItemGroup>
+
 </Project>

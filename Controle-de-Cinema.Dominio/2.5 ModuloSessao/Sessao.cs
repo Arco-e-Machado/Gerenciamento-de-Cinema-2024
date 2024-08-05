@@ -6,25 +6,50 @@ public class Sessao : EntidadeBase
 {
     public Filme Filme { get; set; }
     public Sala Sala { get; set; }
-    public List<Ingresso> ingressos { get; set; }
+    public List<Ingresso> Ingressos { get; set; }
+    public List<Assento> Assentos { get; set; }
     public DateTime InicioDaSessao { get; set; }
     public DateTime FimDaSessao { get; set; }
     public int QuantiaDeIngressos => Sala.Capacidade;
 
 
-    public Sessao() { }
+    public Sessao() { 
+        Assentos = new();
+        Ingressos = new();
+    }
     public Sessao(Filme filme, Sala sala, DateTime inicio, DateTime fim)
     {
         Filme = filme;
         Sala = sala;
         InicioDaSessao = inicio;
         FimDaSessao = fim;
+        Ingressos = new();
+        Assentos = new();
+
+        //gerarIngressos(sala.Assentos, sala);
     }
 
-    public bool CalcularTempoDeSessao()
+    public void gerarIngressos(List<Assento> Assentos, Sala Sala)
     {
-        return InicioDaSessao.AddMinutes(Filme.Duracao.TotalMinutes) < FimDaSessao;
+        Assentos = Sala.Assentos;
+
+        foreach (var Assento in Assentos)
+        {
+            Ingresso ingresso = new Ingresso
+            {
+                Assento = Assento,
+                Sessao = this,
+                Status = false,
+                Tipo = false // inicia como inteira
+            };
+            Ingressos.Add(ingresso);
+        }
     }
+
+        public bool CalcularTempoDeSessao()
+        {
+            return InicioDaSessao.AddMinutes(Filme.Duracao.TotalMinutes) < FimDaSessao;
+        }
 
     #region Overrides
     public override void Atualizar(EntidadeBase registro)

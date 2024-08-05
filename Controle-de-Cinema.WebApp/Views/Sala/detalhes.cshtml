@@ -8,7 +8,7 @@
 <div class="container bd-highlight">
     <div class="row">
         <div class="col card m-5 p-4 gap-2 shadow rounded bg-dark text-white">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between">    
                 <h1>@ViewBag.Title</h1>
                 <a class="btn btn-secondary ps-3 align-content-center" href="/sala/listar">
                     <i class="bi bi-arrow-return-left me-1"></i> Voltar
@@ -22,18 +22,6 @@
                 <div class="list-group-item list-group-item-action">
                     <div class="fw-bold">Número:</div> @Model.Numero
                 </div>
-                @if (Model.Status == "Ocupada")
-                {
-                    <div class="list-group-item list-group-item-action bg-danger">
-                        <div class="fw-bold">Status:</div> @Model.Status
-                    </div>
-                }
-                else
-                {
-                    <div class="list-group-item list-group-item-action">
-                        <div class="fw-bold">Status:</div> @Model.Status
-                    </div>
-                }
 
                 <div class="mt-4 d-flex flex-column align-items-center">
                     <h5>Assentos</h5>

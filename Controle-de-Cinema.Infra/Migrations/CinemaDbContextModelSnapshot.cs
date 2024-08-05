@@ -37,12 +37,17 @@ namespace Controle_de_Cinema.Infra.Migrations
                     b.Property<int>("Sala_Id")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SessaoId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Sala_Id");
+
+                    b.HasIndex("SessaoId");
 
                     b.ToTable("TBAssento", (string)null);
                 });
@@ -85,6 +90,9 @@ namespace Controle_de_Cinema.Infra.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Tipo")
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Valor")
@@ -177,8 +185,12 @@ namespace Controle_de_Cinema.Infra.Migrations
                     b.HasOne("Controle_de_Cinema.Dominio.Sala", "Sala")
                         .WithMany("Assentos")
                         .HasForeignKey("Sala_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Controle_de_Cinema.Dominio.Sessao", null)
+                        .WithMany("Assentos")
+                        .HasForeignKey("SessaoId");
 
                     b.Navigation("Sala");
                 });
@@ -192,7 +204,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                         .IsRequired();
 
                     b.HasOne("Controle_de_Cinema.Dominio.Sessao", "Sessao")
-                        .WithMany("ingressos")
+                        .WithMany("Ingressos")
                         .HasForeignKey("Sessao_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -228,7 +240,9 @@ namespace Controle_de_Cinema.Infra.Migrations
 
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Sessao", b =>
                 {
-                    b.Navigation("ingressos");
+                    b.Navigation("Assentos");
+
+                    b.Navigation("Ingressos");
                 });
 #pragma warning restore 612, 618
         }

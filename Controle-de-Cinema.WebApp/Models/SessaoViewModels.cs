@@ -3,6 +3,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Controle_de_Cinema.WebApp.Models;
 
+public class VendaViewModel
+{
+    public int Id { get; set; }
+    public int AssentoId { get; set; }
+    public bool MeiaEntrada {  get; set; }
+    public List<SelectListItem> Assentos { get; set; }
+    public int SessaoId{ get; set; }
+    public List<Ingresso> Ingressos { get; set; }
+}
+
 public class ListarSessaoViewModel
 {
     public int Id { get; set; }
@@ -47,6 +57,7 @@ public class ExcluirSessaoViewModel
     public Filme Filme { get; set; }
     public Sala Sala { get; set; }
     public DateTime InicioSessao { get; set; }
+    public List<Assento> Assentos {  get; set; }
     public DateTime FimSessao { get; set; }
     public int Ingressos { get; set; }
 }
@@ -59,7 +70,6 @@ public class DetalharSessaoViewModel
     public DateTime InicioSessao { get; set; }
     public DateTime FimSessao { get; set; }
     public int Ingresso { get; set; }
-    public List<Assento> Assentos { get; set; }
-
-
+    public List<Ingresso> Ingressos { get; set; }
+    public List<Assento> Assentos { get; internal set; }
 }

@@ -6,6 +6,9 @@ using Controle_de_Cinema.Infra.ModuloSala;
 using Controle_de_Cinema.Infra.ModuloFilme;
 using Controle_de_Cinema.Infra.Compartilhado;
 using Controle_de_Cinema.Infra.ModuloSessao;
+using Microsoft.EntityFrameworkCore;
+using Controle_de_Cinema.Dominio.Compartilhado;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace Controle_de_Cinema.WebApp.Controllers;
 
@@ -71,20 +74,47 @@ public class SessaoController : Controller
         var repositorioFilme = new RepositorioFilme(db);
         var repositorioSessao = new RepositorioSessao(db);
 
-        var filmes = repositorioFilme.SelecionarTodos().Select(f => new SelectListItem(f.Nome, f.Id.ToString()));
-        var salas = repositorioSala.SelecionarTodos().Select(s => new SelectListItem(s.NumeroDaSala, s.Id.ToString()));
-        var assentos = repositorioSala.SelecionarTodos().Select(s => new SelectListItem(s.Assentos.ToString(), s.Id.ToString()));
+        #region salas
+        var salas = repositorioSala
+            .SelecionarTodos()
+            .Select(s =>
+            new SelectListItem(s.NumeroDaSala, s.Id.ToString()));
+        #endregion
 
-        var sala = repositorioSala.SelecionarId(novaSessaoVM.IdSala.GetValueOrDefault());
-        var filme = repositorioFilme.SelecionarId(novaSessaoVM.IdFilme.GetValueOrDefault());
+        #region filmes
+        var filmes = repositorioFilme
+            .SelecionarTodos()
+            .Select(f =>
+            new SelectListItem(f.Nome, f.Id.ToString()));
+        #endregion
 
-        var novaSessao = new Sessao(filme,
-                                                             sala,
-                                                             novaSessaoVM.InicioSessao,
-                                                             novaSessaoVM.FimSessao
-                                                             );
+        #region assentos
+        var assentos = repositorioSala
+            .SelecionarTodos()
+            .Select(s =>
+            new SelectListItem(s.Assentos.ToString(),
+            s.Id.ToString()));
+        #endregion
 
+        var sala = repositorioSala
+            .SelecionarId(novaSessaoVM.IdSala
+            .GetValueOrDefault());
+
+        var filme = repositorioFilme
+            .SelecionarId(novaSessaoVM.IdFilme
+            .GetValueOrDefault());
+
+        var novaSessao = new Sessao
+        {
+            Filme = filme,
+            Sala = sala,
+            InicioDaSessao = novaSessaoVM.InicioSessao,
+            FimDaSessao = novaSessaoVM.FimSessao
+
+        };
         repositorioSessao.Cadastrar(novaSessao);
+
+        gerarIngressos(novaSessao.Sala, novaSessao);
 
         var Mensagem = new MensagemViewModel()
         {
@@ -95,7 +125,29 @@ public class SessaoController : Controller
 
         HttpContext.Response.StatusCode = 201;
 
+
         return View("notificacao", Mensagem);
+    }
+    public void gerarIngressos(Sala Sala, Sessao Sessao)
+    {
+        var db = new CinemaDbContext();
+        var repo = new RepositorioIngresso(db);
+
+        var Assentos = Sessao.Sala.Assentos;
+
+        foreach (var Assento in Assentos)
+        {
+            var ingresso = new Ingresso
+            {
+                Assento = Assento,
+                Sessao = Sessao,
+                Status = false,
+                Tipo = false // inicia como inteira
+            };
+            db.SaveChanges();
+
+            Sessao.Ingressos.Add(ingresso);
+        }
     }
 
     public ViewResult editar(int id)
@@ -105,9 +157,27 @@ public class SessaoController : Controller
         var repositorioFilme = new RepositorioFilme(db);
         var repositorioSessao = new RepositorioSessao(db);
 
-        var filmes = repositorioFilme.SelecionarTodos().Select(f => new SelectListItem(f.Nome, f.Id.ToString()));
-        var salas = repositorioSala.SelecionarTodos().Select(s => new SelectListItem(s.NumeroDaSala, s.Id.ToString()));
-        var assentos = repositorioSala.SelecionarTodos().Select(s => new SelectListItem(s.Assentos.ToString(), s.Id.ToString()));
+        #region salas
+        var salas = repositorioSala
+            .SelecionarTodos()
+            .Select(s =>
+            new SelectListItem(s.NumeroDaSala, s.Id.ToString()));
+        #endregion
+
+        #region filmes
+        var filmes = repositorioFilme
+            .SelecionarTodos()
+            .Select(f =>
+            new SelectListItem(f.Nome, f.Id.ToString()));
+        #endregion
+
+        #region assentos
+        var assentos = repositorioSala
+            .SelecionarTodos()
+            .Select(s =>
+            new SelectListItem(s.Assentos.ToString(),
+            s.Id.ToString()));
+        #endregion
 
         var editarSessao = MapearInformacoes(salas, filmes, assentos);
 
@@ -133,13 +203,38 @@ public class SessaoController : Controller
         var repositorioFilme = new RepositorioFilme(db);
         var repositorioSessao = new RepositorioSessao(db);
 
-        var filmes = repositorioFilme.SelecionarTodos().Select(f => new SelectListItem(f.Nome, f.Id.ToString()));
-        var salas = repositorioSala.SelecionarTodos().Select(s => new SelectListItem(s.NumeroDaSala, s.Id.ToString()));
-        var assentos = repositorioSala.SelecionarTodos().Select(s => new SelectListItem(s.Assentos.ToString(), s.Id.ToString()));
+        #region salas
+        var salas = repositorioSala
+            .SelecionarTodos()
+            .Select(s =>
+            new SelectListItem(s.NumeroDaSala, s.Id.ToString()));
+        #endregion
 
-        var sessao = repositorioSessao.SelecionarId(editarSessaoVM.Id);
-        var sala = repositorioSala.SelecionarId(editarSessaoVM.IdSala.GetValueOrDefault());
-        var filme = repositorioFilme.SelecionarId(editarSessaoVM.IdFilme.GetValueOrDefault());
+        #region filmes
+        var filmes = repositorioFilme
+            .SelecionarTodos()
+            .Select(f =>
+            new SelectListItem(f.Nome, f.Id.ToString()));
+        #endregion
+
+        #region assentos
+        var assentos = repositorioSala
+            .SelecionarTodos()
+            .Select(s =>
+            new SelectListItem(s.Assentos.ToString(),
+            s.Id.ToString()));
+        #endregion
+
+        var sessao = repositorioSessao
+            .SelecionarId(editarSessaoVM.Id);
+
+        var sala = repositorioSala
+            .SelecionarId(editarSessaoVM.IdSala
+            .GetValueOrDefault());
+
+        var filme = repositorioFilme
+            .SelecionarId(editarSessaoVM.IdFilme
+            .GetValueOrDefault());
 
         sessao.Sala = editarSessaoVM.Sala;
         sessao.Filme = editarSessaoVM.Filme;
@@ -178,11 +273,9 @@ public class SessaoController : Controller
         return View(excluirSessaoVM);
     }
 
-
     [HttpPost, ActionName("excluir")]
     public ViewResult excluirConfirmado(ExcluirSessaoViewModel excluirSessaoVM)
     {
-
         var db = new CinemaDbContext();
         var repositorioSessao = new RepositorioSessao(db);
 
@@ -205,6 +298,7 @@ public class SessaoController : Controller
         var db = new CinemaDbContext();
         var repositorioSessao = new RepositorioSessao(db);
 
+        var Ingressos = repositorioSessao.SelecionarId(id).QuantiaDeIngressos;
         var sessao = repositorioSessao.SelecionarId(id);
 
         var detalharSessaoVM = new DetalharSessaoViewModel()
@@ -212,6 +306,7 @@ public class SessaoController : Controller
             Id = sessao.Id,
             Sala = sessao.Sala,
             Filme = sessao.Filme,
+            Ingressos = sessao.Ingressos,
             Assentos = sessao.Sala.Assentos,
             FimSessao = sessao.FimDaSessao,
             InicioSessao = sessao.InicioDaSessao,
@@ -219,5 +314,133 @@ public class SessaoController : Controller
         };
 
         return View(detalharSessaoVM);
+    }
+
+    public ViewResult VenderAssento(int sessaoId)
+    {
+        var db = new CinemaDbContext();
+        var repositorioSessao = new RepositorioSessao(db);
+
+        var sessao = repositorioSessao.SelecionarId(sessaoId);
+
+        var vendaAssentoVm = new VendaViewModel
+        {
+            SessaoId = sessao.Id,
+            Assentos = sessao
+                        .Sala.Assentos
+                        .Select(a => new SelectListItem(a.Numero, a.Id.ToString()))
+                        .ToList()
+        };
+
+        return View(vendaAssentoVm);
+    }
+
+    [HttpPost]
+    public ViewResult VenderAssento(VendaViewModel vendaAssentoVm)
+    {
+        var db = new CinemaDbContext();
+        var repositorioSessao = new RepositorioSessao(db);
+
+        var sessao = repositorioSessao.SelecionarId(vendaAssentoVm.SessaoId);
+
+        var assentoSelecionado = sessao.Ingressos
+            .FirstOrDefault(a => a.Id == vendaAssentoVm.AssentoId);
+
+        assentoSelecionado.vender();
+
+        return View();
+    }
+
+    public ViewResult ConfirmarVenda(int sessaoId, int assentoId)
+    {
+        var db = new CinemaDbContext();
+        var repositorioSessao = new RepositorioSessao(db);
+        var repositorioIngresso = new RepositorioIngresso(db);
+
+        var sessao = repositorioSessao.SelecionarId(sessaoId);
+        var ingresso = repositorioIngresso.SelecionarId(assentoId);
+
+
+        ingresso.vender();
+
+        repositorioIngresso.Editar(ingresso);
+
+        var notificacaoVm = new MensagemViewModel
+        {
+            Mensagem = $"O assento {ingresso.Assento.Numero} foi vendido com sucesso!",
+            Controlador = "/Sessao",
+            Link = "/listar"
+        };
+
+        return View("confirmarvenda", notificacaoVm);
+
+
+    }
+
+
+
+    private static VendaViewModel MapearInformacoesSessao(IEnumerable<SelectListItem> assentos, Sessao sessao)
+    {
+        return new VendaViewModel
+        {
+            SessaoId = sessao.Id,
+            Assentos = assentos.ToList(),
+            Ingressos = sessao.Ingressos.ToList()
+        };
+    }
+
+    public class RepositorioAssento : RepositorioBase<Assento>, IRepositorioAssento
+    {
+        CinemaDbContext db;
+
+        public RepositorioAssento(CinemaDbContext dbContext) : base(dbContext)
+        { db = dbContext; }
+        public override Assento SelecionarId(int id)
+        {
+            return db.Assentos.FirstOrDefault(x => x.Id == id)!;
+        }
+
+        public override List<Assento> SelecionarTodos()
+        {
+            return db.Assentos.ToList();
+        }
+
+        protected override DbSet<Assento> ObterRegistros()
+        {
+            return db.Assentos;
+        }
+    }
+
+
+
+
+    public class RepositorioIngresso : RepositorioBase<Ingresso>, IRepositorioIngressos
+    {
+        CinemaDbContext db;
+
+        public RepositorioIngresso(CinemaDbContext dbContext) : base(dbContext)
+        { db = dbContext; }
+        public override Ingresso SelecionarId(int id)
+        {
+            return db.Ingressos.FirstOrDefault(x => x.Id == id)!;
+        }
+
+        public override List<Ingresso> SelecionarTodos()
+        {
+            return db.Ingressos.ToList();
+        }
+
+        protected override DbSet<Ingresso> ObterRegistros()
+        {
+            return db.Ingressos;
+        }
+    }
+
+
+    public interface IRepositorioIngressos : IRepositorioBase<Ingresso>
+    {
+    }
+    public interface IRepositorioAssento : IRepositorioBase<Assento>
+    {
     }
 }
