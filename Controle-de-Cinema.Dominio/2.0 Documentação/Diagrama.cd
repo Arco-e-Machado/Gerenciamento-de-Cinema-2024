@@ -10,7 +10,7 @@
   <Class Name="Controle_de_Cinema.Dominio.Filme">
     <Position X="10.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAAAAAAAAAAAIAAAAAQQAAAAAgAAEAAAA=</HashCode>
+      <HashCode>AAAEAAAAAAAAAAAEAAAAAAIAAAAAQQAAAAAgAAEAAAA=</HashCode>
       <FileName>2.3 ModuloFilme\Filme.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -26,8 +26,8 @@
     <AssociationLine Name="ingressos" Type="Controle_de_Cinema.Dominio.Ingresso" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="7.188" Y="3.896" />
-        <Point X="7.188" Y="6.563" />
-        <Point X="6.75" Y="6.563" />
+        <Point X="7.188" Y="6.713" />
+        <Point X="6.75" Y="6.713" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -45,7 +45,7 @@
   <Class Name="Controle_de_Cinema.Dominio.Ingresso">
     <Position X="4" Y="4.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAEAAAAAUAAAAAgBAAAAAA=</HashCode>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAEAAAAAUAAAAAgBAAAAAQ=</HashCode>
       <FileName>2.5 ModuloSessao\Ingresso.cs</FileName>
     </TypeIdentifier>
   </Class>
