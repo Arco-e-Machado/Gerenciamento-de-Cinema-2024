@@ -104,14 +104,18 @@ public class SessaoController : Controller
             .SelecionarId(novaSessaoVM.IdFilme
             .GetValueOrDefault());
 
+
+
         var novaSessao = new Sessao
         {
             Filme = filme,
             Sala = sala,
             InicioDaSessao = novaSessaoVM.InicioSessao,
-            FimDaSessao = novaSessaoVM.FimSessao
 
         };
+
+        novaSessao.FimDaSessao = novaSessao.CalcularTempoDeSessao(novaSessao.Filme);
+
         repositorioSessao.Cadastrar(novaSessao);
 
         var repo = new RepositorioIngresso(db);
@@ -312,35 +316,26 @@ public class SessaoController : Controller
         return View(detalharSessaoVM);
     }
     
-    public ViewResult SelecionarAssento(int idSessao)
+    public ViewResult SelecionarAssento(int id)
     {
         var db = new CinemaDbContext();
         var repositorioSessao = new RepositorioSessao(db);
         var repostirioIngressos = new RepositorioIngresso(db);
 
-        var sessao = repositorioSessao.SelecionarId(idSessao);
+        var sessao = repositorioSessao.SelecionarId(id);
 
-        var ingressos = sessao.Ingressos.Where(x=>x.Status == true).Select(i => new SelectListItem($"Ingresso - {i.Assento.Numero}", i.Id.ToString()));
+        var ingressos = sessao.Ingressos
+            .Where(x=>x.Status == true).Select(
+            i => new SelectListItem($"Ingresso - {i.Assento.Numero}", i.Id.ToString()));
 
         var sessaoMapeada = new VendaViewModel
         {
-            IdSessao = sessao,
-            Ingressos = ingressos.ToList()
+            SessaoVM = sessao,
+            IngressosVM = ingressos.ToList()
         };
      
 
         return View(sessaoMapeada);
-    }
-
-    public static VendaViewModel mapearId(int id)
-    {
-        var db = new CinemaDbContext();
-        var repo = new RepositorioSessao(db);
-
-        return new VendaViewModel
-        {
-            sessao = repo.SelecionarId(id)
-        };
     }
 
     [HttpPost]
@@ -355,13 +350,17 @@ public class SessaoController : Controller
         var vendaViewModel = new VendaViewModel
         {
             Id = sessao.Id,
-            IdSessao = sessao
+            SessaoVM = sessao,
+            MeiaEntrada = venda.MeiaEntrada
         };
 
 
-        var ingressoSelecionado = vendaViewModel.IdSessao.Ingressos.Find(x => x.Id == venda.ingresso.Id);
+        var ingressoSelecionado = vendaViewModel.SessaoVM.Ingressos.Find(x => x.Id == venda.IngressoVM.Id);
 
         ingressoSelecionado!.Vender();
+        if (venda.MeiaEntrada == true)
+            ingressoSelecionado.Desconto();
+
         repositorioIngresso.Editar(ingressoSelecionado);
 
         var Mensagem = new MensagemViewModel

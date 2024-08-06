@@ -7,19 +7,19 @@
 <div class="container">
     <div class="col card m-5 p-4 gap-2 shadow bg-dark text-white rounded">
         <form method="post" action="@Url.Action("ConfirmarVenda")">
-                <input type="hidden" asp-for="Id"  value="@Model.IdSessao.Id"/>
+                <input type="" asp-for="Id"  value="@Model.SessaoVM.Id"/>
 
             <div class="mt-2">
 
                 <label class="control-label fw-semibold">Assento:</label>
-                <select class="custom-select d-flex" asp-for="ingresso.Id" asp-items="Model.Ingressos">
+                <select class="custom-select d-flex" asp-for="IngressoVM.Id" asp-items="Model.IngressosVM">
                     <option value="" disabled selected>Selecione um Assento</option>
                 </select>
             </div>
 
             <div class="mt-2">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" asp-for="MeiaEntrada" id="meiaEntrada">
+                    <input class="form-check-input" type="checkbox" asp-for="MeiaEntrada">
                     <label class="form-check-label fw-semibold" for="meiaEntrada">Meia Entrada</label>
                 </div>
             </div>

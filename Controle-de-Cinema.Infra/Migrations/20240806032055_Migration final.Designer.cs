@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Controle_de_Cinema.Infra.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    [Migration("20240805111808_teste")]
-    partial class teste
+    [Migration("20240806032055_Migration final")]
+    partial class Migrationfinal
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -13,7 +13,7 @@
                 <a class="btn btn-secondary ps-3 align-content-center" href="/sessao/listar">
                     <i class="bi bi-arrow-return-left me-1"></i> Voltar
                 </a>
-                <a class="btn btn-success ps-3 align-content-center" href="@Url.Action("selecionarassento", "Sessao", new { idSessao = Model.Id })">
+                <a class="btn btn-success ps-3 align-content-center" href="@Url.Action("selecionarassento", "sessao", new { id = Model.Id })">
                     <i class="bi bi-arrow-return-left me-1"></i> Vender ingresso
                 </a>
             </div>
@@ -32,7 +32,11 @@
                     <div class="d-flex flex-wrap">
                         @foreach (var ingresso in Model.Ingressos)
                         {
-                            var statusAssento = ingresso.Status ? "bg-success" : "bg-danger";
+                            var statusAssento = "bg-success";
+                            if (ingresso.Tipo == true)
+                                statusAssento = "bg-primary";
+                            else
+                               statusAssento = ingresso.Status ? "bg-success" : "bg-danger";
 
                             <div class="card m-2  @statusAssento  text-white" style="height: 4rem; width:4rem; border-end-end-radius:50%">
 
