@@ -323,9 +323,14 @@ public class SessaoController : Controller
 
         var sessao = repositorioSessao.SelecionarId(idSessao);
 
-        var ingressos = sessao.Ingressos.Select(i => new SelectListItem($"Ingresso - {i.Assento.Numero}", i.Id.ToString()));
+        var ingressos = sessao.Ingressos.Where(x=>x.Status == true).Select(i => new SelectListItem($"Ingresso - {i.Assento.Numero}", i.Id.ToString()));
 
-        var sessaoMapeada = MapearSessao(sessao, ingressos);
+        var sessaoMapeada = new VendaViewModel
+        {
+            IdSessao = sessao,
+            Ingressos = ingressos.ToList()
+        };
+     
 
         return View(sessaoMapeada);
     }
@@ -349,14 +354,13 @@ public class SessaoController : Controller
         var repositorioIngresso = new RepositorioIngresso(db);
 
         var sessao = repositorioSessao.SelecionarId(id);
-        var ingressos = sessao.Ingressos.Select(i => new SelectListItem($"Ingresso - {i.Assento.Numero}", i.Id.ToString()));
 
         var vendaViewModel = new VendaViewModel
         {
             Id = sessao.Id,
-            IdSessao = sessao,
-            Ingressos = ingressos.ToList()
+            IdSessao = sessao
         };
+
 
         var ingressoSelecionado = vendaViewModel.IdSessao.Ingressos.Find(x => x.Id == venda.ingresso.Id);
 
