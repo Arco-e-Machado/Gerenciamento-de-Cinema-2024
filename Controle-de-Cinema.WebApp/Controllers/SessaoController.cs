@@ -400,15 +400,6 @@ public class SessaoController : Controller
         return View("sessoesdiarias", listarSessoesVM); 
     }
 
-    private static VendaViewModel MapearSessao(Sessao sessao, IEnumerable<SelectListItem> ingressos)
-    {
-        return new VendaViewModel
-        {
-            IdSessao = sessao,
-            Ingressos = ingressos.ToList()
-
-        };
-    }
 
     public class RepositorioAssento : RepositorioBase<Assento>, IRepositorioAssento
     {
