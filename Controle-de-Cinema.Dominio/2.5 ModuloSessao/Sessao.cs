@@ -10,7 +10,7 @@ public class Sessao : EntidadeBase
     public List<Assento> Assentos { get; set; }
     public DateTime InicioDaSessao { get; set; }
     public DateTime FimDaSessao { get; set; }
-    public int QuantiaDeIngressos => Sala != null ? Sala.Capacidade : 0;
+    public int QuantiaDeIngressos => Sala.Capacidade;
 
 
     public Sessao() { 
