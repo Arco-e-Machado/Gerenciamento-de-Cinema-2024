@@ -346,32 +346,6 @@ public class SessaoController : Controller
         };
     }
 
-    public ViewResult ListarSessoesDiarias()
-    {
-        var db = new CinemaDbContext();
-        var repositorioSessao = new RepositorioSessao(db);
-
-        var hoje = DateTime.Today;
-        var sessoes = repositorioSessao.SelecionarTodos()
-                                       .Where(s => s.InicioDaSessao.Date == hoje)
-                                       .ToList();
-
-        var listarSessoesVM = sessoes.Select(s =>
-        {
-            return new ListarSessaoViewModel
-            {
-                Id = s.Id,
-                Sala = s.Sala,
-                Filme = s.Filme,
-                FimSessao = s.FimDaSessao,
-                InicioSessao = s.InicioDaSessao,
-                Ingressos = s.QuantiaDeIngressos
-            };
-        });
-
-        return View("sessoesdiarias",listarSessoesVM);
-    }
-
     [HttpPost]
     public ViewResult ConfirmarVenda(int id,VendaViewModel venda)
     {

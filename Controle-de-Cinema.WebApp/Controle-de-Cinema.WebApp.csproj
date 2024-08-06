@@ -8,13 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\Ingresso\**" />
-    <Content Remove="Views\Ingresso\**" />
-    <EmbeddedResource Remove="Views\Ingresso\**" />
-    <None Remove="Views\Ingresso\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -36,6 +29,10 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\Sala\Detalhes.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Ingresso\" />
   </ItemGroup>
 
 </Project>
