@@ -314,6 +314,7 @@ public class SessaoController : Controller
 
         return View(detalharSessaoVM);
     }
+    
     public ViewResult SelecionarAssento(int idSessao)
     {
         var db = new CinemaDbContext();
@@ -341,27 +342,34 @@ public class SessaoController : Controller
     }
 
     [HttpPost]
-    public ViewResult ConfirmarVenda(int id, VendaViewModel vendaVM)
+    public ViewResult ConfirmarVenda(int id,VendaViewModel venda)
     {
-
         var db = new CinemaDbContext();
         var repositorioSessao = new RepositorioSessao(db);
         var repositorioIngresso = new RepositorioIngresso(db);
 
-        var teste = mapearId(id);
-
         var sessao = repositorioSessao.SelecionarId(id);
+        var ingressos = sessao.Ingressos.Select(i => new SelectListItem($"Ingresso - {i.Assento.Numero}", i.Id.ToString()));
 
-        var ingressoSelecionado = sessao.Ingressos.FirstOrDefault(a => a.Id == vendaVM.ingresso.Id);
+        var vendaViewModel = new VendaViewModel
+        {
+            Id = sessao.Id,
+            IdSessao = sessao,
+            Ingressos = ingressos.ToList()
+        };
+
+        var ingressoSelecionado = vendaViewModel.IdSessao.Ingressos.Find(x => x.Id == venda.ingresso.Id);
+
+        ingressoSelecionado!.Vender();
+        repositorioIngresso.Editar(ingressoSelecionado);
 
         var Mensagem = new MensagemViewModel
         {
-            Mensagem = $"Vendeu o ingresso {ingressoSelecionado.Assento.Numero}!",
+            Mensagem = $"O assento {ingressoSelecionado.Assento.Numero.ToString()} foi alocado com sucesso!",
             Controlador = "/sessao",
-            Link = $"/detalhes/{sessao.Id}"
+            Link = $"/detalhes/{id}"
         };
 
-        ingressoSelecionado.Vender();
 
         return View("notificacao", Mensagem);
     }
