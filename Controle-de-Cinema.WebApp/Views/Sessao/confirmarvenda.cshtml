@@ -8,7 +8,7 @@
 <div class="container mt-5">
     <h2>Confirmar Venda</h2>
     <form asp-action="ConfirmarVenda" method="post">
-        <input type="hidden" id="sessaoId" name="sessaoId" value="@Model.SessaoId" />
+        <input type="hidden" id="sessaoId" name="sessaoId" value="@Model.Id" />
         <div class="form-group">
             <label for="assentoId">Assento</label>
             <select id="assentoId" name="assentoId" class="form-control">

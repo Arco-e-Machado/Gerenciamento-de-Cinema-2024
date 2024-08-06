@@ -10,7 +10,7 @@ public class Sessao : EntidadeBase
     public List<Assento> Assentos { get; set; }
     public DateTime InicioDaSessao { get; set; }
     public DateTime FimDaSessao { get; set; }
-    public int QuantiaDeIngressos => Sala.Capacidade;
+    public int QuantiaDeIngressos => Sala != null ? Sala.Capacidade : 0;
 
 
     public Sessao() { 
@@ -26,24 +26,6 @@ public class Sessao : EntidadeBase
         Ingressos = new();
         Assentos = new();
 
-        //gerarIngressos(sala.Assentos, sala);
-    }
-
-    public void gerarIngressos(List<Assento> Assentos, Sala Sala)
-    {
-        Assentos = Sala.Assentos;
-
-        foreach (var Assento in Assentos)
-        {
-            Ingresso ingresso = new Ingresso
-            {
-                Assento = Assento,
-                Sessao = this,
-                Status = false,
-                Tipo = false // inicia como inteira
-            };
-            Ingressos.Add(ingresso);
-        }
     }
 
         public bool CalcularTempoDeSessao()

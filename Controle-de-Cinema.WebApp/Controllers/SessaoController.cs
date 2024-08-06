@@ -9,6 +9,8 @@ using Controle_de_Cinema.Infra.ModuloSessao;
 using Microsoft.EntityFrameworkCore;
 using Controle_de_Cinema.Dominio.Compartilhado;
 using Microsoft.AspNetCore.Components.Forms;
+using Controle_de_Cinema.Dominio.ModuloFilme;
+using Controle_de_Cinema.Dominio.ModuloSala;
 
 namespace Controle_de_Cinema.WebApp.Controllers;
 
@@ -73,6 +75,7 @@ public class SessaoController : Controller
         var repositorioSala = new RepositorioSala(db);
         var repositorioFilme = new RepositorioFilme(db);
         var repositorioSessao = new RepositorioSessao(db);
+        var repositorioIngressos = new RepositorioIngresso(db);
 
         #region salas
         var salas = repositorioSala
@@ -114,7 +117,24 @@ public class SessaoController : Controller
         };
         repositorioSessao.Cadastrar(novaSessao);
 
-        gerarIngressos(novaSessao.Sala, novaSessao);
+        var repo = new RepositorioIngresso(db);
+
+        var Assentos = sala.Assentos;
+
+        foreach (var Assento in Assentos)
+        {
+            var ingresso = new Ingresso
+            {
+                Assento = Assento,
+                Sessao = novaSessao,
+                Status = true,
+                Tipo = false // inicia como inteira
+            };
+
+            repositorioIngressos.Cadastrar(ingresso);
+
+            novaSessao.Ingressos.Add(ingresso);
+        }
 
         var Mensagem = new MensagemViewModel()
         {
@@ -127,27 +147,6 @@ public class SessaoController : Controller
 
 
         return View("notificacao", Mensagem);
-    }
-    public void gerarIngressos(Sala Sala, Sessao Sessao)
-    {
-        var db = new CinemaDbContext();
-        var repo = new RepositorioIngresso(db);
-
-        var Assentos = Sessao.Sala.Assentos;
-
-        foreach (var Assento in Assentos)
-        {
-            var ingresso = new Ingresso
-            {
-                Assento = Assento,
-                Sessao = Sessao,
-                Status = false,
-                Tipo = false // inicia como inteira
-            };
-            db.SaveChanges();
-
-            Sessao.Ingressos.Add(ingresso);
-        }
     }
 
     public ViewResult editar(int id)
@@ -315,77 +314,65 @@ public class SessaoController : Controller
 
         return View(detalharSessaoVM);
     }
-
-    public ViewResult VenderAssento(int sessaoId)
+    public ViewResult SelecionarAssento(int idSessao)
     {
         var db = new CinemaDbContext();
         var repositorioSessao = new RepositorioSessao(db);
+        var repostirioIngressos = new RepositorioIngresso(db);
 
-        var sessao = repositorioSessao.SelecionarId(sessaoId);
+        var sessao = repositorioSessao.SelecionarId(idSessao);
 
-        var vendaAssentoVm = new VendaViewModel
+        var ingressos = sessao.Ingressos.Select(i => new SelectListItem($"Ingresso - {i.Assento.Numero}", i.Id.ToString()));
+
+        var sessaoMapeada = MapearSessao(sessao, ingressos);
+
+        return View(sessaoMapeada);
+    }
+
+    public static VendaViewModel mapearId(int id)
+    {
+        var db = new CinemaDbContext();
+        var repo = new RepositorioSessao(db);
+
+        return new VendaViewModel
         {
-            SessaoId = sessao.Id,
-            Assentos = sessao
-                        .Sala.Assentos
-                        .Select(a => new SelectListItem(a.Numero, a.Id.ToString()))
-                        .ToList()
+            sessao = repo.SelecionarId(id)
         };
-
-        return View(vendaAssentoVm);
     }
 
     [HttpPost]
-    public ViewResult VenderAssento(VendaViewModel vendaAssentoVm)
+    public ViewResult ConfirmarVenda(int id, VendaViewModel vendaVM)
     {
-        var db = new CinemaDbContext();
-        var repositorioSessao = new RepositorioSessao(db);
 
-        var sessao = repositorioSessao.SelecionarId(vendaAssentoVm.SessaoId);
-
-        var assentoSelecionado = sessao.Ingressos
-            .FirstOrDefault(a => a.Id == vendaAssentoVm.AssentoId);
-
-        assentoSelecionado.vender();
-
-        return View();
-    }
-
-    public ViewResult ConfirmarVenda(int sessaoId, int assentoId)
-    {
         var db = new CinemaDbContext();
         var repositorioSessao = new RepositorioSessao(db);
         var repositorioIngresso = new RepositorioIngresso(db);
 
-        var sessao = repositorioSessao.SelecionarId(sessaoId);
-        var ingresso = repositorioIngresso.SelecionarId(assentoId);
+        var teste = mapearId(id);
 
+        var sessao = repositorioSessao.SelecionarId(id);
 
-        ingresso.vender();
+        var ingressoSelecionado = sessao.Ingressos.FirstOrDefault(a => a.Id == vendaVM.ingresso.Id);
 
-        repositorioIngresso.Editar(ingresso);
-
-        var notificacaoVm = new MensagemViewModel
+        var Mensagem = new MensagemViewModel
         {
-            Mensagem = $"O assento {ingresso.Assento.Numero} foi vendido com sucesso!",
-            Controlador = "/Sessao",
-            Link = "/listar"
+            Mensagem = $"Vendeu o ingresso {ingressoSelecionado.Assento.Numero}!",
+            Controlador = "/sessao",
+            Link = $"/detalhes/{sessao.Id}"
         };
 
-        return View("confirmarvenda", notificacaoVm);
+        ingressoSelecionado.Vender();
 
-
+        return View("notificacao", Mensagem);
     }
 
-
-
-    private static VendaViewModel MapearInformacoesSessao(IEnumerable<SelectListItem> assentos, Sessao sessao)
+    private static VendaViewModel MapearSessao(Sessao sessao, IEnumerable<SelectListItem> ingressos)
     {
         return new VendaViewModel
         {
-            SessaoId = sessao.Id,
-            Assentos = assentos.ToList(),
-            Ingressos = sessao.Ingressos.ToList()
+            IdSessao = sessao,
+            Ingressos = ingressos.ToList()
+
         };
     }
 
@@ -410,9 +397,9 @@ public class SessaoController : Controller
             return db.Assentos;
         }
     }
-
-
-
+    public interface IRepositorioAssento : IRepositorioBase<Assento>
+    {
+    }
 
     public class RepositorioIngresso : RepositorioBase<Ingresso>, IRepositorioIngressos
     {
@@ -435,12 +422,7 @@ public class SessaoController : Controller
             return db.Ingressos;
         }
     }
-
-
     public interface IRepositorioIngressos : IRepositorioBase<Ingresso>
-    {
-    }
-    public interface IRepositorioAssento : IRepositorioBase<Assento>
     {
     }
 }

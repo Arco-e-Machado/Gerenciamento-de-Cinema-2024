@@ -5,11 +5,15 @@
 }
 <div class="container">
     <div class="col card m-5 p-4 gap-2 shadow bg-dark text-white rounded">
-            <form method="post" action="ConfirmarVenda">
+        <form method="post" action="ConfirmarVenda">
 
+            <div class="list-group-item list-group-item-action" >
+                <input class="form-control" type="text" asp-for="Id" required />
+            </div>
+            
             <div class="mt-2">
-                <label class="control-label fw-semibold">Filme:</label>
-                <select class="custom-select d-flex" asp-for="AssentoId" asp-items="Model.Assentos" required>
+                <label class="control-label fw-semibold">Assento:</label>
+                <select class="custom-select d-flex" asp-for="ingresso.Id" asp-items="Model.Ingressos" required>
                     <option value="" disabled selected>Selecione um Assento</option>
                 </select>
             </div>

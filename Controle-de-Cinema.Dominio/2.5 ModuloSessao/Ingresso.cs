@@ -10,7 +10,7 @@ public class Ingresso : EntidadeBase
 
     public decimal Valor { get; set; } = 50;
 
-    public bool Status { get; set; } // true = vendido
+    public bool Status { get; set; } // true = Livre
 
     public bool Tipo { get; set; } // false = inteira
 
@@ -43,9 +43,14 @@ public class Ingresso : EntidadeBase
         throw new NotImplementedException();
     }
 
-    private void vender()
+    public void Vender()
     {
-        Status = true;
+        Status = false;
+    }
+
+    public override string ToString()
+    {
+        return $"ingresso {Assento.Numero}";
     }
     #endregion
 }

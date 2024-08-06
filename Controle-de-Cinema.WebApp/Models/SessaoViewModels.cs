@@ -6,11 +6,13 @@ namespace Controle_de_Cinema.WebApp.Models;
 public class VendaViewModel
 {
     public int Id { get; set; }
-    public int AssentoId { get; set; }
     public bool MeiaEntrada {  get; set; }
+    public Sessao sessao{ get; set; }
+    public int Capacidade { get; internal set; }
+    public Ingresso ingresso { get; set; }
     public List<SelectListItem> Assentos { get; set; }
-    public int SessaoId{ get; set; }
-    public List<Ingresso> Ingressos { get; set; }
+    public Sessao IdSessao{ get; set; }
+    public List<SelectListItem> Ingressos { get; set; }
 }
 
 public class ListarSessaoViewModel
