@@ -17,20 +17,22 @@ public class Sessao : EntidadeBase
         Assentos = new();
         Ingressos = new();
     }
-    public Sessao(Filme filme, Sala sala, DateTime inicio, DateTime fim)
+    public Sessao(Filme filme, Sala sala, DateTime inicio)
     {
         Filme = filme;
         Sala = sala;
         InicioDaSessao = inicio;
-        FimDaSessao = fim;
         Ingressos = new();
         Assentos = new();
 
     }
 
-        public bool CalcularTempoDeSessao()
+        public DateTime CalcularTempoDeSessao(Filme filme)
         {
-            return InicioDaSessao.AddMinutes(Filme.Duracao.TotalMinutes) < FimDaSessao;
+        var fimCalculado = InicioDaSessao.Add(filme.Duracao);
+
+
+        return fimCalculado;
         }
 
     #region Overrides
@@ -60,8 +62,6 @@ public class Sessao : EntidadeBase
         if (FimDaSessao == null)
             erros.Add("O campo \"Horário de Termino\" deve ser preenchido.");
 
-        if (!CalcularTempoDeSessao())
-            erros.Add("A sessão deve ser mais longa que a duração do filme.");
     }
 
     #endregion

@@ -107,14 +107,18 @@ public class SessaoController : Controller
             .SelecionarId(novaSessaoVM.IdFilme
             .GetValueOrDefault());
 
+
+
         var novaSessao = new Sessao
         {
             Filme = filme,
             Sala = sala,
             InicioDaSessao = novaSessaoVM.InicioSessao,
-            FimDaSessao = novaSessaoVM.FimSessao
 
         };
+
+        novaSessao.FimDaSessao = novaSessao.CalcularTempoDeSessao(novaSessao.Filme);
+
         repositorioSessao.Cadastrar(novaSessao);
 
         var repo = new RepositorioIngresso(db);

@@ -8,7 +8,7 @@
 <div class="container">
     <div class="col card m-5 p-4 gap-2 shadow bg-dark text-white rounded">
 
-        <form class="d-grid gap-4" asp-action="inserir" method="post">
+        <form id="form" class="d-grid gap-4" asp-action="inserir" method="post">
 
             <div class="mt-2">
                 <label class="control-label fw-semibold">Filme:</label>
@@ -32,12 +32,12 @@
 
             <div class="mt-2">
                 <label class="control-label fw-semibold">Início da Sessão:</label>
-                <input class="form-control" type="datetime-local" asp-for="InicioSessao" required />
+                <input id="teste2" class="form-control" type="datetime-local" asp-for="InicioSessao" required />
             </div>
 
             <div class="mt-2">
                 <label class="control-label fw-semibold">Fim da Sessão:</label>
-                <input class="form-control" type="datetime-local" asp-for="FimSessao" readonly />
+                <input  class="form-control" type="datetime-local" asp-for="FimSessao" readonly value="@Model.FimSessaoCalculado" />
             </div>
 
             <div class="mt-2 d-grid gap-2 d-md-block">

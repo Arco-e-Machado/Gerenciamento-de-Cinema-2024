@@ -6,9 +6,9 @@ namespace Controle_de_Cinema.WebApp.Models;
 public class VendaViewModel
 {
     public int Id { get; set; }
-    public bool MeiaEntrada {  get; set; }
+    public bool MeiaEntrada { get; set; }
     public Ingresso IngressoVM { get; set; }
-    public Sessao SessaoVM{ get; set; }
+    public Sessao SessaoVM { get; set; }
     public List<SelectListItem> IngressosVM { get; set; }
 }
 
@@ -33,7 +33,8 @@ public class InserirSessaoViewModel
     public IEnumerable<SelectListItem>? salas { get; set; }
     public IEnumerable<SelectListItem>? assentos { get; set; }
     public DateTime InicioSessao { get; set; } = DateTime.Today;
-    public DateTime FimSessao { get; set; } = DateTime.Today;
+    public DateTime FimSessao { get; set; }
+    public DateTime FimSessaoCalculado { get; set; }
 }
 
 public class EditarSessaoViewModel
@@ -56,7 +57,7 @@ public class ExcluirSessaoViewModel
     public Filme Filme { get; set; }
     public Sala Sala { get; set; }
     public DateTime InicioSessao { get; set; }
-    public List<Assento> Assentos {  get; set; }
+    public List<Assento> Assentos { get; set; }
     public DateTime FimSessao { get; set; }
     public int Ingressos { get; set; }
 }
