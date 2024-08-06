@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ListarSessaoViewModel>
+@{
+    Layout = "_Layout";
+    ViewBag.Tittle = "Listagem de Sessões do Dia";
+}
+<style>
+    .btn-maroon {
+        background-color: #80000084;
+        color: white;
+        transition: all .3s ease
+    }
+
+        .btn-maroon:hover {
+            scale: 1.4;
+            background-color: #800000;
+            transition: all .3s ease
+        }
+
+    #card-hover {
+        scale: 1;
+        transition: all .1s ease;
+        text-decoration: none;
+        color: white;
+        cursor: pointer
+    }
+
+        #card-hover:hover {
+            scale: 1.1;
+            transition: all .3s ease;
+        }
+
+    }
+</style>
+@* Lista *@
+<div class="row gap-3 mt-3 p-2 d-flex justify-content-evenly">
+    @foreach (var sessao in Model)
+    {
+
+        <div id="card-hover" class="card col-md-5 col-lg-4 col-xl-3 p-2 bg-dark text-white">
+            <a id="card-hover" href="/sessao/detalhes/@sessao.Id">
+
+                <div class="card-body">
+
+                    <div class="row row-cols-2 gap-2">
+                        <label class="card-title fs-5 fw-semibold">Sala: @sessao.Sala </label>
+
+                    </div>
+
+                    <p class="card-subtitle fs-6"><strong>Id: </strong>[@sessao.Id]</p>
+                    <p class="card-subtitle fs-6"><strong>Filme: </strong>[@sessao.Filme] </p>
+                    <p class="card-subtitle fs-6"><strong>Capacidade da Sala: </strong>[@sessao.Ingressos] </p>
+                </div>
+            </a>
+        </div>
+    }
+</div>

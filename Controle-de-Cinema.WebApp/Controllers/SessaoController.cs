@@ -8,9 +8,6 @@ using Controle_de_Cinema.Infra.Compartilhado;
 using Controle_de_Cinema.Infra.ModuloSessao;
 using Microsoft.EntityFrameworkCore;
 using Controle_de_Cinema.Dominio.Compartilhado;
-using Microsoft.AspNetCore.Components.Forms;
-using Controle_de_Cinema.Dominio.ModuloFilme;
-using Controle_de_Cinema.Dominio.ModuloSala;
 
 namespace Controle_de_Cinema.WebApp.Controllers;
 
@@ -376,6 +373,32 @@ public class SessaoController : Controller
 
 
         return View("notificacao", Mensagem);
+    }
+
+    public ViewResult ListarSessoesDiarias()
+    {
+        var db = new CinemaDbContext();
+        var repositorioSessao = new RepositorioSessao(db);
+
+        var hoje = DateTime.Today;
+        var sessoes = repositorioSessao.SelecionarTodos()
+                                       .Where(s => s.InicioDaSessao.Date == hoje)
+                                       .ToList();
+
+        var listarSessoesVM = sessoes.Select(s =>
+        {
+            return new ListarSessaoViewModel
+            {
+                Id = s.Id,
+                Sala = s.Sala,
+                Filme = s.Filme,
+                FimSessao = s.FimDaSessao,
+                InicioSessao = s.InicioDaSessao,
+                Ingressos = s.QuantiaDeIngressos
+            };
+        });
+
+        return View("sessoesdiarias", listarSessoesVM); 
     }
 
     private static VendaViewModel MapearSessao(Sessao sessao, IEnumerable<SelectListItem> ingressos)
