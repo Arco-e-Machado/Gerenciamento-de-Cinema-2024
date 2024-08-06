@@ -7,12 +7,9 @@ public class VendaViewModel
 {
     public int Id { get; set; }
     public bool MeiaEntrada {  get; set; }
-    public Sessao sessao{ get; set; }
-    public int Capacidade { get; internal set; }
-    public Ingresso ingresso { get; set; }
-    public List<SelectListItem> Assentos { get; set; }
-    public Sessao IdSessao{ get; set; }
-    public List<SelectListItem> Ingressos { get; set; }
+    public Ingresso IngressoVM { get; set; }
+    public Sessao SessaoVM{ get; set; }
+    public List<SelectListItem> IngressosVM { get; set; }
 }
 
 public class ListarSessaoViewModel

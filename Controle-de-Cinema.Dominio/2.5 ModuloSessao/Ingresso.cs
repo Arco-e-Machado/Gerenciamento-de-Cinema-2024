@@ -48,6 +48,10 @@ public class Ingresso : EntidadeBase
         Status = false;
     }
 
+    public void Desconto()
+    {
+        Tipo = true;
+    }
     public override string ToString()
     {
         return $"ingresso {Assento.Numero}";
