@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Controle_de_Cinema.Infra.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    [Migration("20240806032055_Migration final")]
-    partial class Migrationfinal
+    [Migration("20240808031544_Migração Completa com dados")]
+    partial class MigraçãoCompletacomdados
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,20 +37,20 @@ namespace Controle_de_Cinema.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("Sala_Id")
-                        .HasColumnType("int");
-
                     b.Property<int?>("SessaoId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
+                    b.Property<int>("sala_Id")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("Sala_Id");
-
                     b.HasIndex("SessaoId");
+
+                    b.HasIndex("sala_Id");
 
                     b.ToTable("TBAssento", (string)null);
                 });
@@ -76,6 +76,78 @@ namespace Controle_de_Cinema.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TBfilme", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Duracao = new TimeSpan(0, 1, 36, 0, 0),
+                            Genero = 8,
+                            Nome = "UP - Altas Aventuras"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Duracao = new TimeSpan(0, 2, 23, 0, 0),
+                            Genero = 0,
+                            Nome = "Os Vingadores"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Duracao = new TimeSpan(0, 2, 7, 0, 0),
+                            Genero = 1,
+                            Nome = "Jurassic Park"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Duracao = new TimeSpan(0, 1, 57, 0, 0),
+                            Genero = 2,
+                            Nome = "O Grande Lebowski"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Duracao = new TimeSpan(0, 3, 15, 0, 0),
+                            Genero = 3,
+                            Nome = "A Lista de Schindler"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Duracao = new TimeSpan(0, 2, 58, 0, 0),
+                            Genero = 4,
+                            Nome = "O Senhor dos Anéis: A Sociedade do Anel"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Duracao = new TimeSpan(0, 2, 2, 0, 0),
+                            Genero = 5,
+                            Nome = "O Exorcista"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Duracao = new TimeSpan(0, 2, 4, 0, 0),
+                            Genero = 6,
+                            Nome = "Diário de uma Paixão"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Duracao = new TimeSpan(0, 1, 58, 0, 0),
+                            Genero = 7,
+                            Nome = "O Silêncio dos Inocentes"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Duracao = new TimeSpan(0, 2, 35, 0, 0),
+                            Genero = 9,
+                            Nome = "Gladiador"
+                        });
                 });
 
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Ingresso", b =>
@@ -120,15 +192,15 @@ namespace Controle_de_Cinema.Infra.Migrations
 
                     b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TBPessoa", (string)null);
+                    b.ToTable("Pessoas");
                 });
 
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Sala", b =>
@@ -146,12 +218,47 @@ namespace Controle_de_Cinema.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("TBSala", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Capacidade = 30,
+                            NumeroDaSala = "Pequena 01"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Capacidade = 45,
+                            NumeroDaSala = "Pequena 02"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Capacidade = 80,
+                            NumeroDaSala = "Média 01"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Capacidade = 110,
+                            NumeroDaSala = "Média 02"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Capacidade = 180,
+                            NumeroDaSala = "Grande 01"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Capacidade = 200,
+                            NumeroDaSala = "Grande 02"
+                        });
                 });
 
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Sessao", b =>
@@ -185,15 +292,15 @@ namespace Controle_de_Cinema.Infra.Migrations
 
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Assento", b =>
                 {
-                    b.HasOne("Controle_de_Cinema.Dominio.Sala", "Sala")
-                        .WithMany("Assentos")
-                        .HasForeignKey("Sala_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Controle_de_Cinema.Dominio.Sessao", null)
                         .WithMany("Assentos")
                         .HasForeignKey("SessaoId");
+
+                    b.HasOne("Controle_de_Cinema.Dominio.Sala", "Sala")
+                        .WithMany("Assentos")
+                        .HasForeignKey("sala_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Sala");
                 });

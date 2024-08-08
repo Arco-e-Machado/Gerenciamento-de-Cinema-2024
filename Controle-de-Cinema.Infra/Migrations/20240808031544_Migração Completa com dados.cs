@@ -3,14 +3,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Controle_de_Cinema.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrationfinal : Migration
+    public partial class MigraçãoCompletacomdados : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Pessoas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cpf = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pessoas", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "TBfilme",
                 columns: table => new
@@ -27,28 +43,13 @@ namespace Controle_de_Cinema.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TBPessoa",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "varchar(200)", nullable: false),
-                    Cpf = table.Column<string>(type: "varchar(20)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TBPessoa", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TBSala",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NumeroDaSala = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Capacidade = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false)
+                    Capacidade = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,7 +90,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Numero = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Sala_Id = table.Column<int>(type: "int", nullable: false),
+                    sala_Id = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     SessaoId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -97,11 +98,11 @@ namespace Controle_de_Cinema.Infra.Migrations
                 {
                     table.PrimaryKey("PK_TBAssento", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TBAssento_TBSala_Sala_Id",
-                        column: x => x.Sala_Id,
+                        name: "FK_TBAssento_TBSala_sala_Id",
+                        column: x => x.sala_Id,
                         principalTable: "TBSala",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TBAssento_TBSessao_SessaoId",
                         column: x => x.SessaoId,
@@ -138,10 +139,40 @@ namespace Controle_de_Cinema.Infra.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "TBSala",
+                columns: new[] { "Id", "Capacidade", "NumeroDaSala" },
+                values: new object[,]
+                {
+                    { 1, 30, "Pequena 01" },
+                    { 2, 45, "Pequena 02" },
+                    { 3, 80, "Média 01" },
+                    { 4, 110, "Média 02" },
+                    { 5, 180, "Grande 01" },
+                    { 6, 200, "Grande 02" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TBfilme",
+                columns: new[] { "Id", "Duracao", "Genero", "Nome" },
+                values: new object[,]
+                {
+                    { 1, new TimeSpan(0, 1, 36, 0, 0), 8, "UP - Altas Aventuras" },
+                    { 2, new TimeSpan(0, 2, 23, 0, 0), 0, "Os Vingadores" },
+                    { 3, new TimeSpan(0, 2, 7, 0, 0), 1, "Jurassic Park" },
+                    { 4, new TimeSpan(0, 1, 57, 0, 0), 2, "O Grande Lebowski" },
+                    { 5, new TimeSpan(0, 3, 15, 0, 0), 3, "A Lista de Schindler" },
+                    { 6, new TimeSpan(0, 2, 58, 0, 0), 4, "O Senhor dos Anéis: A Sociedade do Anel" },
+                    { 7, new TimeSpan(0, 2, 2, 0, 0), 5, "O Exorcista" },
+                    { 8, new TimeSpan(0, 2, 4, 0, 0), 6, "Diário de uma Paixão" },
+                    { 9, new TimeSpan(0, 1, 58, 0, 0), 7, "O Silêncio dos Inocentes" },
+                    { 10, new TimeSpan(0, 2, 35, 0, 0), 9, "Gladiador" }
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_TBAssento_Sala_Id",
+                name: "IX_TBAssento_sala_Id",
                 table: "TBAssento",
-                column: "Sala_Id");
+                column: "sala_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TBAssento_SessaoId",
@@ -173,10 +204,10 @@ namespace Controle_de_Cinema.Infra.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "TBIngresso");
+                name: "Pessoas");
 
             migrationBuilder.DropTable(
-                name: "TBPessoa");
+                name: "TBIngresso");
 
             migrationBuilder.DropTable(
                 name: "TBAssento");

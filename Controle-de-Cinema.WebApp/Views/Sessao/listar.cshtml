@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ListarSessaoViewModel>
 @{
-    Layout = "_Layout";
     ViewBag.Tittle = "Listagem de Sessão";
+    MensagemViewModel? mensagem = ViewBag.Mensagem ?? null;
 }
 <style>
     .btn-maroon {
@@ -41,6 +41,7 @@
  *@
 @* Lista *@
 <div class="row gap-3 mt-3 p-2 d-flex justify-content-evenly">
+    <partial name="_Mensagem" model="mensagem"></partial>
     @foreach (var sessao in Model)
     {
 

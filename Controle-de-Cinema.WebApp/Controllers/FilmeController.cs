@@ -1,6 +1,8 @@
 ﻿using Controle_de_Cinema.Dominio;
+using Controle_de_Cinema.Dominio.Compartilhado;
 using Controle_de_Cinema.Infra.Compartilhado;
 using Controle_de_Cinema.Infra.ModuloFilme;
+using Controle_de_Cinema.WebApp.Extensions;
 using Controle_de_Cinema.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +10,15 @@ namespace Controle_de_Cinema.WebApp.Controllers;
 
 public class FilmeController : Controller
 {
-    public ViewResult listar()
+    readonly private IRepositorioBase<Filme> repositorioFilme;
+
+    public FilmeController(IRepositorioBase<Filme> repositorioFilme)
     {
-        var db = new CinemaDbContext();
-        var repositorioFilme = new RepositorioFilme(db);
+        this.repositorioFilme = repositorioFilme;
+    }
+
+    public IActionResult listar()
+    {
 
         var filmes = repositorioFilme.SelecionarTodos();
 
@@ -26,20 +33,19 @@ public class FilmeController : Controller
             };
         });
 
+        ViewBag.Mensagem = TempData.DesserializarMensagemViewModel();
+
         return View(ListarFilmesVM);
     }
 
-    public ViewResult inserir()
+    public IActionResult inserir()
     {
         return View();
     }
 
     [HttpPost]
-    public ViewResult inserir(InserirFilmeViewModel novoFilmeVM)
+    public IActionResult inserir(InserirFilmeViewModel novoFilmeVM)
     {
-        var db = new CinemaDbContext();
-        var repositorioFilme = new RepositorioFilme(db);
-
         var novoFilme = new Filme(novoFilmeVM.Nome,
                                                       novoFilmeVM.Genero,
                                                       novoFilmeVM.Duracao
@@ -47,20 +53,19 @@ public class FilmeController : Controller
 
         repositorioFilme.Cadastrar(novoFilme);
 
-        var Mensagem = new MensagemViewModel()
+        TempData.SerializarMensagemViewModel(new MensagemViewModel
         {
-            Mensagem = $"O registro com o ID [{novoFilme.Id}] foi cadastrado com sucesso!",
+            Titulo = "Sucesso",
+            Mensagem = $"O registro ID [{novoFilme.Id}] foi inserido com sucesso!",
             Controlador = "/filme",
             Link = "/listar"
-        };
-        return View("notificacao", Mensagem);
+        });
+
+        return RedirectToAction(nameof(listar));
     }
 
-    public ViewResult editar(int id)
+    public IActionResult editar(int id)
     {
-        var db = new CinemaDbContext();
-        var repositorioFilme = new RepositorioFilme(db);
-
         var filmeSelecinado = repositorioFilme.SelecionarId(id);
 
         var editarFilmeVM = new EditarFilmeViewModel
@@ -75,11 +80,8 @@ public class FilmeController : Controller
     }
 
     [HttpPost]
-    public ViewResult editar(EditarFilmeViewModel editarFilmeVM)
+    public IActionResult editar(EditarFilmeViewModel editarFilmeVM)
     {
-        var db = new CinemaDbContext();
-        var repositorioFilme = new RepositorioFilme(db);
-
         var filme = repositorioFilme.SelecionarId(editarFilmeVM.Id);
 
         filme.Nome = editarFilmeVM.Nome;
@@ -87,21 +89,20 @@ public class FilmeController : Controller
         filme.Genero = editarFilmeVM.Genero;
 
         repositorioFilme.Editar(filme);
-        var Mensagem = new MensagemViewModel()
+
+        TempData.SerializarMensagemViewModel(new MensagemViewModel
         {
-            Mensagem = $"O registro com o ID [{filme.Id}] foi editar com sucesso!",
+            Titulo = "Sucesso",
+            Mensagem = $"O registro ID [{filme.Id}] foi editado com sucesso!",
             Controlador = "/filme",
             Link = "/listar"
-        };
+        });
 
-        return View("notificacao", Mensagem);
+        return RedirectToAction(nameof(listar));
     }
 
-    public ViewResult excluir(int id)
+    public IActionResult excluir(int id)
     {
-        var db = new CinemaDbContext();
-        var repositorioFilme = new RepositorioFilme(db);
-
         var filmeSelecionado = repositorioFilme.SelecionarId(id);
 
         var excluirFilmeVM = new ExcluirFilmeViewModel
@@ -116,30 +117,25 @@ public class FilmeController : Controller
     }
 
     [HttpPost, ActionName("excluir")]
-    public ViewResult excluirConfirmado(ExcluirFilmeViewModel excluirFilmeVM)
+    public IActionResult excluirConfirmado(ExcluirFilmeViewModel excluirFilmeVM)
     {
-        var db = new CinemaDbContext();
-        var repositorioFilme = new RepositorioFilme(db);
-
         var filme = repositorioFilme.SelecionarId(excluirFilmeVM.Id);
 
         repositorioFilme.Excluir(filme);
 
-        var mensagem = new MensagemViewModel()
+        TempData.SerializarMensagemViewModel(new MensagemViewModel
         {
-            Mensagem = $"O registro com o ID {filme.Id} foi excluído com sucesso!",
+            Titulo = "Sucesso",
+            Mensagem = $"O registro ID [{filme.Id}] foi excluído com sucesso!",
             Controlador = "/filme",
             Link = "/listar"
-        };
+        });
 
-        return View("notificacao", mensagem);
+        return RedirectToAction(nameof(listar));
     }
 
-    public ViewResult detalhes(int id)
+    public IActionResult detalhes(int id)
     {
-        var db = new CinemaDbContext();
-        var repositorioFilme = new RepositorioFilme(db);
-
         var filme = repositorioFilme.SelecionarId(id);
 
         var detalharFilmeVM = new DetalharFilmeViewModel()

@@ -1,7 +1,6 @@
 ﻿@model DetalharPessoasViewModel
 
 @{
-    Layout = "_Layout";
     ViewBag.Title = "Detalhamento de pessoa";
 }
 
@@ -16,13 +15,7 @@
             </div>
 
             <div class="list-group">
-                <div class="list-group-item list-group-item-action">
-                    <div class="fw-bold">Id:</div> @Model.Id
-                </div>
-                <div class="list-group-item list-group-item-action">
-                    <div class="fw-bold">Nome:</div> @Model.Nome
-                </div>
-
+                <partial name="_Pattern" model="Model"></partial>
             </div>
         </div>
     </div>

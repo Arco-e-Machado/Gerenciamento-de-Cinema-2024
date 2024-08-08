@@ -10,18 +10,15 @@ public class Sala : EntidadeBase
 
     public List<Assento> Assentos { get; set; }
 
-    public bool Status { get; set; } // True = Livre
-
     public Sala()
     {
         Assentos = new List<Assento>();
     }
 
-    public Sala(string numeroDaSala, int capacidade, bool status)
+    public Sala(string numeroDaSala, int capacidade)
     {
         NumeroDaSala = numeroDaSala;
         Capacidade = capacidade;
-        Status = status;
         Assentos = new List<Assento>();
 
         AlocarAssentos(capacidade);
@@ -29,6 +26,16 @@ public class Sala : EntidadeBase
 
     public void AlocarAssentos(int Capacidade)
     {
+        if (Assentos.Count != 0)
+        {
+            return;
+        }
+        else if (Assentos.Count > Capacidade)
+        {
+            Assentos.Clear();
+            AlocarAssentos(Capacidade);
+        }
+
         int fileiraIndex = 0;
         for (int i = 0; i < Capacidade; i++)
         {
@@ -53,8 +60,9 @@ public class Sala : EntidadeBase
     {
         Sala update = (Sala)registro;
 
+
         Capacidade = update.Capacidade;
-        Status = update.Status;
+        NumeroDaSala = update.NumeroDaSala;
     }
 
     public override string? ToString()

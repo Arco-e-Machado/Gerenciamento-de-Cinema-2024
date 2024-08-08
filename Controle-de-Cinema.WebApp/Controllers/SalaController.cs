@@ -1,19 +1,26 @@
 ﻿using Controle_de_Cinema.Dominio;
+using Controle_de_Cinema.Dominio.Compartilhado;
 using Controle_de_Cinema.Infra.Compartilhado;
-using Controle_de_Cinema.Infra.ModuloSala;
+using Controle_de_Cinema.WebApp.Extensions;
 using Controle_de_Cinema.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Controle_de_Cinema.WebApp.Controllers;
 
 public class SalaController : Controller
 {
-    public ViewResult listar()
+    readonly private IRepositorioBase<Assento> repositorioAssento;
+    readonly private IRepositorioBase<Sala> repositorioSala;
+    public SalaController(IRepositorioBase<Sala> repositorioSala, IRepositorioBase<Assento> repositorioAssento)
     {
-        var db = new CinemaDbContext();
-        var reposirotioSala = new RepositorioSala(db);
 
-        var salas = reposirotioSala.SelecionarTodos();
+        this.repositorioSala = repositorioSala;
+        this.repositorioAssento = repositorioAssento;
+    }
+    public IActionResult listar()
+    {
+        var salas = repositorioSala.SelecionarTodos();
 
         var ListarSalasVM = salas.Select(s =>
         {
@@ -23,50 +30,38 @@ public class SalaController : Controller
                 Numero = s.NumeroDaSala,
                 Capacidade = s.Capacidade,
                 Assentos = s.Assentos,
-                Status = s.Status ? "Ocupada" : "Livre"
             };
         });
 
+        ViewBag.Mensagem = TempData.DesserializarMensagemViewModel();
 
         return View(ListarSalasVM);
     }
 
-    public ViewResult inserir()
+    public IActionResult inserir()
     {
         return View();
     }
 
     [HttpPost]
-    public ViewResult inserir(InserirSalaViewModel novaSalaVM)
+    public IActionResult inserir(InserirSalaViewModel novaSalaVM)
     {
-        var db = new CinemaDbContext();
-        var repositorioSala = new RepositorioSala(db);
-
         var novaSala = new Sala(novaSalaVM.Numero,
-                                                    novaSalaVM.Capacidade,
-                                                    novaSalaVM.Status
+                                                    novaSalaVM.Capacidade
                                                     );
 
         repositorioSala.Cadastrar(novaSala);
 
-
-        var Mensagem = new MensagemViewModel()
+        TempData.SerializarMensagemViewModel(new MensagemViewModel
         {
-            Mensagem = $"O registro com o ID [{novaSala.Id}] foi cadastrado com sucesso!",
-            Controlador = "/sala",
-            Link = "/listar"
-        };
+            Titulo = "Sucesso",
+            Mensagem = $"O registro ID [{novaSala.Id}] foi inserido com sucesso!"
+        });
 
-        HttpContext.Response.StatusCode = 201;
-
-        return View("notificacao", Mensagem);
+        return RedirectToAction(nameof(listar));
     }
-
-    public ViewResult editar(int id)
+    public IActionResult editar(int id)
     {
-        var db = new CinemaDbContext();
-        var repositorioSala = new RepositorioSala(db);
-
         var salaSelecionada = repositorioSala.SelecionarId(id);
 
         var editarSalaVM = new EditarSalaViewModel
@@ -74,21 +69,14 @@ public class SalaController : Controller
             Id = salaSelecionada.Id,
             Numero = salaSelecionada.NumeroDaSala,
             Capacidade = salaSelecionada.Capacidade,
-            Status = salaSelecionada.Status ? "Ocupada" : "Livre"
         };
 
         return View(editarSalaVM);
     }
 
     [HttpPost]
-    public ViewResult editar(EditarSalaViewModel editarSalaVM)
+    public IActionResult editar(EditarSalaViewModel editarSalaVM)
     {
-        //if (!ModelState.IsValid)
-        //    return View(editarSalaVM);
-
-        var db = new CinemaDbContext();
-        var repositorioSala = new RepositorioSala(db);
-
         var sala = repositorioSala.SelecionarId(editarSalaVM.Id);
 
         sala.NumeroDaSala = editarSalaVM.Numero;
@@ -96,22 +84,18 @@ public class SalaController : Controller
 
         repositorioSala.Editar(sala);
 
-        var mensagem = new MensagemViewModel()
+        TempData.SerializarMensagemViewModel(new MensagemViewModel
         {
-            Mensagem = $"O registro com o ID {sala.Id} foi editado com sucesso!",
-            Controlador = "/sala",
-            Link = "/listar"
-        };
+            Titulo = "Sucesso",
+            Mensagem = $"O registro ID [{sala.Id}] foi editado com sucesso!"
+        });
 
-        return View("notificacao", mensagem);
+        return RedirectToAction(nameof(listar));
 
     }
 
-    public ViewResult Excluir(int id)
+    public IActionResult Excluir(int id)
     {
-        var db = new CinemaDbContext();
-        var repositorioSala = new RepositorioSala(db);
-
         var salaSelecionada = repositorioSala.SelecionarId(id);
 
         var excluirSalaVM = new ExcluirSalaViewModel
@@ -119,49 +103,56 @@ public class SalaController : Controller
             Id = salaSelecionada.Id,
             Numero = salaSelecionada.NumeroDaSala,
             Capacidade = salaSelecionada.Capacidade,
-            Status = salaSelecionada.Status ? "Ocupada" : "Livre"
         };
 
         return View(excluirSalaVM);
     }
 
     [HttpPost, ActionName("excluir")]
-    public ViewResult ExcluirConfirmado(ExcluirSalaViewModel excluirSalaVM)
+    public IActionResult ExcluirConfirmado(ExcluirSalaViewModel excluirSalaVM)
     {
-        var db = new CinemaDbContext();
-        var repositorioSala = new RepositorioSala(db);
-
         var sala = repositorioSala.SelecionarId(excluirSalaVM.Id);
 
         repositorioSala.Excluir(sala);
 
-        var mensagem = new MensagemViewModel()
+        TempData.SerializarMensagemViewModel(new MensagemViewModel
         {
-            Mensagem = $"O registro com o ID {sala.Id} foi excluído com sucesso!",
-            Controlador = "/sala",
-            Link = "/listar"
-        };
+            Titulo = "Sucesso",
+            Mensagem = $"O registro ID [{sala.Id}] foi excluído com sucesso!",
+        });
 
-        return View("notificacao", mensagem);
+        return RedirectToAction(nameof(listar));
     }
 
-    public ViewResult Detalhes(int id)
+    public IActionResult Detalhes(int id)
     {
-        var db = new CinemaDbContext();
-        var repositorioSala = new RepositorioSala(db);
-
         var sala = repositorioSala.SelecionarId(id);
 
+        if(sala.Assentos.Count == 0){
+            sala.AlocarAssentos(sala.Capacidade);
+            repositorioSala.Editar(sala);
+        }
         var detalharSalaVM = new DetalharSalaViewModel()
         {
             Id = id,
             Numero = sala.NumeroDaSala,
             Capacidade = sala.Capacidade,
             Assentos = sala.Assentos,
-            Status = sala.Status ? "Ocupada" : "Livre"
+
         };
 
 
         return View(detalharSalaVM);
+    }
+
+    private IActionResult MensagemRegistroNaoEncontrado(int idRegistro)
+    {
+        TempData.SerializarMensagemViewModel(new MensagemViewModel
+        {
+            Titulo = "Erro",
+            Mensagem = $"Não foi possível encontrar o registro ID [{idRegistro}]!"
+        });
+
+        return RedirectToAction(nameof(listar));
     }
 }

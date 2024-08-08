@@ -1,4 +1,5 @@
 ﻿using Controle_de_Cinema.Dominio;
+using Controle_de_Cinema.Dominio.Compartilhado;
 using Controle_de_Cinema.Infra.Compartilhado;
 using Controle_de_Cinema.Infra.ModuloPessoa;
 using Controle_de_Cinema.WebApp.Models;
@@ -9,12 +10,14 @@ namespace Controle_de_Cinema.WebApp.Controllers;
 
 public class PessoaController : Controller
 {
+    readonly private IRepositorioBase<Pessoa> repositorioPessoa;
+    public PessoaController(IRepositorioBase<Pessoa> repositorioPessoa)
+    {
+        this.repositorioPessoa = repositorioPessoa;
+    }
     public ViewResult listar()
     {
-        var db = new CinemaDbContext();
-        var repositorioFuncionario = new RepositorioPessoa(db);
-
-        var pessoas = repositorioFuncionario.SelecionarTodos();
+        var pessoas = repositorioPessoa.SelecionarTodos();
 
         var ListarFuncionarioVM = pessoas.Select(p =>
         {
@@ -37,9 +40,6 @@ public class PessoaController : Controller
     [HttpPost]
     public ViewResult inserir(InserirPessoasViewModel novaPessoaVM)
     {
-        var db = new CinemaDbContext();
-        var repositorioPessoa = new RepositorioPessoa(db);
-
         var novaPessoa = new Pessoa(novaPessoaVM.Nome,
                                                              novaPessoaVM.Cpf
                                                              );
@@ -60,10 +60,7 @@ public class PessoaController : Controller
 
     public ViewResult editar(int id)
     {
-        var db = new CinemaDbContext();
-        var repositorioPessoas = new RepositorioPessoa(db);
-
-        var pessoaSelecionada = repositorioPessoas.SelecionarId(id);
+        var pessoaSelecionada = repositorioPessoa.SelecionarId(id);
 
         var editarPessoaVM = new EditarPessoasViewModel
         {
@@ -81,15 +78,12 @@ public class PessoaController : Controller
         if (!ModelState.IsValid)
             return View(editarPessoaVM);
 
-        var db = new CinemaDbContext();
-        var repositorioPessoas = new RepositorioPessoa(db);
-
-        var pessoa = repositorioPessoas.SelecionarId(editarPessoaVM.Id);
+        var pessoa = repositorioPessoa.SelecionarId(editarPessoaVM.Id);
 
         pessoa.Nome = editarPessoaVM.Nome;
         pessoa.Cpf = editarPessoaVM.Cpf;
 
-        repositorioPessoas.Editar(pessoa);
+        repositorioPessoa.Editar(pessoa);
 
         var mensagem = new MensagemViewModel()
         {
@@ -103,9 +97,6 @@ public class PessoaController : Controller
 
     public ViewResult excluir(int id)
     {
-        var db = new CinemaDbContext();
-        var repositorioPessoa = new RepositorioPessoa(db);
-
         var pessoaSelecionada = repositorioPessoa.SelecionarId(id);
 
         var excluirPessoaVM = new ExcluirPessoasViewModel
@@ -121,9 +112,6 @@ public class PessoaController : Controller
     [HttpPost, ActionName("excluir")]
     public ViewResult excluirConfirmado(ExcluirPessoasViewModel excluirPessoaVM)
     {
-        var db = new CinemaDbContext();
-        var repositorioPessoa = new RepositorioPessoa(db);
-
         var pessoa = repositorioPessoa.SelecionarId(excluirPessoaVM.Id);
 
         repositorioPessoa.Excluir(pessoa);
@@ -140,9 +128,6 @@ public class PessoaController : Controller
 
     public ViewResult detalhes(int id)
     {
-        var db = new CinemaDbContext();
-        var repositorioPessoa = new RepositorioPessoa(db);
-
         var pessoa = repositorioPessoa.SelecionarId(id);
 
         var detalharPessoaVM = new DetalharPessoasViewModel()
