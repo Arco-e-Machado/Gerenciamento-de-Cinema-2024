@@ -28,31 +28,31 @@
             scale: 1.1;
             transition: all .3s ease;
         }
-
-    }
 </style>
-@* Lista *@
-<div class="row gap-3 mt-3 p-2 d-flex justify-content-evenly">
-    @foreach (var sessao in Model)
-    {
 
-        <div id="card-hover" class="card col-md-5 col-lg-4 col-xl-3 p-2 bg-dark text-white">
-            <a id="card-hover" href="/sessao/detalhes/@sessao.Id">
 
-                <div class="card-body">
+@foreach (var filmeGroup in Model.GroupBy(s => s.Filme))
+{
+    <div class="row gap-3 mt-3 p-2 d-flex justify-content-between">
+        <h3 class="text-white">@filmeGroup.Key</h3>  
+        @foreach (var sessao in filmeGroup)
+        {
+            <div id="card-hover" class="card col-md-5 col-lg-4 col-xl-3 p-2 bg-dark text-white">
+                <a id="card-hover" href="/sessao/detalhes/@sessao.Id">
+                    <div class="card-body">
+                        <div class="row row-cols-2 gap-2">
+                            <label class="card-title fs-5 fw-semibold">Sala: @sessao.Sala </label>
+                        </div>
 
-                    <div class="row row-cols-2 gap-2">
-                        <label class="card-title fs-5 fw-semibold">Sala: @sessao.Sala </label>
-
+                        <p class="card-subtitle fs-6"><strong>Id: </strong>[@sessao.Id]</p>
+                        <p class="card-subtitle fs-6"><strong>Filme: </strong>[@sessao.Filme] </p>
+                        <p class="card-subtitle fs-6"><strong>Capacidade da Sala: </strong>[@sessao.Ingressos] </p>
+                        <p class="card-subtitle fs-6"><strong>Horario De Inicio: </strong>[@sessao.InicioSessao] </p>
+                        <p class="card-subtitle fs-6"><strong>Horario De Término: </strong>[@sessao.FimSessao] </p>
                     </div>
-
-                    <p class="card-subtitle fs-6"><strong>Id: </strong>[@sessao.Id]</p>
-                    <p class="card-subtitle fs-6"><strong>Filme: </strong>[@sessao.Filme] </p>
-                    <p class="card-subtitle fs-6"><strong>Capacidade da Sala: </strong>[@sessao.Ingressos] </p>
-                    <p class="card-subtitle fs-6"><strong>Horario De Inicio: </strong>[@sessao.InicioSessao] </p>
-                    <p class="card-subtitle fs-6"><strong>Horario De Término: </strong>[@sessao.FimSessao] </p>
-                </div>
-            </a>
-        </div>
-    }
-</div>
+                </a>
+            </div>
+        }
+    </div>
+    <hr /> 
+}
