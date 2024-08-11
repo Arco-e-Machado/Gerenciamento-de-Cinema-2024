@@ -7,10 +7,14 @@
 
 <div class="container">
     <div class="col card m-5 p-4 gap-2 shadow bg-dark text-white rounded">
-        <form class="d-grid gap-4" asp-action="inserir">
+        <form class="d-grid gap-4" asp-action="editar">
             <div class="mt-2">
                 <label class="control-label fw-semibold">Nome:</label>
                 <input class="form-control" type="text" asp-for="Nome" required min="2" max="100" />
+            </div> 
+            <div class="mt-2">
+                <label class="control-label fw-semibold">Url Imagem:</label>
+                <input class="form-control" type="text" asp-for="ImagemUrl" required min="2"  />
             </div>
             <select class="custom-select" asp-for="Genero" required>
                 @foreach (var genero in Enum.GetValues(typeof(EnumGeneros)))
@@ -22,7 +26,7 @@
 
             <div class="mt-2">
                 <label class="control-label fw-semibold">Duração:</label>
-                <input class="form-control" type="number" placeholder="Minutos" asp-for="Duracao" required />
+                <input class="form-control" type="text" placeholder="Minutos" asp-for="Duracao" required />
             </div>
 
             <div class="mt-2 d-grid gap-2 d-md-block">
@@ -31,7 +35,7 @@
                     Gravar
                 </button>
 
-                <a class="btn btn-secondary px-5" href="/sala/listar">
+                <a class="btn btn-secondary px-5" href="/filme/listar">
                     <i class="bi bi-arrow-return-left me-1"></i>
                     Voltar
                 </a>

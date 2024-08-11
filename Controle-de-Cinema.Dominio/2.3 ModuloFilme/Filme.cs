@@ -9,13 +9,16 @@ public class Filme : EntidadeBase
     public TimeSpan Duracao { get; set; }
 
     private int conversorDeMinutos = 1440; // fui testando
+    public string ImagemUrl { get; set; }
+
 
     public Filme() { }
-    public Filme(string nome, EnumGeneros genero, TimeSpan duracao)
+    public Filme(string nome, EnumGeneros genero, TimeSpan duracao, string imagemUrl)
     {
         Nome = nome;
         Genero = genero;
         Duracao = duracao / conversorDeMinutos;
+        ImagemUrl = imagemUrl;
     }
 
     #region Overrides
@@ -27,6 +30,7 @@ public class Filme : EntidadeBase
         Nome = update.Nome;
         Genero = update.Genero;
         Duracao = update.Duracao;
+        ImagemUrl = update.ImagemUrl;
     }
 
     public override void Validar()

@@ -29,7 +29,8 @@ public class FilmeController : Controller
                 Id = f.Id,
                 Nome = f.Nome,
                 Genero = f.Genero,
-                Duracao = f.Duracao
+                Duracao = f.Duracao,
+                image = f.ImagemUrl
             };
         });
 
@@ -48,7 +49,8 @@ public class FilmeController : Controller
     {
         var novoFilme = new Filme(novoFilmeVM.Nome,
                                                       novoFilmeVM.Genero,
-                                                      novoFilmeVM.Duracao
+                                                      novoFilmeVM.Duracao,
+                                                      novoFilmeVM.ImagemUrl
                                                       );
 
         repositorioFilme.Cadastrar(novoFilme);
@@ -73,7 +75,8 @@ public class FilmeController : Controller
             Id = filmeSelecinado.Id,
             Nome = filmeSelecinado.Nome,
             Genero = filmeSelecinado.Genero,
-            Duracao = filmeSelecinado.Duracao
+            Duracao = filmeSelecinado.Duracao,
+            ImagemUrl = filmeSelecinado.ImagemUrl
         };
 
         return View(editarFilmeVM);
@@ -81,12 +84,13 @@ public class FilmeController : Controller
 
     [HttpPost]
     public IActionResult editar(EditarFilmeViewModel editarFilmeVM)
-    {
+    { 
         var filme = repositorioFilme.SelecionarId(editarFilmeVM.Id);
 
         filme.Nome = editarFilmeVM.Nome;
         filme.Duracao = editarFilmeVM.Duracao;
         filme.Genero = editarFilmeVM.Genero;
+        filme.ImagemUrl = editarFilmeVM.ImagemUrl;
 
         repositorioFilme.Editar(filme);
 

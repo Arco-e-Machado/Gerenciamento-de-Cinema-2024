@@ -5,31 +5,57 @@
 }
 
 <style>
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
     .btn-maroon {
         background-color: #80000084;
         color: white;
-        transition: all .3s ease
+        transition: all .3s ease;
     }
 
         .btn-maroon:hover {
             scale: 1.4;
             background-color: #800000;
-            transition: all .3s ease
-        }
-
-    #card-hover {
-        scale: 1;
-        transition: all .1s ease;
-        text-decoration: none;
-        color: white;
-        cursor: pointer
-    }
-
-        #card-hover:hover {
-            scale: 1.1;
             transition: all .3s ease;
         }
 
+    #card-hover {
+        position: relative;
+        overflow: hidden;
+        color: white;
+        cursor: pointer;
+        transition: transform .3s ease;
+    }
+
+        #card-hover:hover {
+            transform: scale(1.05);
+        }
+
+    .card-body {
+        background-color: #343a40;
+        padding: 20px;
+        border-radius: 10px;
+        transition: transform .3s ease;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .card-subtitle {
+        font-size: 1.1rem;
+        color: #b3b3b3;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
     }
 </style>
 
@@ -38,36 +64,22 @@
     @foreach (var sala in Model)
     {
         <div id="card-hover" class="card col-md-5 col-lg-4 col-xl-3 p-2 bg-dark text-white">
-            <a id="card-hover" href="/sala/detalhes/@sala.Id">
+            <a href="/sala/detalhes/@sala.Id">
                 <div class="card-body">
+                    <div class="card-title">Sala: @sala.Numero</div>
+                    <p class="card-subtitle"><strong>Id: </strong>[@sala.Id]</p>
+                    <p class="card-subtitle"><strong>Capacidade: </strong>[@sala.Capacidade]</p>
 
-
-                    <div class="row row-cols-2 gap-2">
-                        <label class="card-title fs-5 fw-semibold">Nome: @sala.Numero </label>
-
-                    </div>
-
-                    <p class="card-subtitle fs-6"><strong>Id: </strong>[@sala.Id]</p>
-                    <p class="card-subtitle fs-6"><strong>Capacidade: </strong>[@sala.Capacidade] </p>
-
-                    <div class="d-flex justify-content-around gap-2 mt-3">
-                        @*
-                    <a class="btn btn-maroon btn-sm" href="/sala/detalhes/@sala.Id">
-                    <i class="bi bi-search"></i>
-                    </a>
-                    *@
-
+                    <div class=" d-flex justify-content-center gap-2">
                         <a class="btn btn-maroon btn-sm" href="/sala/editar/@sala.Id">
-                            <i class="bi bi-pencil-square"></i>
+                            <i class="bi bi-pencil-square"></i> Editar
                         </a>
 
                         <a class="btn btn-maroon btn-sm" href="/sala/excluir/@sala.Id">
-                            <i class="bi bi-trash3"></i>
+                            <i class="bi bi-trash3"></i> Excluir
                         </a>
-
                     </div>
                 </div>
-
             </a>
         </div>
     }

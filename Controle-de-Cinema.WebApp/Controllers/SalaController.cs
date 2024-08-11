@@ -139,7 +139,17 @@ public class SalaController : Controller
             Capacidade = sala.Capacidade,
             Assentos = sala.Assentos,
 
+        
         };
+        string PartialLayout;
+        if (detalharSalaVM.Capacidade < 50)
+            PartialLayout = "_salaPequena";
+        else if (detalharSalaVM.Capacidade > 120)
+            PartialLayout = "_salaGrande";
+        else
+            PartialLayout = "_salaMedio";
+
+        ViewBag.layoutSala = PartialLayout;
 
 
         return View(detalharSalaVM);

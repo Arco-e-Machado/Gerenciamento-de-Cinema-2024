@@ -6,7 +6,7 @@ public class Sala : EntidadeBase
 {
     public string NumeroDaSala { get; set; }
 
-    public int Capacidade { get; set; }
+    public int Capacidade { get; set; } //Pequena > 30 :50 < média > 120: grande > 120
 
     public List<Assento> Assentos { get; set; }
 
@@ -27,19 +27,27 @@ public class Sala : EntidadeBase
     public void AlocarAssentos(int Capacidade)
     {
         if (Assentos.Count != 0)
-        {
             return;
-        }
+
         else if (Assentos.Count > Capacidade)
         {
             Assentos.Clear();
             AlocarAssentos(Capacidade);
         }
 
+        int CapacidadeFileira;
+
+        if (Capacidade is > 0 and <= 50)
+            CapacidadeFileira = 10;
+        else if (Capacidade is > 50 and < 120)
+            CapacidadeFileira = 12;
+        else
+            CapacidadeFileira = 20;
+
         int fileiraIndex = 0;
         for (int i = 0; i < Capacidade; i++)
         {
-            if (i % 10 == 0 && i != 0)
+            if (i % CapacidadeFileira == 0 && i != 0)
                 fileiraIndex++;
 
             string Fileira = $"{(char)(65 + (fileiraIndex))}";

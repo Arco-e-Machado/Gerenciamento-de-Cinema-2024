@@ -24,7 +24,7 @@ namespace ControleDeCinema.Tests.Integracao.ModuloSala
         public void Deve_Cadastrar_Sala()
         {
             // Arrange
-            Sala novaSala = new Sala("Sala", 80, false);
+            Sala novaSala = new Sala("Sala", 80);
 
             // Act
             repositorioSala!.Cadastrar(novaSala);
@@ -39,7 +39,7 @@ namespace ControleDeCinema.Tests.Integracao.ModuloSala
         public void Deve_Editar_Sala()
         {
             // Arrange
-            Sala salaOriginal = new Sala("Sala", 80, false);
+            Sala salaOriginal = new Sala("Sala", 80);
 
             repositorioSala!.Cadastrar(salaOriginal);
 
@@ -57,7 +57,7 @@ namespace ControleDeCinema.Tests.Integracao.ModuloSala
         [TestMethod]
         public void Deve_Excluir_Sala()
         {
-            Sala salaParaExclusao = new Sala("Sala", 80, false);
+            Sala salaParaExclusao = new Sala("Sala", 80);
 
             repositorioSala!.Cadastrar(salaParaExclusao);
 
@@ -76,9 +76,9 @@ namespace ControleDeCinema.Tests.Integracao.ModuloSala
         {
             List<Sala> SalasParaInserir =
            [
-               new("Sala1", 90, false),
-               new("Sala2", 80, false),
-               new("Sala3", 70, false),
+               new("Sala1", 90),
+               new("Sala2", 80),
+               new("Sala3", 70),
            ];
 
             foreach (Sala Sala in SalasParaInserir)

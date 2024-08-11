@@ -1,4 +1,5 @@
 using Controle_de_Cinema.Dominio;
+using Controle_de_Cinema.Dominio.ModuloFilme;
 using Controle_de_Cinema.Infra.Compartilhado;
 using Controle_de_Cinema.Infra.ModuloFilme;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -28,8 +29,9 @@ namespace ControleDeCinema.Tests.Integracao.ModuloFilme
             // Arrange
             Filme novoFilme = new Filme(
                 "Filme",
-                Controle_de_Cinema.Dominio.ModuloFilme.EnumGeneros.Terror,
-                new TimeSpan(0, 0, 30));
+                EnumGeneros.Terror,
+                new TimeSpan(0, 0, 30),
+                "https://upload.wikimedia.org/wikipedia/en/8/86/Posternotebook.jpg");
 
             // Act
             repositorioFilme!.Cadastrar(novoFilme);
@@ -46,8 +48,9 @@ namespace ControleDeCinema.Tests.Integracao.ModuloFilme
             // Arrange
             Filme filmeOriginal = new Filme(
                 "Filme",
-                Controle_de_Cinema.Dominio.ModuloFilme.EnumGeneros.Ação,
-                new TimeSpan(0, 0, 30));
+                EnumGeneros.Ação,
+                new TimeSpan(0, 0, 30),
+                "https://upload.wikimedia.org/wikipedia/en/8/86/Posternotebook.jpg");
 
             repositorioFilme!.Cadastrar(filmeOriginal);
 
@@ -67,8 +70,9 @@ namespace ControleDeCinema.Tests.Integracao.ModuloFilme
         {
             Filme filmeParaExclusao = new Filme(
                  "Filme",
-                Controle_de_Cinema.Dominio.ModuloFilme.EnumGeneros.Ação,
-                new TimeSpan(0, 0, 30));
+                EnumGeneros.Ação,
+                new TimeSpan(0, 0, 30),
+                "https://upload.wikimedia.org/wikipedia/en/8/86/Posternotebook.jpg");
 
             repositorioFilme!.Cadastrar(filmeParaExclusao);
 
@@ -87,9 +91,12 @@ namespace ControleDeCinema.Tests.Integracao.ModuloFilme
         {
             List<Filme> filmesParaInserir =
            [
-               new("Filme 1",Controle_de_Cinema.Dominio.ModuloFilme.EnumGeneros.Animação, new TimeSpan(0,0,30)),
-               new("Filme 2",Controle_de_Cinema.Dominio.ModuloFilme.EnumGeneros.Terror, new TimeSpan(0,0,30)),
-               new("Filme 3",Controle_de_Cinema.Dominio.ModuloFilme.EnumGeneros.Ação, new TimeSpan(0,0,30))
+               new("Filme 1",EnumGeneros.Animação, new TimeSpan(0,0,30),
+                "https://upload.wikimedia.org/wikipedia/en/8/86/Posternotebook.jpg"),
+               new("Filme 2",EnumGeneros.Terror, new TimeSpan(0,0,30),
+                "https://upload.wikimedia.org/wikipedia/en/8/86/Posternotebook.jpg"),
+               new("Filme 3",EnumGeneros.Ação, new TimeSpan(0,0,30),
+                "https://upload.wikimedia.org/wikipedia/en/8/86/Posternotebook.jpg")
            ];
 
             foreach (Filme filme in filmesParaInserir)

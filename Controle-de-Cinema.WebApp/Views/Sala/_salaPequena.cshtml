@@ -1,0 +1,22 @@
+﻿@model DetalharSalaViewModel
+@{
+    int filaIndex = 0;
+}
+<div class="d-flex flex-column">
+    @foreach (var fila in Model.Assentos.GroupBy(a => a.Numero.Split('-')[0]))
+    {
+        filaIndex++;
+
+        <div class="d-flex justify-content-center mb-2 @(filaIndex % 2 == 0 ? "mt-5" : "")">
+            @foreach (var assento in fila)
+            {
+                <div class="card m-2 bg-secondary text-white" style="height: 2rem; width:2rem; border-end-end-radius:10px;">
+                    <div class="d-flex flex-column justify-content-center text-center">
+                        <i class="bi bi-person fs-5"></i>
+                        <p class="card-text" style="font-size:10px">@assento.Numero</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -10,6 +10,8 @@ public class ListarFilmeViewModel
     public EnumGeneros Genero { get; set; }
     public TimeSpan Duracao { get; set; }
     public int DuracaoInt { get; set; }
+
+    public string image { get; set; }
 }
 
 public class InserirFilmeViewModel
@@ -21,6 +23,7 @@ public class InserirFilmeViewModel
     public EnumGeneros Genero { get; set; }
     [Required(ErrorMessage = "A duração do filme é obrigatório!")]
     public TimeSpan Duracao { get; set; }
+    public string ImagemUrl { get; set; }
 }
 
 public class EditarFilmeViewModel
@@ -32,6 +35,8 @@ public class EditarFilmeViewModel
     public EnumGeneros Genero { get; set; }
     [Required(ErrorMessage = "A duração do filme é obrigatório!")]
     public TimeSpan Duracao { get; set; }
+    public string ImagemUrl { get; set; }
+
 }
 
 public class ExcluirFilmeViewModel
