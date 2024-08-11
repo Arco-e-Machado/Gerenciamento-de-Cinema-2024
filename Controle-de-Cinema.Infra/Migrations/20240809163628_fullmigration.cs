@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Controle_de_Cinema.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class MigraçãoCompletacomdados : Migration
+    public partial class fullmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,7 +35,8 @@ namespace Controle_de_Cinema.Infra.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
                     Genero = table.Column<int>(type: "int", nullable: false),
-                    Duracao = table.Column<TimeSpan>(type: "time", nullable: false)
+                    Duracao = table.Column<TimeSpan>(type: "time", nullable: false),
+                    ImagemUrl = table.Column<string>(type: "varchar(600)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -154,19 +155,19 @@ namespace Controle_de_Cinema.Infra.Migrations
 
             migrationBuilder.InsertData(
                 table: "TBfilme",
-                columns: new[] { "Id", "Duracao", "Genero", "Nome" },
+                columns: new[] { "Id", "Duracao", "Genero", "ImagemUrl", "Nome" },
                 values: new object[,]
                 {
-                    { 1, new TimeSpan(0, 1, 36, 0, 0), 8, "UP - Altas Aventuras" },
-                    { 2, new TimeSpan(0, 2, 23, 0, 0), 0, "Os Vingadores" },
-                    { 3, new TimeSpan(0, 2, 7, 0, 0), 1, "Jurassic Park" },
-                    { 4, new TimeSpan(0, 1, 57, 0, 0), 2, "O Grande Lebowski" },
-                    { 5, new TimeSpan(0, 3, 15, 0, 0), 3, "A Lista de Schindler" },
-                    { 6, new TimeSpan(0, 2, 58, 0, 0), 4, "O Senhor dos Anéis: A Sociedade do Anel" },
-                    { 7, new TimeSpan(0, 2, 2, 0, 0), 5, "O Exorcista" },
-                    { 8, new TimeSpan(0, 2, 4, 0, 0), 6, "Diário de uma Paixão" },
-                    { 9, new TimeSpan(0, 1, 58, 0, 0), 7, "O Silêncio dos Inocentes" },
-                    { 10, new TimeSpan(0, 2, 35, 0, 0), 9, "Gladiador" }
+                    { 1, new TimeSpan(0, 1, 36, 0, 0), 8, "https://upload.wikimedia.org/wikipedia/en/0/05/Up_%282009_film%29.jpg", "UP - Altas Aventuras" },
+                    { 2, new TimeSpan(0, 2, 23, 0, 0), 0, "https://upload.wikimedia.org/wikipedia/en/f/f9/TheAvengers2012Poster.jpg", "Os Vingadores" },
+                    { 3, new TimeSpan(0, 2, 7, 0, 0), 1, "https://upload.wikimedia.org/wikipedia/en/e/e7/Jurassic_Park_poster.jpg", "Jurassic Park" },
+                    { 4, new TimeSpan(0, 1, 57, 0, 0), 2, "https://upload.wikimedia.org/wikipedia/en/3/35/Biglebowskiposter.jpg", "O Grande Lebowski" },
+                    { 5, new TimeSpan(0, 3, 15, 0, 0), 3, "https://upload.wikimedia.org/wikipedia/en/3/38/Schindler%27s_List_movie.jpg", "A Lista de Schindler" },
+                    { 6, new TimeSpan(0, 2, 58, 0, 0), 4, "https://upload.wikimedia.org/wikipedia/en/8/87/Ringstrilogyposter.jpg", "O Senhor dos Anéis: A Sociedade do Anel" },
+                    { 7, new TimeSpan(0, 2, 2, 0, 0), 5, "https://upload.wikimedia.org/wikipedia/en/6/6b/Exorcist_ver2.jpg", "O Exorcista" },
+                    { 8, new TimeSpan(0, 2, 4, 0, 0), 6, "https://upload.wikimedia.org/wikipedia/en/8/86/Posternotebook.jpg", "Diário de uma Paixão" },
+                    { 9, new TimeSpan(0, 1, 58, 0, 0), 7, "https://upload.wikimedia.org/wikipedia/en/8/86/The_Silence_of_the_Lambs_poster.jpg", "O Silêncio dos Inocentes" },
+                    { 10, new TimeSpan(0, 2, 35, 0, 0), 9, "https://upload.wikimedia.org/wikipedia/en/8/8d/Gladiator_ver1.jpg", "Gladiador" }
                 });
 
             migrationBuilder.CreateIndex(

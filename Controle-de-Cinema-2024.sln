@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controle-de-Cinema.WebApp",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.1 Integração", "4.1 Integração", "{63269DAA-1948-4866-8152-22D2C8C80730}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.Tests.Integracao", "ControleDeCinema.Tests.Integracao\ControleDeCinema.Tests.Integracao.csproj", "{A6270F2D-28D6-4661-AE9C-AEF499C25BED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDeCinema.Tests.Integracao", "ControleDeCinema.Tests.Integracao\ControleDeCinema.Tests.Integracao.csproj", "{A6270F2D-28D6-4661-AE9C-AEF499C25BED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

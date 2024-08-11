@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Controle_de_Cinema.Infra.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    [Migration("20240808031544_Migração Completa com dados")]
-    partial class MigraçãoCompletacomdados
+    [Migration("20240809163628_fullmigration")]
+    partial class fullmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,6 +69,10 @@ namespace Controle_de_Cinema.Infra.Migrations
                     b.Property<int>("Genero")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImagemUrl")
+                        .IsRequired()
+                        .HasColumnType("varchar(600)");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
@@ -83,6 +87,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                             Id = 1,
                             Duracao = new TimeSpan(0, 1, 36, 0, 0),
                             Genero = 8,
+                            ImagemUrl = "https://upload.wikimedia.org/wikipedia/en/0/05/Up_%282009_film%29.jpg",
                             Nome = "UP - Altas Aventuras"
                         },
                         new
@@ -90,6 +95,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                             Id = 2,
                             Duracao = new TimeSpan(0, 2, 23, 0, 0),
                             Genero = 0,
+                            ImagemUrl = "https://upload.wikimedia.org/wikipedia/en/f/f9/TheAvengers2012Poster.jpg",
                             Nome = "Os Vingadores"
                         },
                         new
@@ -97,6 +103,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                             Id = 3,
                             Duracao = new TimeSpan(0, 2, 7, 0, 0),
                             Genero = 1,
+                            ImagemUrl = "https://upload.wikimedia.org/wikipedia/en/e/e7/Jurassic_Park_poster.jpg",
                             Nome = "Jurassic Park"
                         },
                         new
@@ -104,6 +111,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                             Id = 4,
                             Duracao = new TimeSpan(0, 1, 57, 0, 0),
                             Genero = 2,
+                            ImagemUrl = "https://upload.wikimedia.org/wikipedia/en/3/35/Biglebowskiposter.jpg",
                             Nome = "O Grande Lebowski"
                         },
                         new
@@ -111,6 +119,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                             Id = 5,
                             Duracao = new TimeSpan(0, 3, 15, 0, 0),
                             Genero = 3,
+                            ImagemUrl = "https://upload.wikimedia.org/wikipedia/en/3/38/Schindler%27s_List_movie.jpg",
                             Nome = "A Lista de Schindler"
                         },
                         new
@@ -118,6 +127,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                             Id = 6,
                             Duracao = new TimeSpan(0, 2, 58, 0, 0),
                             Genero = 4,
+                            ImagemUrl = "https://upload.wikimedia.org/wikipedia/en/8/87/Ringstrilogyposter.jpg",
                             Nome = "O Senhor dos Anéis: A Sociedade do Anel"
                         },
                         new
@@ -125,6 +135,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                             Id = 7,
                             Duracao = new TimeSpan(0, 2, 2, 0, 0),
                             Genero = 5,
+                            ImagemUrl = "https://upload.wikimedia.org/wikipedia/en/6/6b/Exorcist_ver2.jpg",
                             Nome = "O Exorcista"
                         },
                         new
@@ -132,6 +143,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                             Id = 8,
                             Duracao = new TimeSpan(0, 2, 4, 0, 0),
                             Genero = 6,
+                            ImagemUrl = "https://upload.wikimedia.org/wikipedia/en/8/86/Posternotebook.jpg",
                             Nome = "Diário de uma Paixão"
                         },
                         new
@@ -139,6 +151,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                             Id = 9,
                             Duracao = new TimeSpan(0, 1, 58, 0, 0),
                             Genero = 7,
+                            ImagemUrl = "https://upload.wikimedia.org/wikipedia/en/8/86/The_Silence_of_the_Lambs_poster.jpg",
                             Nome = "O Silêncio dos Inocentes"
                         },
                         new
@@ -146,6 +159,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                             Id = 10,
                             Duracao = new TimeSpan(0, 2, 35, 0, 0),
                             Genero = 9,
+                            ImagemUrl = "https://upload.wikimedia.org/wikipedia/en/8/8d/Gladiator_ver1.jpg",
                             Nome = "Gladiador"
                         });
                 });

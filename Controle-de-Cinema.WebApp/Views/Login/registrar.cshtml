@@ -1,12 +1,12 @@
-﻿@model LoginViewModel 
+﻿@model RegistrarViewModel 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Registrar nova Empresa";
 }
 
 <div class="container">
     <div class="col card m-5 p-4 gap-2 shadow bg-dark text-white rounded">
 
-        <form asp-action="Login" method="post" class="d-grid gap-4">
+        <form asp-action="registrar" method="post" class="d-grid gap-4">
             <div class="mt-2">
                 <label class="control-label fw-semibold">Login: (Leo)</label>
                 <input class="form-control" type="text" asp-for="Usuario" required />
@@ -16,12 +16,21 @@
                 <label class="control-label fw-semibold">Senha: (123)</label>
                 <input class="form-control" type="password" asp-for="Senha" required />
             </div>
-            <a href="@Url.Action("registrar","login")"></a>
+
+            <div class="mt-2">
+                <label class="control-label fw-semibold">Email: (123)</label>
+                <input class="form-control" type="email" asp-for="Email" required />
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label fw-semibold">Nome da Empresa: (123)</label>
+                <input class="form-control" type="text" asp-for="NomeEmpresa" required />
+            </div>
 
             <div class="mt-2 d-grid gap-2 d-md-block">
                 <button class="btn btn-primary px-5" type="submit">
                     <i class="bi bi-box-arrow-in-right me-1"></i>
-                    Entrar
+                    Cadastrar
                 </button>
             </div>
         </form>

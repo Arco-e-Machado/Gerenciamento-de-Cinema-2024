@@ -1,11 +1,11 @@
 using Controle_de_Cinema.Dominio;
-using Controle_de_Cinema.Dominio.Compartilhado;
-using Controle_de_Cinema.Dominio.ModuloSessao;
-using Controle_de_Cinema.Infra.Compartilhado;
+using Controle_de_Cinema.Infra.Servicos;
+using Controle_de_Cinema.Infra.ModuloSala;
 using Controle_de_Cinema.Infra.ModuloFilme;
 using Controle_de_Cinema.Infra.ModuloPessoa;
-using Controle_de_Cinema.Infra.ModuloSala;
 using Controle_de_Cinema.Infra.ModuloSessao;
+using Controle_de_Cinema.Infra.Compartilhado;
+using Controle_de_Cinema.Dominio.Compartilhado;
 
 namespace Controle_de_Cinema.WebApp;
 
@@ -13,7 +13,11 @@ public class Program
 {
     public static void Main(string[] args)
     {
+
         var builder = WebApplication.CreateBuilder(args);
+
+
+        builder.Services.AddSingleton<ConexaoBancoDeDados>(sp => ConexaoBancoDeDados.instance);
 
         builder.Services.AddControllersWithViews();
 

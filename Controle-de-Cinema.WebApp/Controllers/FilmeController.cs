@@ -48,10 +48,10 @@ public class FilmeController : Controller
     public IActionResult inserir(InserirFilmeViewModel novoFilmeVM)
     {
         var novoFilme = new Filme(novoFilmeVM.Nome,
-                                                      novoFilmeVM.Genero,
-                                                      novoFilmeVM.Duracao,
-                                                      novoFilmeVM.ImagemUrl
-                                                      );
+                                  novoFilmeVM.Genero,
+                                  novoFilmeVM.Duracao,
+                                  novoFilmeVM.ImagemUrl
+                                  );
 
         repositorioFilme.Cadastrar(novoFilme);
 
