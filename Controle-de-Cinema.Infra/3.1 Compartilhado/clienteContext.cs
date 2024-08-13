@@ -1,23 +1,26 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Controle_de_Cinema.Dominio.ModuloEmpresa;
+using Controle_de_Cinema.Infra.Servicos;
 
 namespace Controle_de_Cinema.Infra.Compartilhado
 {
     public class ClienteDbContext : DbContext
     {
-       public DbSet<Empresa> Empresas { get; set; }
+        public ClienteDbContext(DbContextOptions<ClienteDbContext> options)
+    : base(options)
+        {
+        }
+
+        public DbSet<Empresa> Empresas { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            IConfigurationRoot config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
+            var Banco = ConexaoBancoDeDados.Instance;
 
-            string connectionString = config.GetConnectionString("SqlServer")!;
+            optionsBuilder.UseSqlServer(Banco.Connection);
 
-            optionsBuilder.UseSqlServer(connectionString);
+            ApplyMigrations();
 
             base.OnConfiguring(optionsBuilder);
         }
@@ -29,7 +32,13 @@ namespace Controle_de_Cinema.Infra.Compartilhado
             modelBuilder.ApplyConfiguration(new mapperEmpresas());
 
 
-        base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+        }
+    public void ApplyMigrations()
+    {
+        this.Database.Migrate();
     }
-}
+
+
+    }
 }

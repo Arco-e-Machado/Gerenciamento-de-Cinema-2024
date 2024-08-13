@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Controle_de_Cinema.Infra.Migrations
+namespace Controle_de_Cinema.Infra.Migrations.CinemaDb
 {
     /// <inheritdoc />
-    public partial class fullmigration : Migration
+    public partial class Adicionado : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

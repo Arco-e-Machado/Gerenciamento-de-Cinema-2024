@@ -4,19 +4,16 @@ using Controle_de_Cinema.Infra.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Controle_de_Cinema.Infra.Migrations
+namespace Controle_de_Cinema.Infra.Migrations.CinemaDb
 {
     [DbContext(typeof(CinemaDbContext))]
-    [Migration("20240809163628_fullmigration")]
-    partial class fullmigration
+    partial class CinemaDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

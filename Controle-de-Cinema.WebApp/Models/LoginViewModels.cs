@@ -1,16 +1,51 @@
-﻿namespace Controle_de_Cinema.WebApp.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
+
+namespace Controle_de_Cinema.WebApp.Models;
 
 public class LoginViewModel
 {
-    public string Usuario { get; set; }
-    public string Senha { get; set; }
+    [Required]
+    public string? Usuario { get; set; }
+
+    [Required(ErrorMessage = "A senha é obrigatória")]
+    [DataType(DataType.Password)]
+    public string? Senha { get; set; }
+
+    [Display(Name = "Lembrar-me")]
+    public bool LembrarMe { get; set; }
 }
 
 public class RegistrarViewModel
 {
-    public string Usuario { get; set; }
-    public string Senha { get; set; }
-    public string Email {  get; set; }
-    public string NomeEmpresa { get; set; }
+    public RegistrarViewModel()
+    {
+        Tipos =
+            [
+            new SelectListItem { Value = "Empresa", Text = "Empresa" },
+            new SelectListItem { Value = "Cliente", Text = "Cliente" }
+            ];
+    }
 
+    [Required]
+    public string? Usuario { get; set; }
+
+    [Required]
+    [EmailAddress]
+    public string? Email { get; set; }
+
+    [Required]
+    [DataType(DataType.Password)]
+    public string? Senha { get; set; }
+
+    [Display(Name = "Confirme a senha")]
+    [DataType(DataType.Password)]
+    [Compare("Senha", ErrorMessage = "As senhas não conferem")]
+    public string? ConfirmarSenha { get; set; }
+
+    [Required]
+    public string? Tipo { get; set; }
+
+    [Required]
+    public IEnumerable<SelectListItem> Tipos { get; set; }
 }

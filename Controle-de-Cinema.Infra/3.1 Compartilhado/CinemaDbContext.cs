@@ -1,14 +1,14 @@
 ﻿using Controle_de_Cinema.Dominio;
-using Controle_de_Cinema.Infra.ModuloFilme;
 using Controle_de_Cinema.Infra.ModuloSala;
 using Controle_de_Cinema.Infra.ModuloSessao;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 
 namespace Controle_de_Cinema.Infra.Compartilhado;
 
-public class CinemaDbContext : DbContext
+public class CinemaDbContext : IdentityDbContext
 {
     public DbSet<Pessoa> Pessoas { get; set; }
     public DbSet<Filme> Filmes { get; set; }

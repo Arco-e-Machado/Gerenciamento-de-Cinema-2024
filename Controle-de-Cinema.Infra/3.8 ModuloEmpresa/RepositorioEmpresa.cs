@@ -1,23 +1,17 @@
-﻿using Controle_de_Cinema.Dominio.ModuloEmpresa;
+﻿using Microsoft.EntityFrameworkCore;
 using Controle_de_Cinema.Infra.Compartilhado;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Win32;
+using Controle_de_Cinema.Dominio.ModuloEmpresa;
 
 namespace Controle_de_Cinema.Infra.ModuloEmpresa
 {
-    public class RepositorioEmpresa
+    public class RepositorioEmpresa : IRepositorioEmpresa
     {
 
         private readonly ClienteDbContext _clientesContext;
 
-        public RepositorioEmpresa(ClienteDbContext dbContext) 
+        public RepositorioEmpresa(ClienteDbContext dbContext)
         {
             _clientesContext = dbContext;
-        }
-
-        public object buscar(object id)
-        {
-            throw new NotImplementedException();
         }
 
         public void Cadastrar(Empresa novaEmpresa)
@@ -53,6 +47,11 @@ namespace Controle_de_Cinema.Infra.ModuloEmpresa
         public List<Empresa> SelecionarTodos()
         {
             return ObterRegistros().ToList();
+        }
+
+        public bool Excluir(Empresa registro)
+        {
+            throw new NotImplementedException();
         }
     }
 }

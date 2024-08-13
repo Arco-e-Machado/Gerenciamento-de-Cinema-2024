@@ -1,4 +1,4 @@
-﻿@model LoginViewModel 
+﻿@model Controle_de_Cinema.WebApp.Models.LoginViewModel
 @{
     ViewBag.Title = "Login";
 }
@@ -8,15 +8,15 @@
 
         <form asp-action="Login" method="post" class="d-grid gap-4">
             <div class="mt-2">
-                <label class="control-label fw-semibold">Login: (Leo)</label>
+                <label class="control-label fw-semibold">Login:</label>
                 <input class="form-control" type="text" asp-for="Usuario" required />
             </div>
 
             <div class="mt-2">
-                <label class="control-label fw-semibold">Senha: (123)</label>
+                <label class="control-label fw-semibold">Senha:</label>
                 <input class="form-control" type="password" asp-for="Senha" required />
             </div>
-            <a href="@Url.Action("registrar","login")"></a>
+            <a asp-action="registrar">Registrar Empresa</a>
 
             <div class="mt-2 d-grid gap-2 d-md-block">
                 <button class="btn btn-primary px-5" type="submit">

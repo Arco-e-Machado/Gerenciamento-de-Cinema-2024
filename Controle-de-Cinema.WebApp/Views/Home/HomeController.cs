@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Controle_de_Cinema.WebApp.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Controle_de_Cinema.WebApp.Views.Home
 {
@@ -6,7 +7,12 @@ namespace Controle_de_Cinema.WebApp.Views.Home
     {
         public IActionResult Index()
         {
-            return View();
+            var model = new LoginViewModel
+            {
+                Saudacao = "Bem-vindo!"
+            };
+            return View(model);
+
         }
     }
 }
