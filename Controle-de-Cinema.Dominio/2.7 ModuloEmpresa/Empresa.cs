@@ -1,9 +1,7 @@
-﻿using Controle_de_Cinema.Dominio.Compartilhado;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
-namespace Controle_de_Cinema.Dominio.ModuloEmpresa
+namespace Controle_de_Cinema.Dominio.ModuloEmpresa;
+
+public class Empresa : IdentityRole<int>
 {
-    public class Empresa : IdentityUser<int>
-    {
-    }
 }

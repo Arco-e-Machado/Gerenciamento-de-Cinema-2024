@@ -21,6 +21,13 @@ namespace Controle_de_Cinema.Infra.ModuloSala
             assentoBuilder.Property(a => a.Status)
                 .IsRequired()
                 .HasColumnType("bit");
+
+            assentoBuilder.HasOne(x => x.usuario)
+                .WithMany()
+                .HasForeignKey("User_Id")
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

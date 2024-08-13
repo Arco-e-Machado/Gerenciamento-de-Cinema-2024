@@ -26,8 +26,6 @@ public abstract class RepositorioBase<Generico> where Generico : EntidadeBase
         if (registro == null || registroAtualizado == null)
             return false;
 
-        registro.Atualizar(registroAtualizado);
-
         ObterRegistros().Update(registro);
 
         _dbContext.SaveChanges();

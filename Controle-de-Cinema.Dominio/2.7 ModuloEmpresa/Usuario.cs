@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Controle_de_Cinema.Dominio.Compartilhado
+namespace Controle_de_Cinema.Dominio.Compartilhado; 
+
+public class Usuario : IdentityUser<int>
 {
-    public class Usuario : IdentityUser<int>
+    public Usuario()
     {
-        public Usuario()
-        {
-            EmailConfirmed = true;
-        }
+        EmailConfirmed = true;
     }
 }

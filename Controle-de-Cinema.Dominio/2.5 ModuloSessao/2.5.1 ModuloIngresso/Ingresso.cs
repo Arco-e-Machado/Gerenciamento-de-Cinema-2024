@@ -24,25 +24,6 @@ public class Ingresso : EntidadeBase
         Tipo = tipo;
         Status = status;
     }
-
-
-
-    #region Overrides
-    public override void Atualizar(EntidadeBase registro)
-    {
-        Ingresso update = (Ingresso)registro;
-
-        Sessao = update.Sessao;
-        Assento = update.Assento;
-        Valor = update.Valor;
-        Status = update.Status;
-    }
-
-    public override void Validar()
-    {
-        throw new NotImplementedException();
-    }
-
     public void Vender()
     {
         Status = false;
@@ -56,5 +37,4 @@ public class Ingresso : EntidadeBase
     {
         return $"ingresso {Assento.Numero}";
     }
-    #endregion
 }

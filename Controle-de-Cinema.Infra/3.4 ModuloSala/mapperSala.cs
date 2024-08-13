@@ -27,7 +27,13 @@ public class mapperSala : IEntityTypeConfiguration<Sala>
             .HasForeignKey("sala_Id")
             .OnDelete(DeleteBehavior.Cascade);
 
-        salaBuilder.HasData(NewData());
+        salaBuilder.HasOne(x => x.usuario)
+            .WithMany()
+            .HasForeignKey("User_Id")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
+
+        //salaBuilder.HasData(NewData());
     }
 
     private Sala[] NewData()

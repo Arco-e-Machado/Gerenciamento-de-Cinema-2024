@@ -34,35 +34,4 @@ public class Sessao : EntidadeBase
 
         return fimCalculado;
         }
-
-    #region Overrides
-    public override void Atualizar(EntidadeBase registro)
-    {
-        Sessao update = (Sessao)registro;
-
-        Filme = update.Filme;
-        Sala = update.Sala;
-        InicioDaSessao = update.InicioDaSessao;
-        FimDaSessao = update.FimDaSessao;
-    }
-
-    public override void Validar()
-    {
-        List<string> erros = new List<string>();
-
-        if (Filme == null)
-            erros.Add("O campo \"Filme\" deve ser preenchido.");
-
-        if (Sala == null)
-            erros.Add("O campo \"Sala\" deve ser preenchido.");
-
-        if (InicioDaSessao == null)
-            erros.Add("O campo \"Horário de Inicio\" deve ser preenchido.");
-
-        if (FimDaSessao == null)
-            erros.Add("O campo \"Horário de Termino\" deve ser preenchido.");
-
-    }
-
-    #endregion
 }

@@ -7,11 +7,7 @@ namespace Controle_de_Cinema.WebApp.Views.Home
     {
         public IActionResult Index()
         {
-            var model = new LoginViewModel
-            {
-                Saudacao = "Bem-vindo!"
-            };
-            return View(model);
+            return View();
 
         }
     }

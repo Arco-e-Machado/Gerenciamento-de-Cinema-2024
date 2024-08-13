@@ -29,7 +29,13 @@ public class mapperFilme : IEntityTypeConfiguration<Filme>
             .IsRequired()
             .HasColumnType("varchar(600)");
 
-        filmeBuilder.HasData(NewData());
+        filmeBuilder.HasOne(x => x.usuario)
+            .WithMany()
+            .HasForeignKey("User_Id")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
+
+        //filmeBuilder.HasData(NewData());
     }
 
     private Filme[] NewData()

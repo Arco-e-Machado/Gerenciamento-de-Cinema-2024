@@ -21,21 +21,4 @@ public class Atendimento : EntidadeBase
         Sessao = sessao;
         Cliente = cliente;
     }
-
-    #region Overrides
-    public override void Atualizar(EntidadeBase registro)
-    {
-        Atendimento update = (Atendimento)registro;
-
-        Funcionario = update.Funcionario;
-        Ingresso = update.Ingresso;
-        Sessao = update.Sessao;
-        Cliente = update.Cliente;
-    }
-
-    public override void Validar()
-    {
-        throw new NotImplementedException();
-    }
-    #endregion
 }

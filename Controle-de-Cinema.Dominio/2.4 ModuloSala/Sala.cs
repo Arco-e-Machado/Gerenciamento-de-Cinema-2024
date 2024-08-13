@@ -62,28 +62,8 @@ public class Sala : EntidadeBase
         }
     }
 
-
-    #region Overrides
-    public override void Atualizar(EntidadeBase registro)
-    {
-        Sala update = (Sala)registro;
-
-
-        Capacidade = update.Capacidade;
-        NumeroDaSala = update.NumeroDaSala;
-    }
-
     public override string? ToString()
     {
         return $"Sala {NumeroDaSala}";
     }
-
-    public override void Validar()
-    {
-        List<string> erros = new List<string>();
-
-        if (Capacidade == null || Capacidade < 15)
-            erros.Add("A Sala deve conter uma quantia mínima de 15 assentos de capacidade.");
-    }
-    #endregion
 }

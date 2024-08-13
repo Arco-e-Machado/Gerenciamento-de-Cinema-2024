@@ -19,16 +19,4 @@ public class Assento : EntidadeBase
     {
         return $"assento {Numero}";
     }
-
-    public override void Atualizar(EntidadeBase registro)
-    {
-        Assento a = (Assento)registro;
-
-        Status = a.Status;
-    }
-
-    public override void Validar()
-    {
-        throw new NotImplementedException();
-    }
 }
