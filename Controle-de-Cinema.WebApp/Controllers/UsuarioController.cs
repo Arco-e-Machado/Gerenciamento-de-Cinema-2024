@@ -74,7 +74,7 @@ public class UsuarioController : Controller
 
         return View();
     }
-
+    [HttpPost]
     public async Task<IActionResult> Login( LoginViewModel login, string? returnUrl = null)
     {
         ViewBag.ReturnUrl = returnUrl;
@@ -100,5 +100,13 @@ public class UsuarioController : Controller
     public IActionResult AcessoNegado()
     {
         return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Logout()
+    {
+        await signInManager.SignOutAsync();
+
+        return RedirectToAction("Index", "Home");
     }
 }

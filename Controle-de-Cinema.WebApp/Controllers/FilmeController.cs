@@ -47,6 +47,7 @@ public class FilmeController : Controller
     [HttpPost]
     public IActionResult inserir(InserirFilmeViewModel novoFilmeVM)
     {
+
         var novoFilme = new Filme(novoFilmeVM.Nome,
                                   novoFilmeVM.Genero,
                                   novoFilmeVM.Duracao,

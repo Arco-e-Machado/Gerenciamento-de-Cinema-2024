@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Controle_de_Cinema.Infra.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    [Migration("20240813022754_add migration")]
-    partial class addmigration
+    [Migration("20240813204354_Add-migration identity")]
+    partial class Addmigrationidentity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,7 +43,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<int>("User_Id")
+                    b.Property<int>("Usuario_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("sala_Id")
@@ -53,7 +53,7 @@ namespace Controle_de_Cinema.Infra.Migrations
 
                     b.HasIndex("SessaoId");
 
-                    b.HasIndex("User_Id");
+                    b.HasIndex("Usuario_Id");
 
                     b.HasIndex("sala_Id");
 
@@ -150,12 +150,12 @@ namespace Controle_de_Cinema.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("User_Id")
+                    b.Property<int>("Usuario_Id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("User_Id");
+                    b.HasIndex("Usuario_Id");
 
                     b.ToTable("TBfilme", (string)null);
                 });
@@ -180,7 +180,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                     b.Property<bool>("Tipo")
                         .HasColumnType("bit");
 
-                    b.Property<int>("User_Id")
+                    b.Property<int>("Usuario_Id")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Valor")
@@ -192,7 +192,7 @@ namespace Controle_de_Cinema.Infra.Migrations
 
                     b.HasIndex("Sessao_Id");
 
-                    b.HasIndex("User_Id");
+                    b.HasIndex("Usuario_Id");
 
                     b.ToTable("TBIngresso", (string)null);
                 });
@@ -243,12 +243,12 @@ namespace Controle_de_Cinema.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("usuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("usuarioId");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Pessoas");
                 });
@@ -268,12 +268,12 @@ namespace Controle_de_Cinema.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("User_Id")
+                    b.Property<int>("Usuario_Id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("User_Id");
+                    b.HasIndex("Usuario_Id");
 
                     b.ToTable("TBSala", (string)null);
                 });
@@ -298,7 +298,7 @@ namespace Controle_de_Cinema.Infra.Migrations
                     b.Property<int>("Sala_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("User_Id")
+                    b.Property<int>("Usuario_Id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -307,7 +307,7 @@ namespace Controle_de_Cinema.Infra.Migrations
 
                     b.HasIndex("Sala_Id");
 
-                    b.HasIndex("User_Id");
+                    b.HasIndex("Usuario_Id");
 
                     b.ToTable("TBSessao", (string)null);
                 });
@@ -421,9 +421,9 @@ namespace Controle_de_Cinema.Infra.Migrations
                         .WithMany("Assentos")
                         .HasForeignKey("SessaoId");
 
-                    b.HasOne("Controle_de_Cinema.Dominio.Compartilhado.Usuario", "usuario")
+                    b.HasOne("Controle_de_Cinema.Dominio.Compartilhado.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("User_Id")
+                        .HasForeignKey("Usuario_Id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -435,18 +435,18 @@ namespace Controle_de_Cinema.Infra.Migrations
 
                     b.Navigation("Sala");
 
-                    b.Navigation("usuario");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Filme", b =>
                 {
-                    b.HasOne("Controle_de_Cinema.Dominio.Compartilhado.Usuario", "usuario")
+                    b.HasOne("Controle_de_Cinema.Dominio.Compartilhado.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("User_Id")
+                        .HasForeignKey("Usuario_Id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("usuario");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Ingresso", b =>
@@ -463,9 +463,9 @@ namespace Controle_de_Cinema.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Controle_de_Cinema.Dominio.Compartilhado.Usuario", "usuario")
+                    b.HasOne("Controle_de_Cinema.Dominio.Compartilhado.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("User_Id")
+                        .HasForeignKey("Usuario_Id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -473,29 +473,29 @@ namespace Controle_de_Cinema.Infra.Migrations
 
                     b.Navigation("Sessao");
 
-                    b.Navigation("usuario");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Pessoa", b =>
                 {
-                    b.HasOne("Controle_de_Cinema.Dominio.Compartilhado.Usuario", "usuario")
+                    b.HasOne("Controle_de_Cinema.Dominio.Compartilhado.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("usuarioId")
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("usuario");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Sala", b =>
                 {
-                    b.HasOne("Controle_de_Cinema.Dominio.Compartilhado.Usuario", "usuario")
+                    b.HasOne("Controle_de_Cinema.Dominio.Compartilhado.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("User_Id")
+                        .HasForeignKey("Usuario_Id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("usuario");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Controle_de_Cinema.Dominio.Sessao", b =>
@@ -512,9 +512,9 @@ namespace Controle_de_Cinema.Infra.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Controle_de_Cinema.Dominio.Compartilhado.Usuario", "usuario")
+                    b.HasOne("Controle_de_Cinema.Dominio.Compartilhado.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("User_Id")
+                        .HasForeignKey("Usuario_Id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -522,7 +522,7 @@ namespace Controle_de_Cinema.Infra.Migrations
 
                     b.Navigation("Sala");
 
-                    b.Navigation("usuario");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

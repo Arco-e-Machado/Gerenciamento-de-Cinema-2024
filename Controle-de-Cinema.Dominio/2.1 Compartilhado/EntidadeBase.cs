@@ -3,5 +3,5 @@
 public abstract class EntidadeBase
 {
     public int Id { get; set; }
-    public Usuario usuario{ get; set; }
+    public Usuario Usuario{ get; set; }
 }

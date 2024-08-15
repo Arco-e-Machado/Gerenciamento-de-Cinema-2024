@@ -46,4 +46,17 @@ public class RepositorioSessao : RepositorioBase<Sessao>, IRepositorioSessao
             .ToList();
     }
 
+    public List<IGrouping<string, Sessao>> ObterSessoesAgrupadasPorFilme()
+    {
+        return _dbContext.Sessoes
+            .Where(s => !s.Encerrada)
+            .Include(s => s.Filme)
+            .ThenInclude(f => f.Genero)
+            .Include(s => s.Sala)
+            .Include(s => s.Ingressos)
+            .GroupBy(s => s.Filme.Nome)
+            .AsNoTracking()
+            .ToList();
+    }
 }
+

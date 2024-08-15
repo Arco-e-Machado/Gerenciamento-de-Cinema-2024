@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Controle_de_Cinema.WebApp.Models;
 using Controle_de_Cinema.Dominio.Compartilhado;
 using Controle_de_Cinema.WebApp.Extensions;
+using Controle_de_Cinema.Dominio.ModuloSessao;
 
 namespace Controle_de_Cinema.WebApp.Controllers;
 
 public class SessaoController : Controller
 {
-    readonly private IRepositorioBase<Sessao> repositorioSessao;
+    readonly private IRepositorioSessao repositorioSessao;
     readonly private IRepositorioBase<Filme> repositorioFilme;
     readonly private IRepositorioBase<Assento> repositorioAssento;
     readonly private IRepositorioBase<Sala> repositorioSala;
@@ -18,7 +19,7 @@ public class SessaoController : Controller
     public SessaoController(
         IRepositorioBase<Sala> repositorioSala,
         IRepositorioBase<Filme> repositorioFilme,
-        IRepositorioBase<Sessao> repositorioSessao,
+        IRepositorioSessao repositorioSessao,
         IRepositorioBase<Assento> repositorioAssento,
         IRepositorioBase<Ingresso> repositorioIngresso)
     {
@@ -32,6 +33,8 @@ public class SessaoController : Controller
     public IActionResult listar()
     {
         var sessoes = repositorioSessao.SelecionarTodos();
+
+        var agrupamento = repositorioSessao.ObterSessoesAgrupadasPorFilme();
 
         var listarSessoesVM = sessoes.Select(s =>
         {
@@ -328,6 +331,7 @@ public class SessaoController : Controller
         var sessoes = repositorioSessao.SelecionarTodos()
                                        .Where(s => s.InicioDaSessao.Date == hoje)
                                        .ToList();
+
         IEnumerable<ListarSessaoViewModel> listarSessoesVM = MapearSessoes(sessoes);
 
         return View("sessoesdiarias", listarSessoesVM);

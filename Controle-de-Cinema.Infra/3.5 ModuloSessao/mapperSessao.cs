@@ -41,9 +41,9 @@ namespace Controle_de_Cinema.Infra.Compartilhado
             .IsRequired()
             .HasColumnType("datetime2");
 
-            sessaoBuilder.HasOne(x => x.usuario)
+            sessaoBuilder.HasOne(x => x.Usuario)
                 .WithMany()
-                .HasForeignKey("User_Id")
+                .HasForeignKey("Usuario_Id")
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 

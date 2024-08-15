@@ -29,13 +29,12 @@ public class mapperFilme : IEntityTypeConfiguration<Filme>
             .IsRequired()
             .HasColumnType("varchar(600)");
 
-        filmeBuilder.HasOne(x => x.usuario)
+        filmeBuilder.HasOne(x => x.Usuario)
             .WithMany()
-            .HasForeignKey("User_Id")
+            .HasForeignKey("Usuario_Id")
             .IsRequired()
             .OnDelete(DeleteBehavior.NoAction);
 
-        //filmeBuilder.HasData(NewData());
     }
 
     private Filme[] NewData()

@@ -23,9 +23,9 @@ public class mapperIngresso : IEntityTypeConfiguration<Ingresso>
         .IsRequired()
         .HasColumnType("bit");
 
-        ingressoBuilder.HasOne(x => x.usuario)
+        ingressoBuilder.HasOne(x => x.Usuario)
             .WithMany()
-            .HasForeignKey("User_Id")
+            .HasForeignKey("Usuario_Id")
             .IsRequired()
             .OnDelete(DeleteBehavior.NoAction);
 

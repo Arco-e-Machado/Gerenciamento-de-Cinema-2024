@@ -46,8 +46,9 @@ public class SalaController : Controller
     [HttpPost]
     public IActionResult inserir(InserirSalaViewModel novaSalaVM)
     {
-        var novaSala = new Sala(novaSalaVM.Numero,
-                                                    novaSalaVM.Capacidade
+        var novaSala = new Sala(
+                                novaSalaVM.Numero,
+                                novaSalaVM.Capacidade
                                                     );
 
         repositorioSala.Cadastrar(novaSala);
