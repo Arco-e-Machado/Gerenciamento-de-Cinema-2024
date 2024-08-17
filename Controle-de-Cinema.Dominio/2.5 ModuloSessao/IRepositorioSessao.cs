@@ -4,5 +4,5 @@ namespace Controle_de_Cinema.Dominio.ModuloSessao;
 
 public interface IRepositorioSessao : IRepositorioBase<Sessao>
 {
-    List<IGrouping<string, Sessao>> ObterSessoesAgrupadasPorFilme();
+    public List<IGrouping<string, Sessao>> ObterSessoesAgrupadasPorFilme();
 }

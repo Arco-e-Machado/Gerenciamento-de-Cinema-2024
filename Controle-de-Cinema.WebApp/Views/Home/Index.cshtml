@@ -1,11 +1,14 @@
-﻿@model ListarSessaoViewModel
+﻿@model ListarSessaoViewModel?
 @{
     ViewBag.Title = "Gerenciamento de Cinema";
 
 
 }
+<div class="container my-4">
+    <h1 class="text-center mb-4">Bem-vindo à Página Inicial!</h1>
+    <p class="text-center mb-4">Filmes Em cartaz!</p>
 
-    <partial name="Carossel" model="Model"></partial>
+    <partial name="Caroussel" model="Model"></partial>
 
     <div class="row mt-4">
         <div class="col-md-4 mb-4">

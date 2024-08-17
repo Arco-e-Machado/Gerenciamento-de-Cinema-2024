@@ -17,9 +17,16 @@ namespace Controle_de_Cinema.WebApp.Models
         public int Id { get; set; }
         public Filme Filme { get; set; }
         public Sala Sala { get; set; }
+        public string Encerrada {  get; set; }
         public DateTime InicioSessao { get; set; }
         public DateTime FimSessao { get; set; }
         public int Ingressos { get; set; }
+    }
+
+    public class AgrupamentoSessoesViewModel
+    {
+        public string Filme { get; set; }
+        public IEnumerable<ListarSessaoViewModel> Sessoes { get; set; }
     }
 
     public class InserirSessaoViewModel

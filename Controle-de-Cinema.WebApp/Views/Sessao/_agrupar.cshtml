@@ -1,0 +1,43 @@
+﻿@model IEnumerable<AgrupamentoSessoesViewModel>
+
+@foreach (var Agrupamento in Model)
+{
+    <h2>@Agrupamento.Filme</h2>
+
+    @foreach (var sessao in Agrupamento.Sessoes)
+    {
+        <div id="card-hover" class="card col-md-5 col-lg-4 col-xl-3 p-2 bg-dark text-white">
+            <a id="card-hover" href="/sessao/detalhes/@sessao.Id">
+
+                <div class="card-body">
+
+                    <div class="row row-cols-2 gap-2">
+                        <label class="card-title fs-5 fw-semibold">Sala: @sessao.Sala </label>
+
+                    </div>
+
+                    <p class="card-subtitle fs-6"><strong>Id: </strong>[@sessao.Id]</p>
+                    <p class="card-subtitle fs-6"><strong>Filme: </strong>[@sessao.Filme] </p>
+                    <p class="card-subtitle fs-6"><strong>Capacidade da Sala: </strong>[@sessao.Ingressos] </p>
+                    <p class="card-subtitle fs-6"><strong>Status da Sessão: </strong>[@sessao.Encerrada] </p>
+                    <p class="card-subtitle fs-6"><strong>Horario De Inicio: </strong>[@sessao.InicioSessao] </p>
+                    <p class="card-subtitle fs-6"><strong>Horario De Término: </strong>[@sessao.FimSessao] </p>
+
+                    <div class="d-flex justify-content-around gap-2 mt-3">
+
+                        @*                         <a class="btn btn-maroon btn-sm" href="/sessao/detalhes/@sessao.Id">
+                <i class="bi bi-search"></i>
+                </a> *@
+
+                        <a class="btn btn-maroon btn-sm" href="/sessao/editar/@sessao.Id">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+
+                        <a class="btn btn-maroon btn-sm" href="/sessao/excluir/@sessao.Id">
+                            <i class="bi bi-trash3"></i>
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }   }

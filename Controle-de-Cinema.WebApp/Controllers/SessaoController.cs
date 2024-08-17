@@ -5,23 +5,25 @@ using Controle_de_Cinema.WebApp.Models;
 using Controle_de_Cinema.Dominio.Compartilhado;
 using Controle_de_Cinema.WebApp.Extensions;
 using Controle_de_Cinema.Dominio.ModuloSessao;
+using Controle_de_Cinema.Dominio.ModuloSala;
+using Controle_de_Cinema.Dominio.ModuloFilme;
 
 namespace Controle_de_Cinema.WebApp.Controllers;
 
 public class SessaoController : Controller
 {
     readonly private IRepositorioSessao repositorioSessao;
-    readonly private IRepositorioBase<Filme> repositorioFilme;
-    readonly private IRepositorioBase<Assento> repositorioAssento;
-    readonly private IRepositorioBase<Sala> repositorioSala;
-    readonly private IRepositorioBase<Ingresso> repositorioIngresso;
+    readonly private IRepositorioFilme repositorioFilme;
+    readonly private IRepositorioAssento repositorioAssento;
+    readonly private IRepositorioSala repositorioSala;
+    readonly private IRepositorioIngressos repositorioIngresso;
 
     public SessaoController(
-        IRepositorioBase<Sala> repositorioSala,
-        IRepositorioBase<Filme> repositorioFilme,
+        IRepositorioSala repositorioSala,
+        IRepositorioFilme repositorioFilme,
         IRepositorioSessao repositorioSessao,
-        IRepositorioBase<Assento> repositorioAssento,
-        IRepositorioBase<Ingresso> repositorioIngresso)
+        IRepositorioAssento repositorioAssento,
+        IRepositorioIngressos repositorioIngresso)
     {
         this.repositorioSala = repositorioSala;
         this.repositorioFilme = repositorioFilme;
@@ -32,26 +34,33 @@ public class SessaoController : Controller
 
     public IActionResult listar()
     {
-        var sessoes = repositorioSessao.SelecionarTodos();
-
         var agrupamento = repositorioSessao.ObterSessoesAgrupadasPorFilme();
 
-        var listarSessoesVM = sessoes.Select(s =>
+        var AgruparSessoesVM = agrupamento.Select(mapearAgrupamentoSessoes);
+
+        ViewBag.Mensagem = TempData.DesserializarMensagemViewModel();
+
+        return View(AgruparSessoesVM);
+    }
+
+    private static AgrupamentoSessoesViewModel mapearAgrupamentoSessoes(IGrouping<string, Sessao> SessaoAgrupada)
+    {
+        return new AgrupamentoSessoesViewModel
         {
-            return new ListarSessaoViewModel
+            Filme = SessaoAgrupada.Key,
+            Sessoes = SessaoAgrupada.Select(s => new ListarSessaoViewModel
             {
                 Id = s.Id,
                 Sala = s.Sala,
                 Filme = s.Filme,
-                FimSessao = s.FimDaSessao,
+                Encerrada = s.Encerrada ? "Ativa" : "Encerrada",
                 InicioSessao = s.InicioDaSessao,
+                FimSessao = s.FimDaSessao,
                 Ingressos = s.QuantiaDeIngressos
-            };
-        });
-
-        ViewBag.Mensagem = TempData.DesserializarMensagemViewModel();
-
-        return View(listarSessoesVM);
+            })
+            .OrderBy(s => s.Encerrada)
+            .ThenBy(s => s.InicioSessao)
+        };
     }
 
     public IActionResult inserir()
@@ -65,7 +74,7 @@ public class SessaoController : Controller
         return View(criarSessao);
     }
 
-  
+
     [HttpPost]
     public IActionResult inserir(InserirSessaoViewModel novaSessaoVM)
     {
