@@ -51,8 +51,8 @@ public class RepositorioSessao : RepositorioBase<Sessao>, IRepositorioSessao
         return _dbContext.Sessoes
             .Where(s => !s.Encerrada)
             .Include(s => s.Filme)
-            .ThenInclude(f => f.Genero)
             .Include(s => s.Sala)
+                .ThenInclude(a => a.Assentos)
             .Include(s => s.Ingressos)
             .GroupBy(s => s.Filme.Nome)
             .AsNoTracking()

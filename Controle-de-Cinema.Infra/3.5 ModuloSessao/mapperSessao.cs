@@ -21,6 +21,10 @@ namespace Controle_de_Cinema.Infra.Compartilhado
             .HasForeignKey("Sala_Id")
             .OnDelete(DeleteBehavior.Restrict); //lançar uma try catch no controllerSala
 
+            sessaoBuilder.Property(ss => ss.Encerrada)
+            .IsRequired()
+            .HasColumnType("bit");
+
             sessaoBuilder.HasOne(ss => ss.Filme)
             .WithMany()
             .IsRequired()

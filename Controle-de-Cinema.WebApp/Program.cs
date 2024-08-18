@@ -1,15 +1,16 @@
-using Controle_de_Cinema.Dominio;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Controle_de_Cinema.Infra.ModuloSala;
 using Controle_de_Cinema.Infra.ModuloFilme;
-using Controle_de_Cinema.WebApp.Controllers;
 using Controle_de_Cinema.Infra.ModuloPessoa;
 using Controle_de_Cinema.Infra.ModuloSessao;
 using Controle_de_Cinema.Infra.Compartilhado;
 using Controle_de_Cinema.Dominio.Compartilhado;
 using Controle_de_Cinema.Dominio.ModuloEmpresa;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Controle_de_Cinema.Dominio.ModuloSessao;
+using Controle_de_Cinema.Dominio.ModuloSala;
+using Controle_de_Cinema.Dominio.ModuloFilme;
+using Controle_de_Cinema.Dominio.ModuloPessoa;
 
 namespace Controle_de_Cinema.WebApp;
 
@@ -24,12 +25,12 @@ public class Program
 
         builder.Services.AddDbContext<CinemaDbContext>();
 
-        builder.Services.AddScoped<IRepositorioBase<Assento>, RepositorioAssento>();
-        builder.Services.AddScoped<IRepositorioBase<Ingresso>, RepositorioIngresso>();
-        builder.Services.AddScoped<IRepositorioBase<Sala>, RepositorioSala>();
-        builder.Services.AddScoped<IRepositorioBase<Filme>, RepositorioFilme>();
-        builder.Services.AddScoped<IRepositorioBase<Pessoa>, RepositorioPessoa>();
-        builder.Services.AddScoped<IRepositorioBase<Sessao>, RepositorioSessao>();
+        builder.Services.AddScoped<IRepositorioAssento, RepositorioAssento>();
+        builder.Services.AddScoped<IRepositorioIngressos, RepositorioIngresso>();
+        builder.Services.AddScoped<IRepositorioSala, RepositorioSala>();
+        builder.Services.AddScoped<IRepositorioFilme, RepositorioFilme>();
+        builder.Services.AddScoped<IRepositorioPessoa, RepositorioPessoa>();
+        builder.Services.AddScoped<IRepositorioSessao, RepositorioSessao>();
 
         builder.Services.AddIdentity<Usuario, Empresa>()
             .AddEntityFrameworkStores<CinemaDbContext>()
